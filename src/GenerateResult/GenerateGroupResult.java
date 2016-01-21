@@ -15,7 +15,6 @@ public class GenerateGroupResult {
     public static List<GroupInfo> getGroupResult(List<ContainerInfo> containerInfoList){
 
         List<GroupInfo> groupInfoList = new ArrayList<GroupInfo>();
-        HashMap<String, ArrayList<String>> groupmap = new HashMap<String, ArrayList<String>>();
 
         Set<String> cportSet = new HashSet<String>();   //包含港口类型
         Set<String> ctypeSet = new HashSet<String>();  //包含箱型类型
@@ -36,13 +35,7 @@ public class GenerateGroupResult {
         for (String port: cportSet){
             for (String type:ctypeSet){
                 for (String size: csizeSet) {
-                    //向hashmap增加数据
-                    ArrayList<String> groupattri = new ArrayList<String>();
-                    groupattri.add(port);
-                    groupattri.add(type);
-                    groupattri.add(size);
                     String groupID = "G" + groupnum.toString();
-                    groupmap.put(groupID, groupattri);
                     groupnum++;
                     //向groupInfoList增加数据
                     groupInfo = new GroupInfo();
@@ -54,7 +47,6 @@ public class GenerateGroupResult {
                 }
             }
         }
-        ImportData.groupmap = groupmap;
         return groupInfoList;
     }
 }
