@@ -39,7 +39,7 @@ public class PrestowageFrame extends JFrame{
         setSize(1000, 600);
         setLocationRelativeTo(null);//居中显示
         {
-            jlFilter = new JLabel("按舱位ID查询:");
+            jlFilter = new JLabel("按舱号查询:");
             jfFilter = new JTextField(10);
             btn = new JButton("查询");
 
