@@ -4,53 +4,53 @@ package importDataInfo;
  * Created by leko on 2016/1/17.
  */
 public class PreStowageInfo {
-    private Integer VHT_ID;          //舱位ID
-    private Integer VBY_BAYID;      //倍位ID
-    private Integer VTR_TIERNO;     //层号
-    private Integer VRW_ROWNO;      //排号
-    private Integer SIZE;            //箱尺寸
+    private String VHT_ID;          //舱位ID
+    private String VBY_BAYID;      //倍位ID
+    private String VTR_TIERNO;     //层号
+    private String VRW_ROWNO;      //排号
+    private String SIZE;            //箱尺寸
     private String  GROUP_ID;       //属性组
     private Integer WEIGHT;         //重量等级
     private Integer MOVE_ORDER;    //move顺序
 
-    public Integer getVHT_ID() {
+    public String getVHT_ID() {
         return VHT_ID;
     }
 
-    public void setVHT_ID(Integer VHT_ID) {
+    public void setVHT_ID(String VHT_ID) {
         this.VHT_ID = VHT_ID;
     }
 
-    public Integer getVBY_BAYID() {
+    public String getVBY_BAYID() {
         return VBY_BAYID;
     }
 
-    public void setVBY_BAYID(Integer VBY_BAYID) {
+    public void setVBY_BAYID(String VBY_BAYID) {
         this.VBY_BAYID = VBY_BAYID;
     }
 
-    public Integer getVTR_TIERNO() {
+    public String getVTR_TIERNO() {
         return VTR_TIERNO;
     }
 
-    public void setVTR_TIERNO(Integer VTR_TIERNO) {
-        this.VTR_TIERNO = VTR_TIERNO;
-    }
-
-    public Integer getVRW_ROWNO() {
+    public String getVRW_ROWNO() {
         return VRW_ROWNO;
     }
 
-    public void setVRW_ROWNO(Integer VRW_ROWNO) {
+    public void setVRW_ROWNO(String VRW_ROWNO) {
         this.VRW_ROWNO = VRW_ROWNO;
     }
 
-    public Integer getSIZE() {
+    public String getSIZE() {
         return SIZE;
     }
 
-    public void setSIZE(Integer SIZE) {
+    public void setSIZE(String SIZE) {
         this.SIZE = SIZE;
+    }
+
+    public void setVTR_TIERNO(String VTR_TIERNO) {
+        this.VTR_TIERNO = VTR_TIERNO;
     }
 
     public String getGROUP_ID() {
