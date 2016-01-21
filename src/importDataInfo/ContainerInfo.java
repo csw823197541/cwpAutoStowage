@@ -6,19 +6,35 @@ package importDataInfo;
 public class ContainerInfo {
     private String IYC_CNTRNO;                    //唯一箱号
     private String IYC_CNTR_AREA_ID;             //箱所在箱区号
-    private String IYC_VOYID;                     //航次ID
+    private Integer IYC_VOYID;                     //航次ID
 
     private String IYC_CTYPECD;                   //箱型
     private String IYC_CSZ_CSIZECD;              //尺寸
     private String IYC_PORTCD;                    //目的港
 
-    private String IYC_WEIGHT;                     //箱重
+    private Integer IYC_WEIGHT;                     //箱重
 
     private String IYC_DNGFG;                      //是否危险品(Y,N)
     private String IYC_REFFG;                      //是否冷藏(Y,N)
     private String IYC_YLOCATION;                 //场箱位
     private String IYC_PLANFG;                    //是否可配载
     private String IYC_RETIME;                    //当前作业该箱所需的倒箱时间
+
+    public Integer getIYC_VOYID() {
+        return IYC_VOYID;
+    }
+
+    public void setIYC_VOYID(Integer IYC_VOYID) {
+        this.IYC_VOYID = IYC_VOYID;
+    }
+
+    public Integer getIYC_WEIGHT() {
+        return IYC_WEIGHT;
+    }
+
+    public void setIYC_WEIGHT(Integer IYC_WEIGHT) {
+        this.IYC_WEIGHT = IYC_WEIGHT;
+    }
 
     public String getIYC_CNTRNO() {
         return IYC_CNTRNO;
@@ -34,14 +50,6 @@ public class ContainerInfo {
 
     public void setIYC_CNTR_AREA_ID(String IYC_CNTR_AREA_ID) {
         this.IYC_CNTR_AREA_ID = IYC_CNTR_AREA_ID;
-    }
-
-    public String getIYC_VOYID() {
-        return IYC_VOYID;
-    }
-
-    public void setIYC_VOYID(String IYC_VOYID) {
-        this.IYC_VOYID = IYC_VOYID;
     }
 
     public String getIYC_CTYPECD() {
@@ -68,15 +76,7 @@ public class ContainerInfo {
         this.IYC_PORTCD = IYC_PORTCD;
     }
 
-    public String getIYC_WEIGHT() {
-        return IYC_WEIGHT;
-    }
-
-    public void setIYC_WEIGHT(String IYC_WEIGHT) {
-        this.IYC_WEIGHT = IYC_WEIGHT;
-    }
-
-    public String getIYC_DNGFG() {
+   public String getIYC_DNGFG() {
         return IYC_DNGFG;
     }
 
