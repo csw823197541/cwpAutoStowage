@@ -5,16 +5,16 @@ package importDataInfo;
  */
 public class CwpResultInfo {
 
-    private String CRANEID;
-    private Integer EndMoveID;
-    private Integer HATCHBWID;
-    private String HATCHID;
-    private Integer MOVECOUNT;
-    private Integer QDC;
-    private Integer StartMoveID;
-    private String VESSELID;
-    private Integer WORKINGENDTIME;
-    private Integer WORKINGSTARTTIME;
+    private String CRANEID;//桥机ID
+    private Integer EndMoveID;//结束时，舱内的MoveOrder
+    private String HATCHBWID;//倍位ID
+    private String HATCHID;//舱ID
+    private Integer MOVECOUNT;//Move总数
+    private Integer QDC;//是否启动舱
+    private Integer StartMoveID;//开始时，舱内的MoveOrder
+    private String VESSELID;//航次ID
+    private Integer WORKINGENDTIME;//起始时间
+    private Integer WORKINGSTARTTIME;//结束时间
 
     public String getCRANEID() {
         return CRANEID;
@@ -32,11 +32,11 @@ public class CwpResultInfo {
         EndMoveID = endMoveID;
     }
 
-    public Integer getHATCHBWID() {
+    public String getHATCHBWID() {
         return HATCHBWID;
     }
 
-    public void setHATCHBWID(Integer HATCHBWID) {
+    public void setHATCHBWID(String HATCHBWID) {
         this.HATCHBWID = HATCHBWID;
     }
 
