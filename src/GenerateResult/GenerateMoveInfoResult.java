@@ -29,7 +29,7 @@ public class GenerateMoveInfoResult {
                 String hatchID = cwpResultInfo.getHATCHID();                //舱号
                 Integer startmoveorder = cwpResultInfo.getStartMoveID();        //舱内开始的moveorder
                 //System.out.println("start"+startmoveorder.toString());
-                Integer endmoveorder = cwpResultInfo.getEndMoveID()-1;          //舱内结束的moveorder
+                Integer endmoveorder = cwpResultInfo.getEndMoveID();          //舱内结束的moveorder
                 //System.out.println("end"+endmoveorder.toString());
                 Integer starttime = cwpResultInfo.getWORKINGSTARTTIME();
                 Integer endtime = cwpResultInfo.getWORKINGENDTIME();
@@ -50,12 +50,12 @@ public class GenerateMoveInfoResult {
                     String vesselpositon = moverecords.get(hatchmoveorder);
                     moveInfo.setExToPosition(vesselpositon);
                     moveInfo.setWORKINGSTARTTIME(starttime+singletime*(i-startmoveorder));
-                    String areaposition = autostowresult.get(vesselpositon)[0];
-                    String unitID = autostowresult.get(vesselpositon)[1];
-                    String size = autostowresult.get(vesselpositon)[2];
-                    moveInfo.setExFromPosition(areaposition);
-                    moveInfo.setUnitId(unitID);
-                    moveInfo.setUnitLength(size);
+                    //String areaposition = autostowresult.get(vesselpositon)[0];
+                    //String unitID = autostowresult.get(vesselpositon)[1];
+                    //String size = autostowresult.get(vesselpositon)[2];
+                    //moveInfo.setExFromPosition(areaposition);
+                    //moveInfo.setUnitId(unitID);
+                    //moveInfo.setUnitLength(size);
                     moveInfoList.add(moveInfo);
 
                 }

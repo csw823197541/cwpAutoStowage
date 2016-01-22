@@ -2,9 +2,7 @@ package importData;
 
 import importDataInfo.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by leko on 2016/1/22.
@@ -32,6 +30,7 @@ public class PreStowageInfoProcess {
             temp+=containerInfo.getIYC_RETIME()+"#";
             container+=temp;
         }
+        System.out.println(container);
         return container;
     }
 
@@ -55,6 +54,7 @@ public class PreStowageInfoProcess {
             temp+=containerAreaInfo.getWORKEFFICIENCYT().toString()+"#";
             containerarea+=temp;
         }
+        System.out.println(containerarea);
         return containerarea;
     }
 
@@ -69,6 +69,7 @@ public class PreStowageInfoProcess {
             groupattri.add(groupInfo.getSize());
             groupmap.put(groupInfo.getGroupID(),groupattri);
         }
+
 
         //预配信息字符串
         String prestowage="";
@@ -88,6 +89,7 @@ public class PreStowageInfoProcess {
             temp+=preStowageInfo.getMOVE_ORDER().toString()+"#";
             prestowage+=temp;
         }
+        System.out.println(prestowage);
         return prestowage;
     }
 
@@ -108,6 +110,7 @@ public class PreStowageInfoProcess {
             temp+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
             cwpoutput+=temp;
         }
+        System.out.println(cwpoutput);
         return cwpoutput;
     }
 }

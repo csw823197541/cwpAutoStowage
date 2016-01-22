@@ -5,40 +5,40 @@ package importDataInfo;
  */
 public class GroupInfo {
 
-    public static String groupID;   //属性组
-    public static String port;      //港口
-    public static String type;      //箱型
-    public static String size;      //尺寸
+    private String groupID;   //属性组
+    private String port;      //港口
+    private String type;      //箱型
+    private String size;      //尺寸
 
-    public static String getGroupID() {
+    public String getGroupID() {
         return groupID;
     }
 
-    public static void setGroupID(String groupID) {
-        GroupInfo.groupID = groupID;
+    public void setGroupID(String groupID) {
+        this.groupID = groupID;
     }
 
-    public static String getPort() {
+    public String getPort() {
         return port;
     }
 
-    public static void setPort(String port) {
-        GroupInfo.port = port;
+    public void setPort(String port) {
+        this.port = port;
     }
 
-    public static String getType() {
+    public String getType() {
         return type;
     }
 
-    public static void setType(String type) {
-        GroupInfo.type = type;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public static String getSize() {
+    public String getSize() {
         return size;
     }
 
-    public static void setSize(String size) {
-        GroupInfo.size = size;
+    public void setSize(String size) {
+        this.size = size;
     }
 }
