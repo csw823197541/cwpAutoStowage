@@ -1,7 +1,5 @@
 package viewFrame;
 
-
-import importData.ImportData;
 import importDataInfo.PreStowageInfo;
 
 import javax.swing.*;
@@ -63,7 +61,7 @@ public class PrestowageFrame extends JFrame{
                 {
                     this.tableWQL = new JTable();
                     this.scrollPane.setViewportView(this.tableWQL);
-                    ui.TableModel tableModel = new ui.TableModel();
+                    TableModel tableModel = new TableModel();
 
                     //增加列名
                     ArrayList<String> colList = new ArrayList<String>(Arrays.asList("舱号","倍号", "层号", "排号","尺寸","属性组","重量等级","MoveOrder"));

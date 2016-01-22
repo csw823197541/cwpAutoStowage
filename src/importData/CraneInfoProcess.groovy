@@ -1,5 +1,6 @@
 package importData
 
+import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import importDataInfo.CraneInfo
 import importDataInfo.WorkingTimeRange
@@ -71,6 +72,70 @@ class CraneInfoProcess {
         }else {
             System.out.println("桥机数据解析成功！")
             return craneInfoList
+        }
+    }
+
+    //解析生成桥机json格式字符串
+    public static String getCraneInfoJsonStr(List<CraneInfo> craneInfos) {
+
+        boolean isError = false;
+        String result = null
+        List<CraneInfo> craneInfoList = craneInfos;
+
+        if(craneInfoList != null) {
+            try{
+                List<Map<String, Object>> list = new ArrayList<>()
+                assert craneInfoList instanceof List
+                craneInfoList.each {it->
+                    Map<String, Object> map = new HashMap<String, Object>()
+                    map.put("CURRENTPOSITION", it.CURRENTPOSITION)
+                    map.put("DISCHARGEEFFICIENCY20", it.DISCHARGEEFFICIENCY20)
+                    map.put("DISCHARGEEFFICIENCY40", it.DISCHARGEEFFICIENCY40)
+                    map.put("DISCHARGEEFFICIENCYTWIN", it.DISCHARGEEFFICIENCYTWIN)
+                    map.put("ID", it.ID)
+                    map.put("LOADINGEFFICIENCY20", it.LOADINGEFFICIENCY20)
+                    map.put("LOADINGEFFICIENCY40", it.LOADINGEFFICIENCY40)
+                    map.put("LOADINGEFFICIENCYTWIN", it.LOADINGEFFICIENCYTWIN)
+                    map.put("MOVINGRANGEFROM", it.MOVINGRANGEFROM)
+                    map.put("MOVINGRANGETO", it.MOVINGRANGETO)
+                    map.put("NAME", it.NAME)
+                    map.put("SAFESPAN", it.SAFESPAN)
+                    map.put("SEQ", it.SEQ)
+                    map.put("SPEED", it.SPEED)
+                    map.put("WIDTH", it.WIDTH)
+                    def workingTimeRange = it.WORKINGTIMERANGES
+                    assert workingTimeRange instanceof List
+                    List<Map<String, Object>> listT = new ArrayList<>()
+                    workingTimeRange.each {t->
+                        Map<String, Object> mapT = new HashMap<String, Object>();
+                        mapT.put("ID", t.ID)
+//                        mapT.put("WORKENDTIME", sdf.format(t.WORKENDTIME))
+//                        mapT.put("WORKSTARTTIME", sdf.format(t.WORKSTARTTIME))
+                        mapT.put("WORKENDTIME", "2015-06-02 00:59:00")
+                        mapT.put("WORKSTARTTIME", "2015-06-01 10:30:00")
+                        listT.add(mapT)
+                        map.put("WORKINGTIMERANGES", listT)
+                    }
+                    list.add(map)
+                }
+                def builder = new JsonBuilder(list)
+                result = builder.toString()
+                println result
+
+            }catch (Exception e){
+                System.out.println("生成桥机数据json格式时，发现数据异常！")
+                isError = true;
+                e.printStackTrace()
+            }
+        }else {
+            System.out.println("没有桥机的数据！")
+        }
+        if(isError) {
+            System.out.println("生成桥机数据json格式失败！")
+            return null;
+        }else {
+            System.out.println("生成桥机数据json格式成功！")
+            return result
         }
     }
 
