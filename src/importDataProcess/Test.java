@@ -43,10 +43,10 @@ public class Test {
 //        PreStowageFrame preStowageFrame = new PreStowageFrame(preStowageInfoList);
 //        preStowageFrame.setVisible(true);
         List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, preStowageInfoList);
-        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, preStowageInfoList, cwpResultInfoList);
-        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
-        MoveFrame moveFrame = new MoveFrame(moveInfoList);
-        moveFrame.setVisible(true);
+//        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, preStowageInfoList, cwpResultInfoList);
+//        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
+//        MoveFrame moveFrame = new MoveFrame(moveInfoList);
+//        moveFrame.setVisible(true);
 
     }
 }
