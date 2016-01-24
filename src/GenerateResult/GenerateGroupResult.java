@@ -1,6 +1,5 @@
 package GenerateResult;
 
-import importData.ImportData;
 import importDataInfo.ContainerInfo;
 import importDataInfo.GroupInfo;
 

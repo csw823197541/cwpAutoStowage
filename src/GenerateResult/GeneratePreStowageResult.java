@@ -1,6 +1,6 @@
 package GenerateResult;
 
-import importData.ImportData;
+import importDataProcess.ImportData;
 import importDataInfo.ContainerInfo;
 import importDataInfo.GroupInfo;
 import importDataInfo.PreStowageInfo;

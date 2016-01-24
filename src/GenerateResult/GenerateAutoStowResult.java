@@ -1,11 +1,10 @@
 package GenerateResult;
 
-import importData.ImportData;
-import importData.PreStowageInfoProcess;
+import autoStow.CallAutoStow;
+import importDataProcess.ImportData;
+import importDataProcess.PreStowageInfoProcess;
 import importDataInfo.*;
-import utils.FileUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +27,10 @@ public class GenerateAutoStowResult {
         //处理cwp输出信息
         String cwpResultStr = PreStowageInfoProcess.getCwpResultString(cwpResultInfoList);
 
-        String autoStowStr=null;
+        String autoStowStr = null;
         //调用c++
+        autoStowStr = CallAutoStow.autoStow(containerStr, containerAreaStr, preStowageStr, cwpResultStr);
+        System.out.println("自动配载算法返回的结果："+autoStowStr);
         autoStowResultInfoList = getAutoStowResult(autoStowStr);
         return autoStowResultInfoList;
     }

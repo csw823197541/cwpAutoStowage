@@ -1,6 +1,6 @@
 package GenerateResult;
 
-import importData.ImportData;
+import importDataProcess.ImportData;
 import importDataInfo.AutoStowResultInfo;
 import importDataInfo.CwpResultInfo;
 import importDataInfo.MoveInfo;
@@ -13,6 +13,7 @@ import java.util.List;
  * Created by leko on 2016/1/22.
  */
 public class GenerateMoveInfoResult {
+
     public static List<MoveInfo> getMoveInfoResult(List<CwpResultInfo> cwpResultInfoList, List<AutoStowResultInfo> autoStowResultInfoList){
         List<MoveInfo> moveInfoList = new ArrayList<MoveInfo>();
 
@@ -50,12 +51,12 @@ public class GenerateMoveInfoResult {
                     String vesselpositon = moverecords.get(hatchmoveorder);
                     moveInfo.setExToPosition(vesselpositon);
                     moveInfo.setWORKINGSTARTTIME(starttime+singletime*(i-startmoveorder));
-                    //String areaposition = autostowresult.get(vesselpositon)[0];
-                    //String unitID = autostowresult.get(vesselpositon)[1];
-                    //String size = autostowresult.get(vesselpositon)[2];
-                    //moveInfo.setExFromPosition(areaposition);
-                    //moveInfo.setUnitId(unitID);
-                    //moveInfo.setUnitLength(size);
+                    String areaposition = autostowresult.get(vesselpositon)[0];
+                    String unitID = autostowresult.get(vesselpositon)[1];
+                    String size = autostowresult.get(vesselpositon)[2];
+                    moveInfo.setExFromPosition(areaposition);
+                    moveInfo.setUnitId(unitID);
+                    moveInfo.setUnitLength(size);
                     moveInfoList.add(moveInfo);
 
                 }

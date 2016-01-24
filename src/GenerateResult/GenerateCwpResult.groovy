@@ -1,11 +1,11 @@
 package GenerateResult
 
 import cwp.CallCwpTest
-import importData.CraneInfoProcess
-import importData.CwpResultInfoProcess
-import importData.HatchInfoProcess
-import importData.ImportData
-import importData.WorkMoveInfoProcess
+import importDataProcess.CraneInfoProcess
+import importDataProcess.CwpResultInfoProcess
+import importDataProcess.HatchInfoProcess
+import importDataProcess.ImportData
+import importDataProcess.WorkMoveInfoProcess
 import importDataInfo.BayPositionInfo
 import importDataInfo.CraneInfo
 import importDataInfo.CwpResultInfo

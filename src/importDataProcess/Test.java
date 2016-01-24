@@ -1,5 +1,5 @@
 package importDataProcess;
-import generateResult.*;
+import GenerateResult.*;
 import importDataInfo.*;
 import utils.FileUtil;
 import viewFrame.MoveFrame;
