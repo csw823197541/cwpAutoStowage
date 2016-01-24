@@ -1,12 +1,12 @@
 package viewFrame;
 
 import importDataInfo.VoyageInfo;
-import utils.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,6 +15,8 @@ import java.util.List;
  * Created by leko on 2016/1/19.
  */
 public class VoyageFrame extends JFrame {
+
+    public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private JPanel panelCenter;
     private JPanel contentPane;
@@ -63,8 +65,8 @@ public class VoyageFrame extends JFrame {
                             Object[] rowData = new Object[6];
                             rowData[0] = voyageInfo.getVOTVOYID();
                             rowData[1] = voyageInfo.getVESSELID();
-                            rowData[2] = FileUtil.sdf.format(voyageInfo.getVOTPWKSTTM());
-                            rowData[3] = FileUtil.sdf.format(voyageInfo.getVOTPWKENTM());
+                            rowData[2] = sdf.format(voyageInfo.getVOTPWKSTTM());
+                            rowData[3] = sdf.format(voyageInfo.getVOTPWKENTM());
                             rowData[4] = voyageInfo.getSTARTPOSITION();
                             rowData[5] = voyageInfo.getENDPOSITION();
                             tableModel.addRow(rowData);

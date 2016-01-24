@@ -1,14 +1,10 @@
-package importData;
-import GenerateResult.*;
+package importDataProcess;
+import generateResult.*;
 import importDataInfo.*;
 import utils.FileUtil;
-import viewFrame.ContainerAreaFrame;
-import viewFrame.ContainerFrame;
-import viewFrame.GroupFrame;
 import viewFrame.MoveFrame;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,12 +26,8 @@ public class Test {
         List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
         List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
         List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
-        for (GroupInfo groupInfo:groupInfoList)
-        {
-            System.out.println(groupInfo.getGroupID()+" "+groupInfo.getSize());
-        }
-        GroupFrame groupFrame = new GroupFrame( groupInfoList);
-        groupFrame.setVisible(true);
+//        GroupFrame groupFrame = new GroupFrame( groupInfoList);
+//        groupFrame.setVisible(true);
 
         List<PreStowageInfo> preStowageInfoList = GeneratePreStowageResult.getPrestowageResult(groupInfoList, containerInfoList, vesselStructureInfoList);
         List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, preStowageInfoList);

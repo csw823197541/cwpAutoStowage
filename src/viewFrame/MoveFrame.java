@@ -85,10 +85,10 @@ public class MoveFrame extends JFrame {
                             String o2s = o2.split("@")[0];
                             String o1d = o1.split("@")[1];
                             String o2d = o2.split("@")[1];
-                            System.out.println(o1s + " " + o1d);
-                            System.out.println(o2s + " " + o2d);
+//                            System.out.println(o1s + " " + o1d);
+//                            System.out.println(o2s + " " + o2d);
                             if (o1s.equals(o2s)) {//前半截相同,后半截处理为Integer，比对
-                                System.out.println("前半截相同,后半截处理为Integer，比对");
+//                                System.out.println("前半截相同,后半截处理为Integer，比对");
                                 int o1i = Integer.valueOf(o1d);
                                 int o2i = Integer.valueOf(o2d);
                                 return Integer.compare(o1i, o2i);//对比后半截

@@ -1,8 +1,6 @@
-package importData
+package importDataProcess
 
 import groovy.json.JsonSlurper
-import importDataInfo.BayPositionInfo
-import importDataInfo.HatchPositionInfo
 import importDataInfo.VesselStructureInfo
 
 /**
