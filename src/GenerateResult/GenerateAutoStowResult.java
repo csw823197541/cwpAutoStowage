@@ -4,6 +4,7 @@ import autoStow.CallAutoStow;
 import importDataProcess.ImportData;
 import importDataProcess.PreStowageInfoProcess;
 import importDataInfo.*;
+import utils.FileUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +25,28 @@ public class GenerateAutoStowResult {
         String containerAreaStr = PreStowageInfoProcess.getContainerareaString(containerAreaInfoList);
         //处理预配信息
         String preStowageStr = PreStowageInfoProcess.getPreStowageString(groupInfoList,preStowageInfoList);
+        try {//将自动配载要用的结果写在文件里，让算法去读这个文件
+            FileUtil.writeToFile("C:/CwpAutoStowData/Container.txt", containerStr);
+            FileUtil.writeToFile("C:/CwpAutoStowData/PreStowage.txt", preStowageStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         //处理cwp输出信息
         String cwpResultStr = PreStowageInfoProcess.getCwpResultString(cwpResultInfoList);
 
         String autoStowStr = null;
-        //调用c++
-        autoStowStr = CallAutoStow.autoStow(containerStr, containerAreaStr, preStowageStr, cwpResultStr);
-        System.out.println("自动配载算法返回的结果："+autoStowStr);
-        autoStowResultInfoList = getAutoStowResult(autoStowStr);
+        if(containerStr != null && containerAreaStr != null && preStowageStr != null && cwpResultStr != null) {
+            //调用自动配载算法
+            autoStowStr = CallAutoStow.autoStow(containerStr, containerAreaStr, preStowageStr, cwpResultStr);
+            System.out.println("自动配载算法返回的结果："+autoStowStr);
+            if(autoStowStr != null) {
+                autoStowResultInfoList = getAutoStowResult(autoStowStr);
+            } else {
+                System.out.println("自动配载算法没有返回结果！");
+            }
+        } else {
+            System.out.println("自动配载算法需要的4个参数信息中有空的，不能调用算法！");
+        }
         return autoStowResultInfoList;
     }
 
@@ -64,7 +79,7 @@ public class GenerateAutoStowResult {
                 }
                 autoStowResultInfo.setSize(value[2]);
                 autoStowResultInfos.add(autoStowResultInfo);
-                System.out.println(wz+"----"+value[0]+"-"+value[1]+"-"+value[2]);
+//                System.out.println(wz+"----"+value[0]+"-"+value[1]+"-"+value[2]);
                 stringMap.put(wz, value);
             }
         } catch (Exception e){

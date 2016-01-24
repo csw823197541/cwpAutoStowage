@@ -35,9 +35,17 @@ class GenerateCwpResult {
         String hatchJsonStr = HatchInfoProcess.getHatchInfoJsonStr(hatchInfoList)
         String moveJsonStr = WorkMoveInfoProcess.getWorkMoveInfoJsonStr(workMoveInfoList)
         //调用cwp算法
-        String cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr)
-        System.out.println(cwpResultStr);
-        cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
+        if(craneJsonStr != null && hatchJsonStr != null && moveJsonStr != null) {
+            String cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr)
+            System.out.println("cwp算法返回的json字符串:" + cwpResultStr);
+            if(cwpResultStr != null){
+                cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
+            } else {
+                System.out.println("cwp算法没有返回结果！")
+            }
+        } else {
+            System.out.println("cwp算法需要的3个参数信息中有空的，不能调用算法！")
+        }
         return cwpResultInfoList;
     }
 
@@ -73,7 +81,7 @@ class GenerateCwpResult {
             newhatchInfo.setNO(hatchPositionInfo.getVHT_ID());
             newhatchInfo.setSEQ(hatchPositionInfo.getVHT_ID());
             newhatchInfo.setWORKINGTIMERANGES(workingTimeRangeList);//工作时间
-            System.out.println(newhatchInfo.getHORIZONTALSTARTPOSITION() + " " + newhatchInfo.getID() + " " + newhatchInfo.getMOVECOUNT());
+//            System.out.println(newhatchInfo.getHORIZONTALSTARTPOSITION() + " " + newhatchInfo.getID() + " " + newhatchInfo.getMOVECOUNT());
             hatchInfoList.add(newhatchInfo);
         }
         return hatchInfoList;
@@ -164,7 +172,7 @@ class GenerateCwpResult {
             newworkmoveInfo.setMOVETYPE(preStowageInfo.getSIZE().toString());
 
             //调试信息
-            System.out.println(newworkmoveInfo.getCWPWORKMOVENUM() + " " + preStowageInfo.getVBY_BAYID() + " " + newworkmoveInfo.getHORIZONTALPOSITION() + " " + newworkmoveInfo.getHATCH());
+//            System.out.println(newworkmoveInfo.getCWPWORKMOVENUM() + " " + preStowageInfo.getVBY_BAYID() + " " + newworkmoveInfo.getHORIZONTALPOSITION() + " " + newworkmoveInfo.getHATCH());
             workMoveInfoList.add(newworkmoveInfo);
         }
         return workMoveInfoList;

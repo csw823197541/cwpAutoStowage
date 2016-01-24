@@ -30,7 +30,7 @@ public class PreStowageInfoProcess {
             temp+=containerInfo.getIYC_RETIME()+"#";
             container+=temp;
         }
-        System.out.println(container);
+//        System.out.println(container);
         return container;
     }
 
@@ -54,7 +54,7 @@ public class PreStowageInfoProcess {
             temp+=containerAreaInfo.getWORKEFFICIENCYT().toString()+"#";
             containerarea+=temp;
         }
-        System.out.println(containerarea);
+//        System.out.println(containerarea);
         return containerarea;
     }
 
@@ -89,7 +89,7 @@ public class PreStowageInfoProcess {
             temp+=preStowageInfo.getMOVE_ORDER().toString()+"#";
             prestowage+=temp;
         }
-        System.out.println(prestowage);
+//        System.out.println(prestowage);
         return prestowage;
     }
 
@@ -110,7 +110,7 @@ public class PreStowageInfoProcess {
             temp+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
             cwpoutput+=temp;
         }
-        System.out.println(cwpoutput);
+//        System.out.println(cwpoutput);
         return cwpoutput;
     }
 }

@@ -6,10 +6,10 @@ package importDataInfo;
  */
 public class VesselStructureInfo {
 
-    private Integer VHTID;//舱位ID
+    private String VHTID;//舱次ID
     private Integer LENGTH;//舱位长度
     private Integer VHTPOSITION; //舱开始相对于船头位置
-    private Integer VBYBAYID;//倍位ID
+    private String VBYBAYID;//倍位ID
     private Integer VBYPOSITION;//倍位中心相对于船头位置
     private String VTRTIERNO;//层号
     private Integer VTRTIERSEQ;//层序号
@@ -19,11 +19,11 @@ public class VesselStructureInfo {
 
     private String groupId;//属性组
 
-    public Integer getVHTID() {
+    public String getVHTID() {
         return VHTID;
     }
 
-    public void setVHTID(Integer VHTID) {
+    public void setVHTID(String VHTID) {
         this.VHTID = VHTID;
     }
 
@@ -43,11 +43,11 @@ public class VesselStructureInfo {
         this.VHTPOSITION = VHTPOISITION;
     }
 
-    public Integer getVBYBAYID() {
+    public String getVBYBAYID() {
         return VBYBAYID;
     }
 
-    public void setVBYBAYID(Integer VBYBAYID) {
+    public void setVBYBAYID(String VBYBAYID) {
         this.VBYBAYID = VBYBAYID;
     }
 
