@@ -31,6 +31,7 @@ class CwpResultInfoProcess {
                 cwpResultInfo.WORKINGENDTIME = cwpResult.WORKINGENDTIME
                 cwpResultInfo.WORKINGSTARTTIME = cwpResult.WORKINGSTARTTIME
                 cwpResultInfo.setEndMoveID(cwpResultInfo.getMOVECOUNT() + cwpResultInfo.getStartMoveID())
+//                println cwpResultInfo.startMoveID +"--"+ cwpResultInfo.MOVECOUNT +"--"+ cwpResultInfo.endMoveID;
                 cwpResultInfoList.add(cwpResultInfo)
             }
         }catch (Exception e){

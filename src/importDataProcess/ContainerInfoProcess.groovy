@@ -22,11 +22,11 @@ class ContainerInfoProcess {
                 assert container instanceof Map
                 containerInfo.IYC_CNTRNO = container.IYCCNTRNO
                 containerInfo.IYC_CNTR_AREA_ID = container.IYCCNTRAREAID
-                containerInfo.IYC_VOYID = container.IYCVOYID
+                containerInfo.IYC_VOYID = Integer.valueOf(container.IYCEVOYID)
                 containerInfo.IYC_CTYPECD = container.IYCCTYPECD
                 containerInfo.IYC_CSZ_CSIZECD = container.IYCCSZCSIZECD
-                containerInfo.IYC_PORTCD = container.IYCPORTCD
-                containerInfo.IYC_WEIGHT = container.IYCWEIGHT
+                containerInfo.IYC_PORTCD = container.IYCPOTDSTPORT//目的港
+                containerInfo.IYC_WEIGHT = Integer.valueOf(container.IYCWEIGHT)
                 containerInfo.IYC_DNGFG = container.IYCDNGFG
                 containerInfo.IYC_REFFG = container.IYCREFFG
                 containerInfo.IYC_YLOCATION = container.IYCYLOCATION

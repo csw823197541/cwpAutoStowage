@@ -23,15 +23,15 @@ class VesselStructureInfoProcess {
                 VesselStructureInfo vesselStructureInfo = new VesselStructureInfo()
                 assert vesselStructure instanceof Map
                 vesselStructureInfo.VHTID = vesselStructure.VHTID
-                vesselStructureInfo.LENGTH = vesselStructure.LENGTH
-                vesselStructureInfo.VHTPOISITION = vesselStructure.VHTPOSITION;
+                vesselStructureInfo.LENGTH = Integer.valueOf(vesselStructure.LENGTH)
+//                vesselStructureInfo.VHTPOISITION = Integer.valueOf(vesselStructure.VHTPOSITION)
                 vesselStructureInfo.VBYBAYID = vesselStructure.VBYBAYID
                 vesselStructureInfo.VBYPOSITION = vesselStructure.VBYPOSITION
                 vesselStructureInfo.VTRTIERNO = vesselStructure.VTRTIERNO
-                vesselStructureInfo.VTRTIERSEQ = vesselStructure.VTRTIERSEQ
+                vesselStructureInfo.VTRTIERSEQ = Integer.valueOf(vesselStructure.VTRTIERSEQ)
                 vesselStructureInfo.VRWROWNO = vesselStructure.VRWROWNO
-                vesselStructureInfo.VRWROWSEQ = vesselStructure.VRWROWSEQ
-                vesselStructureInfo.VLCVWCID = vesselStructure.VLCVWCID
+                vesselStructureInfo.VRWROWSEQ = Integer.valueOf(vesselStructure.VRWROWSEQ)
+                vesselStructureInfo.VLCVWCID = Integer.valueOf(vesselStructure.VLCVWCID)
                 vesselStructureInfoList.add(vesselStructureInfo)
             }
         }catch (Exception e){

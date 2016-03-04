@@ -19,6 +19,24 @@ public class ContainerAreaInfo {
     private String SCTYPE;//箱区吊机的类型
     private Integer WORKEFFICIENCYB;//靠近海侧的吊机的工作效率
     private Integer WORKEFFICIENCYT;//靠近陆侧的吊机的工作效率
+    private Integer DISPATCHEDWORK;//该箱区已指派的任务数量，可为空
+    private Integer PREDISPATCHEDWORK;//该箱区预估的任务, 可为空
+
+    public Integer getDISPATCHEDWORK() {
+        return DISPATCHEDWORK;
+    }
+
+    public void setDISPATCHEDWORK(Integer DISPATCHEDWORK) {
+        this.DISPATCHEDWORK = DISPATCHEDWORK;
+    }
+
+    public Integer getPREDISPATCHEDWORK() {
+        return PREDISPATCHEDWORK;
+    }
+
+    public void setPREDISPATCHEDWORK(Integer PREDISPATCHEDWORK) {
+        this.PREDISPATCHEDWORK = PREDISPATCHEDWORK;
+    }
 
     public Double getASCBOTTOMSPEED() {
         return ASCBOTTOMSPEED;

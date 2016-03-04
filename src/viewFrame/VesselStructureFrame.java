@@ -62,7 +62,7 @@ public class VesselStructureFrame extends JFrame {
                             Object[] rowData = new Object[8];
                             rowData[0] = vesselStructureInfo.getVHTID();
                             rowData[1] = vesselStructureInfo.getLENGTH();
-                            rowData[2] = vesselStructureInfo.getVHTPOISITION();
+                            rowData[2] = vesselStructureInfo.getVHTPOSITION();
                             rowData[3] = vesselStructureInfo.getVBYBAYID();
                             rowData[4] = vesselStructureInfo.getVBYPOSITION();
                             rowData[5] = vesselStructureInfo.getVTRTIERNO();

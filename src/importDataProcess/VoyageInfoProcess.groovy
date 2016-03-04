@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 class VoyageInfoProcess {
 
     public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-
+    public static SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     //Json字符串解析编码
     public static List<VoyageInfo> getVoyageInfo(String jsonStr) {
 
@@ -25,14 +25,14 @@ class VoyageInfoProcess {
             root.each { voyage ->
                 VoyageInfo voyageInfo = new VoyageInfo()
                 assert voyage instanceof Map
-                voyageInfo.VOTVOYID = voyage.VOTVOYID
+                voyageInfo.VOTVOYID = Integer.valueOf(voyage.VOTVOYID)
                 voyageInfo.VESSELID = voyage.VESSELID
                 if(voyage.VOTPWKSTTM != null)
-                    voyageInfo.VOTPWKSTTM = sdf.parse(voyage.VOTPWKSTTM)
+                    voyageInfo.VOTPWKSTTM = sdf1.parse(String.valueOf(voyage.VOTPWKSTTM))
                 if(voyage.VOTPWKENTM != null)
-                    voyageInfo.VOTPWKENTM = sdf.parse(voyage.VOTPWKENTM)
-                voyageInfo.STARTPOSITION = voyage.STARTPOSITION
-                voyageInfo.ENDPOSITION = voyage.ENDPOSITION
+                    voyageInfo.VOTPWKENTM = sdf1.parse(String.valueOf(voyage.VOTPWKENTM))
+                voyageInfo.STARTPOSITION = Double.valueOf(voyage.STARTPOSITION).intValue()
+                voyageInfo.ENDPOSITION = Double.valueOf(voyage.ENDPOSITION).intValue()
                 voyageInfoList.add(voyageInfo)
             }
         }catch (Exception e){

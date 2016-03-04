@@ -1,0 +1,54 @@
+package importDataProcess
+
+import groovy.json.JsonSlurper
+import importDataInfo.PreStowageData
+
+/**
+ * 解析预配信息
+ * Created by csw on 2016/1/15.
+ */
+class PreStowageDataProcess {
+
+    //Json字符串解析编码
+    public static List<PreStowageData> getPreStowageInfo(String jsonStr) {
+
+        boolean isError = false;
+        List<PreStowageData> preStowageDataList = new ArrayList<PreStowageData>();
+        try{
+            def root = new JsonSlurper().parseText(jsonStr)
+            assert root instanceof List//根据读入数据的格式，可以直接把json转换成List
+            root.each {preStowage->
+                PreStowageData preStowageData = new PreStowageData()
+                assert preStowage instanceof Map
+                preStowageData.VHT_ID = preStowage.VHTID
+                preStowageData.VBY_BAYID = preStowage.VBYBAYID
+                preStowageData.VTR_TIERNO = preStowage.VTRTIERNO
+                preStowageData.VRW_ROWNO = preStowage.VRWROWNO
+                preStowageData.SIZE = preStowage.CNTSIZE
+                preStowageData.CTYPECD = preStowage.CTYPECD
+                preStowageData.GROUP_ID = ""
+                preStowageData.WEIGHT = 0
+                preStowageData.MOVE_ORDER = preStowage.WORKSEQ != "" ? Integer.valueOf(preStowage.WORKSEQ) : 0
+                preStowageData.LDULD = preStowage.LDULD
+                preStowageData.WORKFLOW = preStowage.WORKFLOW
+                preStowageData.QCNO = preStowage.QCNO
+                preStowageData.DSTPORT = preStowage.DSTPORT
+                preStowageData.THROUGHFLAG = preStowage.THROUGHFLAG
+                preStowageDataList.add(preStowageData)
+            }
+        }
+        catch (Exception e){
+            System.out.println("在预配信息解析时，发现json数据异常！")
+            isError = true;
+            e.printStackTrace()
+        }
+        if(isError) {
+            System.out.println("在预配信息解析失败！")
+            return null;
+        }else {
+            System.out.println("在预配信息解析成功！")
+            return preStowageDataList
+        }
+    }
+
+}

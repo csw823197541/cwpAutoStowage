@@ -10,7 +10,7 @@ public class VesselStructureInfo {
     private Integer LENGTH;//舱位长度
     private Integer VHTPOSITION; //舱开始相对于船头位置
     private String VBYBAYID;//倍位ID
-    private Integer VBYPOSITION;//倍位中心相对于船头位置
+    private Double VBYPOSITION;//倍位中心相对于船头位置
     private String VTRTIERNO;//层号
     private Integer VTRTIERSEQ;//层序号
     private String VRWROWNO;//排号
@@ -35,12 +35,12 @@ public class VesselStructureInfo {
         this.LENGTH = LENGTH;
     }
 
-    public Integer getVHTPOISITION() {
+    public Integer getVHTPOSITION() {
         return VHTPOSITION;
     }
 
-    public void setVHTPOISITION(Integer VHTPOISITION) {
-        this.VHTPOSITION = VHTPOISITION;
+    public void setVHTPOSITION(Integer VHTPOSITION) {
+        this.VHTPOSITION = VHTPOSITION;
     }
 
     public String getVBYBAYID() {
@@ -51,12 +51,20 @@ public class VesselStructureInfo {
         this.VBYBAYID = VBYBAYID;
     }
 
-    public Integer getVBYPOSITION() {
+    public Double getVBYPOSITION() {
         return VBYPOSITION;
     }
 
-    public void setVBYPOSITION(Integer VBYPOSITION) {
+    public void setVBYPOSITION(Double VBYPOSITION) {
         this.VBYPOSITION = VBYPOSITION;
+    }
+
+    public String getVTRTIERNO() {
+        return VTRTIERNO;
+    }
+
+    public void setVTRTIERNO(String VTRTIERNO) {
+        this.VTRTIERNO = VTRTIERNO;
     }
 
     public Integer getVTRTIERSEQ() {
@@ -65,6 +73,14 @@ public class VesselStructureInfo {
 
     public void setVTRTIERSEQ(Integer VTRTIERSEQ) {
         this.VTRTIERSEQ = VTRTIERSEQ;
+    }
+
+    public String getVRWROWNO() {
+        return VRWROWNO;
+    }
+
+    public void setVRWROWNO(String VRWROWNO) {
+        this.VRWROWNO = VRWROWNO;
     }
 
     public Integer getVRWROWSEQ() {
@@ -89,29 +105,5 @@ public class VesselStructureInfo {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
-    }
-
-    public Integer getVHTPOSITION() {
-        return VHTPOSITION;
-    }
-
-    public void setVHTPOSITION(Integer VHTPOSITION) {
-        this.VHTPOSITION = VHTPOSITION;
-    }
-
-    public String getVTRTIERNO() {
-        return VTRTIERNO;
-    }
-
-    public void setVTRTIERNO(String VTRTIERNO) {
-        this.VTRTIERNO = VTRTIERNO;
-    }
-
-    public String getVRWROWNO() {
-        return VRWROWNO;
-    }
-
-    public void setVRWROWNO(String VRWROWNO) {
-        this.VRWROWNO = VRWROWNO;
     }
 }

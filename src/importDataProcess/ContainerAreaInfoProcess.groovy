@@ -34,7 +34,8 @@ class ContainerAreaInfoProcess {
                 containerAreaInfo.SCTYPE = containerArea.SCTYPE
                 containerAreaInfo.WORKEFFICIENCYB = containerArea.WORKEFFICIENCYB
                 containerAreaInfo.WORKEFFICIENCYT = containerArea.WORKEFFICIENCYT
-
+                containerAreaInfo.DISPATCHEDWORK = containerArea.DISPATCHEDWORK == null ? 0 : Integer.valueOf(containerArea.DISPATCHEDWORK)
+                containerAreaInfo.PREDISPATCHEDWORK = containerArea.PREDISPATCHEDWORK == null ? 0 : Integer.valueOf(containerArea.PREDISPATCHEDWORK)
                 containerAreaInfoList.add(containerAreaInfo)
             }
         }catch (Exception e){
