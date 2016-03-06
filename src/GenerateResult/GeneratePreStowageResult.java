@@ -21,7 +21,7 @@ public class GeneratePreStowageResult {
     private static Integer[] moveorderchange ={5,3,4,0,3,-3,2,-6,1,-9};                     //甲板上的顺序改变
     private static Integer[] moveorderchange2={0,-5,-4,-4,-3,-3,-2,-2,-1,-1,0};             //不满排的顺序改变
     private static Integer ROWnum = 10;
-    private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,142,6));  //每个舱总数
+    private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,134,6));  //每个舱总数
     private static HashMap<String,String> records = new HashMap<String, String>();          //根据舱和moveorder确定位置
 
 
@@ -60,7 +60,7 @@ public class GeneratePreStowageResult {
             Integer[] a6={9,100,60};
             Integer[] a7={10,60,80};
             Integer[] a8={12,70,80};
-            Integer[] a9={14,74,68};
+            Integer[] a9={14,68,66};
             Integer[] a10={15,6,0};
             allocation.add(a1);
             allocation.add(a2);

@@ -21,10 +21,14 @@ public class GenerateAutoStowResult {
 
         //处理在场箱信息
         String containerStr = PreStowageInfoProcess.getContainerString(containerInfoList);
+        containerStr = containerStr.substring(0, containerStr.length()-1);
+//        System.out.println(containerStr);
         //处理箱区信息
         String containerAreaStr = PreStowageInfoProcess.getContainerareaString(containerAreaInfoList);
         //处理预配信息
-        String preStowageStr = PreStowageInfoProcess.getPreStowageString(groupInfoList,preStowageInfoList);
+        String preStowageStr = PreStowageInfoProcess.getPreStowageString(groupInfoList, preStowageInfoList);
+        preStowageStr = preStowageStr.substring(0, preStowageStr.length()-1);
+//        System.out.println(preStowageStr);
         try {//将自动配载要用的结果写在文件里，让算法去读这个文件
             FileUtil.writeToFile("C:/CwpAutoStowData/Container.txt", containerStr);
             FileUtil.writeToFile("C:/CwpAutoStowData/PreStowage.txt", preStowageStr);

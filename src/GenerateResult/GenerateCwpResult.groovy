@@ -16,6 +16,8 @@ import importDataInfo.VesselStructureInfo
 import importDataInfo.VoyageInfo
 import importDataInfo.WorkMoveInfo
 import importDataInfo.WorkingTimeRange
+import utils.FileUtil
+import viewFrame.VesselStructureFrame
 
 /**
  * Created by csw on 2016/1/22.
@@ -33,6 +35,7 @@ class GenerateCwpResult {
         //生成cwp算法要用的3个json串
         String craneJsonStr = CraneInfoProcess.getCraneInfoJsonStr(craneInfoList)
         String hatchJsonStr = HatchInfoProcess.getHatchInfoJsonStr(hatchInfoList)
+        FileUtil.writeToFile("E:/hatch.txt", hatchJsonStr)
         String moveJsonStr = WorkMoveInfoProcess.getWorkMoveInfoJsonStr(workMoveInfoList)
         //调用cwp算法
         if(craneJsonStr != null && hatchJsonStr != null && moveJsonStr != null) {
@@ -56,7 +59,7 @@ class GenerateCwpResult {
      * @param movecounts
      * @return
      */
-    private
+    public
     static List<HatchInfo> getHatchInfo(List<VoyageInfo> voyageInfoList, List<HatchPositionInfo> hatchPositionInfoList, List<Integer> movecounts) {
         System.out.println("开始生成船舱信息：");
         List<HatchInfo> hatchInfoList = new ArrayList<>()
@@ -93,7 +96,7 @@ class GenerateCwpResult {
      * @param vesselStructureInfoList
      * @return
      */
-    private
+    public
     static List<HatchPositionInfo> getHatchPositionInfo(List<VoyageInfo> voyageInfoList, List<VesselStructureInfo> vesselStructureInfoList) {
 
         Set<String> hatchs = new HashSet<String>();          //舱集合
@@ -105,12 +108,51 @@ class GenerateCwpResult {
         HatchPositionInfo newhatchPositionInfo;
         BayPositionInfo newbayPositionInfo;
         Integer startposition = voyageInfoList.get(0).getSTARTPOSITION();
+
+        //计算舱开始相对于船头位置、倍位中心相对于船头位置
+        List<String> VHTIDs = new ArrayList<>();
+        List<String> VBYBAYIDs = new ArrayList<>();
+        for (VesselStructureInfo vesselStructureInfo : vesselStructureInfoList) {
+            if(!VHTIDs.contains(vesselStructureInfo.getVHTID()))
+                VHTIDs.add(vesselStructureInfo.getVHTID())
+            if(!VBYBAYIDs.contains(vesselStructureInfo.getVBYBAYID()))
+                VBYBAYIDs.add(vesselStructureInfo.getVBYBAYID())
+        }//统计倍舱位数和倍位数
+//        println VHTIDs.size() +"-----"+VBYBAYIDs.size()
+        Map<String, Integer> VHTPOSITIONs = new HashMap<>();
+        int i = 0;
+        for(String vhtiDs : VHTIDs) {
+            VHTPOSITIONs.put(vhtiDs, i*16)//Todo假设舱间距为2米，这个数据码头还没回复我是否合理
+            i++
+        }
+        Map<String, Double> VBYPOSIYIONs = new HashMap<>();
+        i = 1;
+        Double d = 3.5
+        Double pre = 0.0
+        for(String vBYBAYIDs : VBYBAYIDs) {
+            if(i == 1) {
+                d = 3.5
+            }
+            else if(i%2 != 0) {
+                d = 9
+            } else {
+                d = 7
+            }
+            pre = pre + d;
+            VBYPOSIYIONs.put(vBYBAYIDs, pre)
+            i++
+        }
+        //结束
+
         for (VesselStructureInfo vesselStructureInfo : vesselStructureInfoList) {
             String VHTID = vesselStructureInfo.getVHTID().toString();
+            vesselStructureInfo.setVHTPOSITION(VHTPOSITIONs.get(VHTID))//将舱开始相对于船头位置赋值
             Integer Length = vesselStructureInfo.getLENGTH();
-            Integer VHTPOSITION = vesselStructureInfo.getVHTPOISITION();
+            Integer VHTPOSITION = vesselStructureInfo.getVHTPOSITION()
             String VBYBAYID = vesselStructureInfo.getVBYBAYID().toString();
+            vesselStructureInfo.setVBYPOSITION(VBYPOSIYIONs.get(VBYBAYID))//将倍位中心相对于船头位置赋值
             Integer VBYPOSIYION = vesselStructureInfo.getVBYPOSITION();
+
             if (!hatchs.contains(VHTID)) {
                 newhatchPositionInfo = new HatchPositionInfo();
                 newhatchPositionInfo.setVHT_ID(VHTID);
@@ -129,6 +171,10 @@ class GenerateCwpResult {
                 bayPositionInfoList.add(newbayPositionInfo);
             }
         }
+        //为了查看船舶结构两个坐标是否正确，
+        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+        vesselStructureFrame.setVisible(true);
+        //结束
         ImportData.bayPositionInfoList = bayPositionInfoList;
         return hatchPositionInfoList;
     }
