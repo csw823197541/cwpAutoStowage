@@ -44,8 +44,10 @@ public class PreStowageInfoProcess {
             temp+=containerAreaInfo.getASCBOTTOMSPEED().toString()+",";
             temp+=containerAreaInfo.getASCTOPSPEED().toString()+",";
             temp+=containerAreaInfo.getID().toString()+",";
-            temp+=containerAreaInfo.getLOCATIONLB()+containerAreaInfo.getLOCATIONLH()+",";
-            temp+=containerAreaInfo.getLOCATIONRB()+containerAreaInfo.getLOCATIONRH()+",";
+            temp+=containerAreaInfo.getLOCATIONLB()+",";
+            temp+=containerAreaInfo.getLOCATIONLH()+",";
+            temp+=containerAreaInfo.getLOCATIONRB()+",";
+            temp+=containerAreaInfo.getLOCATIONRH()+",";
             temp+=containerAreaInfo.getVBYNUM().toString()+",";
             temp+=containerAreaInfo.getVTRNUM().toString()+",";
             temp+=containerAreaInfo.getVRWNUM().toString()+",";
