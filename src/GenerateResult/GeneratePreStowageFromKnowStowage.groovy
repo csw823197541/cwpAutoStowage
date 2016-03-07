@@ -12,7 +12,9 @@ class GeneratePreStowageFromKnowStowage {
      * @param preStowageDataList
      * @return
      */
-    public static List<PreStowageData> getPreStowageResult(List<PreStowageData> preStowageDataList) {
+    public static List<PreStowageData> getPreStowageResult(List<PreStowageData> preStowageDataList){
+        try{
+
         List<PreStowageData> resultList = new ArrayList<>()
         //去掉过境的箱子
         List<PreStowageData> preStowageDataListNew = new ArrayList<>()
@@ -556,7 +558,11 @@ class GeneratePreStowageFromKnowStowage {
 //                break;
             }
         }
-        return resultList
+            return resultList
+        }catch (Exception e) {
+            e.printStackTrace()
+        }
+
     }
 
     public static void workBayNumIsOne(int seq, List<PreStowageData> dataList, List<Integer> VBY_BAYIDs, List<Integer> VTR_TIERNOs,

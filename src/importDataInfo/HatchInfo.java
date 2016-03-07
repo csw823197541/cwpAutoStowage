@@ -6,7 +6,7 @@ import java.util.List;
  * Created by leko on 2016/1/18.
  */
 public class HatchInfo {
-    private Integer HORIZONTALSTARTPOSITION;        //水平起始交换点
+    private Double HORIZONTALSTARTPOSITION;        //水平起始交换点
     private String ID;                                 //船舱ID
     private String VESSELID;                          //船舶ID
     private Integer LENGTH;                           //舱位长度
@@ -15,11 +15,11 @@ public class HatchInfo {
     private String SEQ;                                //序列
     private List<WorkingTimeRange> WORKINGTIMERANGES;//工作时间
 
-    public Integer getHORIZONTALSTARTPOSITION() {
+    public Double getHORIZONTALSTARTPOSITION() {
         return HORIZONTALSTARTPOSITION;
     }
 
-    public void setHORIZONTALSTARTPOSITION(Integer HORIZONTALSTARTPOSITION) {
+    public void setHORIZONTALSTARTPOSITION(Double HORIZONTALSTARTPOSITION) {
         this.HORIZONTALSTARTPOSITION = HORIZONTALSTARTPOSITION;
     }
 

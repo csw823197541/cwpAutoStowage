@@ -6,7 +6,7 @@ package importDataInfo;
 public class HatchPositionInfo {
     private  String VHT_ID;         //舱位ID
     private  Integer LENGTH;        //舱位长度
-    private  Integer POSITION;      //舱位左边缘的绝对位置
+    private  Double POSITION;      //舱位左边缘的绝对位置
 
     public String getVHT_ID() {
         return VHT_ID;
@@ -24,11 +24,11 @@ public class HatchPositionInfo {
         this.LENGTH = LENGTH;
     }
 
-    public Integer getPOSITION() {
+    public Double getPOSITION() {
         return POSITION;
     }
 
-    public void setPOSITION(Integer POSITION) {
+    public void setPOSITION(Double POSITION) {
         this.POSITION = POSITION;
     }
 }

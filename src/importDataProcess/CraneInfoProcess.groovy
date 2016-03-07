@@ -32,10 +32,12 @@ class CraneInfoProcess {
                 craneInfo.DISCHARGEEFFICIENCY20 = crane.DISCHARGEEFFICIENCY20
                 craneInfo.DISCHARGEEFFICIENCY40 = crane.DISCHARGEEFFICIENCY40
                 craneInfo.DISCHARGEEFFICIENCYTWIN = crane.DISCHARGEEFFICIENCYTWIN
+                craneInfo.DISCHARGEEFFICIENCYTDM = crane.DISCHARGEEFFICIENCYTDM
                 craneInfo.ID = crane.ID
                 craneInfo.LOADINGEFFICIENCY20 = crane.LOADINGEFFICIENCY20
                 craneInfo.LOADINGEFFICIENCY40 = crane.LOADINGEFFICIENCY40
                 craneInfo.LOADINGEFFICIENCYTWIN = crane.LOADINGEFFICIENCYTWIN
+                craneInfo.LOADINGEFFICIENCYTDM = crane.LOADINGEFFICIENCYTDM
                 craneInfo.MOVINGRANGEFROM = crane.MOVINGRANGEFROM
                 craneInfo.MOVINGRANGETO = crane.MOVINGRANGETO
                 craneInfo.NAME = crane.NAME
@@ -92,10 +94,12 @@ class CraneInfoProcess {
                     map.put("DISCHARGEEFFICIENCY20", it.DISCHARGEEFFICIENCY20)
                     map.put("DISCHARGEEFFICIENCY40", it.DISCHARGEEFFICIENCY40)
                     map.put("DISCHARGEEFFICIENCYTWIN", it.DISCHARGEEFFICIENCYTWIN)
+                    map.put("DISCHARGEEFFICIENCYTDM", it.DISCHARGEEFFICIENCYTWIN)
                     map.put("ID", it.ID)
                     map.put("LOADINGEFFICIENCY20", it.LOADINGEFFICIENCY20)
                     map.put("LOADINGEFFICIENCY40", it.LOADINGEFFICIENCY40)
                     map.put("LOADINGEFFICIENCYTWIN", it.LOADINGEFFICIENCYTWIN)
+                    map.put("LOADINGEFFICIENCYTDM", it.LOADINGEFFICIENCYTWIN)
                     map.put("MOVINGRANGEFROM", it.MOVINGRANGEFROM)
                     map.put("MOVINGRANGETO", it.MOVINGRANGETO)
                     map.put("NAME", it.NAME)
@@ -109,10 +113,10 @@ class CraneInfoProcess {
                     workingTimeRange.each {t->
                         Map<String, Object> mapT = new HashMap<String, Object>();
                         mapT.put("ID", t.ID)
-//                        mapT.put("WORKENDTIME", sdf.format(t.WORKENDTIME))
-//                        mapT.put("WORKSTARTTIME", sdf.format(t.WORKSTARTTIME))
-                        mapT.put("WORKENDTIME", "2015-06-02 00:59:00")
-                        mapT.put("WORKSTARTTIME", "2015-06-01 10:30:00")
+                        mapT.put("WORKENDTIME", sdf.format(t.WORKENDTIME))
+                        mapT.put("WORKSTARTTIME", sdf.format(t.WORKSTARTTIME))
+//                        mapT.put("WORKENDTIME", "2015-06-02 00:59:00")
+//                        mapT.put("WORKSTARTTIME", "2015-06-01 10:30:00")
                         listT.add(mapT)
                         map.put("WORKINGTIMERANGES", listT)
                     }

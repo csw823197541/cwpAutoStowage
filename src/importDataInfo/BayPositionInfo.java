@@ -6,7 +6,7 @@ package importDataInfo;
 public class BayPositionInfo {
     private String VHT_ID;         //舱位ID
     private String VBY_BAYID;      //倍位ID
-    private Integer VBY_POSITION;   //倍位中心相对船头距离
+    private Double VBY_POSITION;   //倍位中心相对船头距离
 
     public String getVHT_ID() {
         return VHT_ID;
@@ -24,11 +24,11 @@ public class BayPositionInfo {
         this.VBY_BAYID = VBY_BAYID;
     }
 
-    public Integer getVBY_POSITION() {
+    public Double getVBY_POSITION() {
         return VBY_POSITION;
     }
 
-    public void setVBY_POSITION(Integer VBY_POSITION) {
+    public void setVBY_POSITION(Double VBY_POSITION) {
         this.VBY_POSITION = VBY_POSITION;
     }
 }

@@ -8,7 +8,7 @@ public class WorkMoveInfo {
     private String DECK;                //D甲板下H甲板上
     private Integer GLOBALPRIORITY;     //全为2
     private String HATCH;               //舱
-    private Integer HORIZONTALPOSITION;  //水平交互点
+    private Double HORIZONTALPOSITION;  //水平交互点
     private String LD;                  //D卸船L装船
     private String MOVETYPE;            //作业工艺（暂时写尺寸）
 
@@ -44,11 +44,11 @@ public class WorkMoveInfo {
         this.HATCH = HATCH;
     }
 
-    public Integer getHORIZONTALPOSITION() {
+    public Double getHORIZONTALPOSITION() {
         return HORIZONTALPOSITION;
     }
 
-    public void setHORIZONTALPOSITION(Integer HORIZONTALPOSITION) {
+    public void setHORIZONTALPOSITION(Double HORIZONTALPOSITION) {
         this.HORIZONTALPOSITION = HORIZONTALPOSITION;
     }
 
