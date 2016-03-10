@@ -14,12 +14,12 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) {
 
-        String vo = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
-        String sh = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitvesselstructure.json")).toString();
+        String vo = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
+        String sh = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvesselstructure.json")).toString();
 //        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
-        String cr = FileUtil.readFileToString(new File("E:/NewTestData/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
-        String ca = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
+        String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
+        String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
+        String ca = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
@@ -27,8 +27,10 @@ public class Test {
 //        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
-//        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
-//        vesselStructureFrame.setVisible(true);
+        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+        vesselStructureFrame.setVisible(true);
+
+
 //        //桥机
         List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
 //        CraneFrame craneFrame = new CraneFrame(craneInfoList);
@@ -46,13 +48,13 @@ public class Test {
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("E:/NewTestData/preStowage.json")).toString();
+        String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageInfoList1);
 //        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
         List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage2.getPreStowageResult(preStowageDataList);
-//        System.out.println(resultList.size());
+        System.out.println(resultList.size());
         PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(resultList);
         preStowageFrame1.setVisible(true);
         //测试两个绝对位置
@@ -62,7 +64,7 @@ public class Test {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+//        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
 //        CwpViewFrame cwpViewFrame = new CwpViewFrame();
 //        cwpViewFrame.setVisible(true);
         //测试自动配载算法

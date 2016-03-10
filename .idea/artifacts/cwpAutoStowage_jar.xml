@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/out/artifacts/cwpAutoStowage_jar</output-path>
     <root id="archive" name="cwpAutoStowage.jar">
       <element id="module-output" name="cwpAutoStowage" />
-      <element id="extracted-dir" path="D:/SDK/groovy-2.4.3/embeddable/groovy-all-2.4.3.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

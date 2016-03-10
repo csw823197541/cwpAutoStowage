@@ -46,9 +46,9 @@ class GenerateCwpResult {
         String hatchJsonStr = HatchInfoProcess.getHatchInfoJsonStr(hatchInfoList)
         String moveJsonStr = WorkMoveInfoProcess.getWorkMoveInfoJsonStr(workMoveInfoList)
         try{
-            FileUtil.writeToFile("E:/toCwpData/hatch.txt", hatchJsonStr)
-            FileUtil.writeToFile("E:/toCwpData/crane.txt", craneJsonStr)
-            FileUtil.writeToFile("E:/toCwpData/moves.txt", moveJsonStr)
+            FileUtil.writeToFile("toCwpData/hatch.txt", hatchJsonStr)
+            FileUtil.writeToFile("toCwpData/crane.txt", craneJsonStr)
+            FileUtil.writeToFile("toCwpData/moves.txt", moveJsonStr)
         } catch (Exception e) {
             e.printStackTrace()
         }

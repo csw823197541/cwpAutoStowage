@@ -9,6 +9,8 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -62,7 +64,7 @@ public class PreStowageDataFrame extends JFrame{
                 {
                     this.tableWQL = new JTable();
                     this.scrollPane.setViewportView(this.tableWQL);
-                    TableModel tableModel = new TableModel();
+                    final TableModel tableModel = new TableModel();
 //                    DefaultTableModel tableModel = new DefaultTableModel();
                     //增加列名
                     ArrayList<String> colList = new ArrayList<String>(Arrays.asList("舱号","倍号", "层号", "排号", "尺寸","箱型", "属性组","重量等级","MoveOrder", "装卸船标志", "作业工艺", "桥机号", "目的港", "过境箱标记"));
@@ -93,6 +95,47 @@ public class PreStowageDataFrame extends JFrame{
                         tableModel.addRow(rowData);
                     }
                     this.tableWQL.setModel(tableModel);
+
+                    this.tableWQL.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            System.out.println("Mouse Clicked");
+
+                            super.mouseClicked(e);
+                            if(e.getClickCount()>=2){
+                                System.out.println("Mouse Double Clicked");
+
+                                int row =((JTable)e.getSource()).rowAtPoint(e.getPoint()); //获得行位置
+                                String clickedBayId = (String) tableModel.getValueAt(row,tableWQL.getColumnModel().getColumnIndex("倍号"));
+
+                                //筛选该贝位的数据
+                                List<PreStowageData> bayLoadStowageData = new ArrayList<PreStowageData>();
+                                List<PreStowageData> bayDschStowageData = new ArrayList<PreStowageData>();
+                                for(int i = 0;i<preStowageInfoList.size();i++){
+                                    PreStowageData preStowageData = preStowageInfoList.get(i);
+                                    if(preStowageData.getVBY_BAYID().equals(clickedBayId)){
+                                        if(preStowageData.getLDULD().equals("L")){
+                                            bayLoadStowageData.add(preStowageData);
+                                        }
+                                        if(preStowageData.getLDULD().equals("D")){
+                                            bayDschStowageData.add(preStowageData);
+                                        }
+                                    }
+                                }
+
+
+
+                                VesselBayOrderFrame vesselBayDschOrderFrame = new VesselBayOrderFrame(bayDschStowageData);
+                                vesselBayDschOrderFrame.setTitle(clickedBayId + "贝卸船");
+                                vesselBayDschOrderFrame.setVisible(true);
+
+                                VesselBayOrderFrame vesselBayLoadOrderFrame = new VesselBayOrderFrame(bayLoadStowageData);
+                                vesselBayLoadOrderFrame.setTitle(clickedBayId + "贝装船");
+                                vesselBayLoadOrderFrame.setBounds(vesselBayDschOrderFrame.getWidth(),0,vesselBayLoadOrderFrame.getWidth(),vesselBayLoadOrderFrame.getHeight());
+                                vesselBayLoadOrderFrame.setVisible(true);
+                            }
+                        }
+                    });
 
 
                 }

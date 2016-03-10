@@ -16,4 +16,9 @@ public class TableModel extends DefaultTableModel{
         }
         return returnValue;
     }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return false;
+    }
 }
