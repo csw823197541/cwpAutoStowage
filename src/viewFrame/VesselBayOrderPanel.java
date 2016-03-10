@@ -88,7 +88,7 @@ public class VesselBayOrderPanel extends JPanel {
                     x = start_x - (rowInt/2)*rect_length;
                 }
                 if(tierInt>=82){
-                    y = start_y_b - ((tierInt-80)/2)*rect_length;
+                    y = start_y_a - ((tierInt-80)/2)*rect_length;
                 }
                 else {
                     y = start_y_b - (tierInt/2)*rect_length;
@@ -99,6 +99,7 @@ public class VesselBayOrderPanel extends JPanel {
                 g2d.setFont(font);
                 g2d.setPaint(Color.red);
                 g2d.drawString(tag1,x,y+8);
+
 
 
 
