@@ -35,7 +35,7 @@ public class VesselBayOrderPanel extends JPanel {
         super.paintComponents(g);
         Graphics2D g2d = (Graphics2D)g;
 
-        //取出贝位
+        //取出数据
         for (int i = 0;i<preStowageDataList.size();i++){
             PreStowageData preStowageData = preStowageDataList.get(i);
             int x = 0,y = 0;
@@ -53,6 +53,10 @@ public class VesselBayOrderPanel extends JPanel {
                 y = start_y ;
                 System.out.println("Draw Start Pos:"+ x + "," + y);
                 g2d.drawOval(x,y,4,4);
+                g2d.setPaint(Color.gray);
+                g2d.drawLine(x,0,x,size_height);//竖线
+                g2d.drawLine(0,y,size_width,y);//舱底
+                g2d.drawLine(0,280,size_width,280);//甲板
 
 
                 if(rowInt%2==1){//奇数
