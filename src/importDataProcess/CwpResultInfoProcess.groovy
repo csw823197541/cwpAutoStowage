@@ -27,10 +27,11 @@ class CwpResultInfoProcess {
                 cwpResultInfo.MOVECOUNT = cwpResult.MOVECOUNT
                 cwpResultInfo.QDC = cwpResult.QDC
                 cwpResultInfo.StartMoveID = cwpResult.StartMoveID
-                cwpResultInfo.VESSELID = cwpResult.VESSELID
+                cwpResultInfo.VESSELID = cwpResult.VESSELD
                 cwpResultInfo.WORKINGENDTIME = cwpResult.WORKINGENDTIME
                 cwpResultInfo.WORKINGSTARTTIME = cwpResult.WORKINGSTARTTIME
-                cwpResultInfo.setEndMoveID(cwpResultInfo.getMOVECOUNT() + cwpResultInfo.getStartMoveID())
+                cwpResultInfo.endMoveID = cwpResult.EndMoveID
+                cwpResultInfo.MOVETYPE = cwpResult.MOVETYPE
 //                println cwpResultInfo.startMoveID +"--"+ cwpResultInfo.MOVECOUNT +"--"+ cwpResultInfo.endMoveID;
                 cwpResultInfoList.add(cwpResultInfo)
             }

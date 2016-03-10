@@ -35,12 +35,12 @@ class GenerateCwpResult {
         List<CwpResultInfo> cwpResultInfoList = new ArrayList<>();
         List<HatchPositionInfo> hatchPositionInfoList = getHatchPositionInfo(voyageInfoList, vesselStructureInfoList)
         //根据实配图得到编好作业序列和作业工艺的预配信息
-        List<PreStowageData> preStowageResult = GeneratePreStowageFromKnowStowage.getPreStowageResult(preStowageDataList)
+//        List<PreStowageData> preStowageResult = GeneratePreStowageFromKnowStowage2.getPreStowageResult(preStowageDataList)
         //计算movecounts和对预配图编属性组
-        List<PreStowageData> preStowageDatas = GenerateMoveCountAndGroupId.getMoveCountAndGroupId(preStowageResult)
+        List<PreStowageData> preStowageDatas = GenerateMoveCountAndGroupId.getMoveCountAndGroupId(preStowageDataList)
         List<Integer> movecounts = ImportData.movecounts
         List<HatchInfo> hatchInfoList = getHatchInfo(voyageInfoList, hatchPositionInfoList, movecounts);
-        List<WorkMoveInfo> workMoveInfoList = getWorkMoveInfo(preStowageResult)
+        List<WorkMoveInfo> workMoveInfoList = getWorkMoveInfo(preStowageDataList)
         //生成cwp算法要用的3个json串
         String craneJsonStr = CraneInfoProcess.getCraneInfoJsonStr(craneInfoList)
         String hatchJsonStr = HatchInfoProcess.getHatchInfoJsonStr(hatchInfoList)
@@ -55,7 +55,7 @@ class GenerateCwpResult {
         //调用cwp算法
         if(craneJsonStr != null && hatchJsonStr != null && moveJsonStr != null) {
             String cwpResultStr = null
-//            String cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr)
+            cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr)
             System.out.println("cwp算法返回的json字符串:" + cwpResultStr);
             if(cwpResultStr != null){
                 cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
@@ -138,7 +138,7 @@ class GenerateCwpResult {
         Map<String, Double> VHTPOSITIONs = new HashMap<>();
         int i = 0;
         for(String vhtiDs : VHTIDs) {
-            VHTPOSITIONs.put(vhtiDs, i*49.28)//Todo假设舱间距为2米，这个数据码头还没回复我是否合理
+            VHTPOSITIONs.put(vhtiDs, Double.valueOf(df.format(i*49.28)))//Todo假设舱间距为2米，这个数据码头还没回复我是否合理
             i++
         }
         Map<String, Double> VBYPOSIYIONs = new HashMap<>();

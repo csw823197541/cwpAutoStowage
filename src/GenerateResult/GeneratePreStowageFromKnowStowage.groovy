@@ -3,6 +3,7 @@ package GenerateResult
 import importDataInfo.PreStowageData
 
 /**
+ * 版本1.0
  * Created by csw on 2016/3/5.
  */
 class GeneratePreStowageFromKnowStowage {
@@ -878,7 +879,7 @@ class GeneratePreStowageFromKnowStowage {
                         }
                         j = j-1
                     } else {
-                        if(even.get(j) == even.get(j-1)) {//同一层、同一排，倍位肯定不相等，则用双吊具2
+                        if(even.get(j) == even.get(j-1)) {//同一层、同一排，倍位肯定不相等，则用双箱吊2
                             stringListMap_D_20.get(VBY_BAYIDs.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
                             stringListMap_D_20.get(VBY_BAYIDs.get(1)+"."+tier+"."+even.get(j-1)).setMOVE_ORDER(seq)
                             stringListMap_D_20.get(VBY_BAYIDs.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(2+"")

@@ -38,10 +38,10 @@ class HatchInfoProcess {
                     workingTimeRange.each {t->
                         Map<String, Object> mapT = new HashMap<String, Object>();
                         mapT.put("ID", t.ID)
-//                        mapT.put("WORKENDTIME", sdf.format(t.WORKENDTIME))
-//                        mapT.put("WORKSTARTTIME", sdf.format(t.WORKSTARTTIME))
-                        mapT.put("WORKENDTIME", "2015-06-01 23:59:00")
-                        mapT.put("WORKSTARTTIME", "2015-06-01 12:30:00")
+                        mapT.put("WORKENDTIME", sdf.format(t.WORKENDTIME))
+                        mapT.put("WORKSTARTTIME", sdf.format(t.WORKSTARTTIME))
+//                        mapT.put("WORKENDTIME", "2015-06-01 23:59:00")
+//                        mapT.put("WORKSTARTTIME", "2015-06-01 12:30:00")
                         listT.add(mapT)
                         map.put("WORKINGTIMERANGES", listT)
                     }

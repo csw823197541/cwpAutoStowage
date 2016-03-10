@@ -15,6 +15,15 @@ public class CwpResultInfo {
     private String VESSELID;//航次ID
     private Integer WORKINGENDTIME;//起始时间
     private Integer WORKINGSTARTTIME;//结束时间
+    private String MOVETYPE;//作业工艺
+
+    public String getMOVETYPE() {
+        return MOVETYPE;
+    }
+
+    public void setMOVETYPE(String MOVETYPE) {
+        this.MOVETYPE = MOVETYPE;
+    }
 
     public String getCRANEID() {
         return CRANEID;

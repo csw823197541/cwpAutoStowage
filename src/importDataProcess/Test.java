@@ -1,8 +1,6 @@
 package importDataProcess;
 
-import GenerateResult.GenerateCwpResult;
-import GenerateResult.GenerateMoveCountAndGroupId;
-import GenerateResult.GeneratePreStowageFromKnowStowage;
+import GenerateResult.*;
 import importDataInfo.*;
 import utils.FileUtil;
 import viewFrame.*;
@@ -18,7 +16,8 @@ public class Test {
 
         String vo = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
         String sh = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitvesselstructure.json")).toString();
-        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
+//        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
+        String cr = FileUtil.readFileToString(new File("E:/NewTestData/crane1.txt")).toString();
         String co = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
         String ca = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
 
@@ -32,18 +31,18 @@ public class Test {
 //        vesselStructureFrame.setVisible(true);
 //        //桥机
         List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
-        CraneFrame craneFrame = new CraneFrame(craneInfoList);
-        craneFrame.setVisible(true);
+//        CraneFrame craneFrame = new CraneFrame(craneInfoList);
+//        craneFrame.setVisible(true);
 //        //在场箱
-//        List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
+        List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
 //        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
 //        containerFrame.setVisible(true);
 //        //箱区
-//        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
+        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
 //        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
 //        containerAreaFrame.setVisible(true);
 //        //属性组
-//        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
+        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
@@ -51,18 +50,25 @@ public class Test {
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageInfoList1);
 //        preStowageFrame1.setVisible(true);
-        //测试生成预配图
-        List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage.getPreStowageResult(preStowageDataList);
+        //测试根据实配图生成预配图
+        List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage2.getPreStowageResult(preStowageDataList);
 //        System.out.println(resultList.size());
-//        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(resultList);
-//        preStowageFrame1.setVisible(true);
-        GenerateCwpResult.getHatchPositionInfo(voyageInfoList, vesselStructureInfoList);
+        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(resultList);
+        preStowageFrame1.setVisible(true);
+        //测试两个绝对位置
+//        GenerateCwpResult.getHatchPositionInfo(voyageInfoList, vesselStructureInfoList);
+        //测试生成属性组和moveCount
 //        List<PreStowageData> resultList2 = GenerateMoveCountAndGroupId.getMoveCountAndGroupId(resultList);
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, preStowageDataList);
-//        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, preStowageInfoList, cwpResultInfoList);
+//        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+//        CwpViewFrame cwpViewFrame = new CwpViewFrame();
+//        cwpViewFrame.setVisible(true);
+        //测试自动配载算法
+//        String cwpResultStr = FileUtil.readFileToString(new File("E:/NewTestData/cwpBlock.txt")).toString();
+//        List<CwpResultInfo> cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
+//        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, resultList, cwpResultInfoList);
 //        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
 //        MoveFrame moveFrame = new MoveFrame(moveInfoList);
 //        moveFrame.setVisible(true);

@@ -16,7 +16,7 @@ import java.util.List;
 public class GenerateAutoStowResult {
 
     //调用自动配载
-    public static List<AutoStowResultInfo> getAutoStowResult(List<GroupInfo> groupInfoList,List<ContainerInfo> containerInfoList, List<ContainerAreaInfo> containerAreaInfoList, List<PreStowageInfo> preStowageInfoList, List<CwpResultInfo> cwpResultInfoList) {
+    public static List<AutoStowResultInfo> getAutoStowResult(List<GroupInfo> groupInfoList,List<ContainerInfo> containerInfoList, List<ContainerAreaInfo> containerAreaInfoList, List<PreStowageData> preStowageDataList, List<CwpResultInfo> cwpResultInfoList) {
         List<AutoStowResultInfo> autoStowResultInfoList = new ArrayList<AutoStowResultInfo>();
 
         //处理在场箱信息
@@ -26,20 +26,20 @@ public class GenerateAutoStowResult {
         //处理箱区信息
         String containerAreaStr = PreStowageInfoProcess.getContainerareaString(containerAreaInfoList);
         //处理预配信息
-        String preStowageStr = PreStowageInfoProcess.getPreStowageString(groupInfoList, preStowageInfoList);
+        String preStowageStr = PreStowageInfoProcess.getPreStowageString(groupInfoList, preStowageDataList);
         preStowageStr = preStowageStr.substring(0, preStowageStr.length()-1);
 //        System.out.println(preStowageStr);
         try {//将自动配载要用的结果写在文件里，让算法去读这个文件
-            FileUtil.writeToFile("C:/CwpAutoStowData/Container.txt", containerStr);
-            FileUtil.writeToFile("C:/CwpAutoStowData/PreStowage.txt", preStowageStr);
-            FileUtil.writeToFile("C:/CwpAutoStowData/ContainerArea.txt",containerAreaStr);
+            FileUtil.writeToFile("E:/toAutoStowData/Container.txt", containerStr);
+            FileUtil.writeToFile("E:/toAutoStowData/PreStowage.txt", preStowageStr);
+            FileUtil.writeToFile("E:/toAutoStowData/ContainerArea.txt",containerAreaStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
         //处理cwp输出信息
         String cwpResultStr = PreStowageInfoProcess.getCwpResultString(cwpResultInfoList);
         try {//将自动配载要用的结果写在文件里，让算法去读这个文件
-            FileUtil.writeToFile("C:/CwpAutoStowData/CwpOutput.txt", cwpResultStr);
+            FileUtil.writeToFile("E:/toAutoStowData/CwpOutput.txt", cwpResultStr);
         } catch (Exception e) {
             e.printStackTrace();
         }
