@@ -2,6 +2,7 @@ package viewFrame;
 
 import importDataInfo.PreStowageData;
 import importDataInfo.VesselStructureInfo;
+import importDataProcess.ImportData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,11 +13,9 @@ import java.util.List;
  */
 public class VesselBayOrderPanel extends JPanel {
     private List<PreStowageData> preStowageDataList;
-    public int size_one_row = 4;//每行显示贝位
-    public int size_one_colume = 2;//列数
-    public int rect_length = 20;//边长
-    public static int start_x = 300,start_y = 560;
-    public int size_width = 512;
+    public int rect_length = 25;//边长
+    public static int start_x = 300, start_y_b = 580,start_y_a = 300;
+    public int size_width = 600;
     public int size_height = 600;
     public Font font = new Font("宋体",Font.BOLD,10);
     public Font font2 = new Font("宋体",Font.PLAIN,6);
@@ -35,8 +34,42 @@ public class VesselBayOrderPanel extends JPanel {
         super.paintComponents(g);
         Graphics2D g2d = (Graphics2D)g;
 
-        //取出数据
+        //绘制船舶结构
+
+        g2d.setPaint(Color.gray);
+        g2d.drawLine(start_x,0,start_x,size_height);//中心线
+        g2d.drawLine(0, start_y_b,size_width, start_y_b);//舱底
+        g2d.drawLine(0,start_y_a,size_width, start_y_a);//甲板
+        for(int i=0;i< ImportData.vesselStructureInfoList.size();i++){
+            int vx=0,vy=0;
+            VesselStructureInfo vesselStructureInfo = ImportData.vesselStructureInfoList.get(i);
+            int bayInt = Integer.valueOf(vesselStructureInfo.getVBYBAYID());
+            int rowInt = Integer.valueOf(vesselStructureInfo.getVRWROWNO());
+            int tierInt = Integer.valueOf(vesselStructureInfo.getVTRTIERNO());
+
+            if(rowInt%2==1){//奇数
+                vx = (rowInt/2)*rect_length + start_x;
+            }
+            else{
+                vx = start_x - (rowInt/2)*rect_length;
+            }
+            if(tierInt>=82){
+                vy = start_y_a - ((tierInt-80)/2)*rect_length;
+            }
+            else {
+                vy = start_y_b - (tierInt/2)*rect_length;
+            }
+
+            g2d.drawRect(vx,vy,rect_length,rect_length);
+
+            String tag2 = "" + rowInt+"," + tierInt;
+            g2d.setFont(font2);
+            g2d.drawString(tag2,vx,vy+18);
+        }
+
+        //绘制配载图
         for (int i = 0;i<preStowageDataList.size();i++){
+            g2d.setPaint(Color.BLACK);
             PreStowageData preStowageData = preStowageDataList.get(i);
             int x = 0,y = 0;
             int bayInt = Integer.valueOf(preStowageData.getVBY_BAYID());
@@ -44,44 +77,30 @@ public class VesselBayOrderPanel extends JPanel {
             int tierInt = Integer.valueOf(preStowageData.getVTR_TIERNO());
 
             if(bayInt>0){
-//            if(bayInt==3){
-                if(rowInt == 1){
-                    System.out.println("AAAAAAA:"+ rowInt + "," + tierInt);
-                }
-
-                x = start_x;
-                y = start_y ;
                 System.out.println("Draw Start Pos:"+ x + "," + y);
-                g2d.drawOval(x,y,4,4);
-                g2d.setPaint(Color.gray);
-                g2d.drawLine(x,0,x,size_height);//竖线
-                g2d.drawLine(0,y,size_width,y);//舱底
-                g2d.drawLine(0,280,size_width,280);//甲板
+
 
 
                 if(rowInt%2==1){//奇数
-                    x = (rowInt/2)*rect_length + x;
+                    x = (rowInt/2)*rect_length + start_x;
                 }
                 else{
-                    x = x - (rowInt/2)*rect_length;
+                    x = start_x - (rowInt/2)*rect_length;
                 }
                 if(tierInt>=82){
-                    y = y - ((tierInt-80)/2)*rect_length-280;
+                    y = start_y_b - ((tierInt-80)/2)*rect_length;
                 }
                 else {
-                    y = y - (tierInt/2)*rect_length;
+                    y = start_y_b - (tierInt/2)*rect_length;
                 }
 
                 g2d.drawRect(x,y,rect_length,rect_length);
-                String tag2 = preStowageData.getMOVE_ORDER().toString();
+                String tag1 = preStowageData.getMOVE_ORDER().toString();
                 g2d.setFont(font);
                 g2d.setPaint(Color.red);
-                g2d.drawString(tag2,x,y+8);
+                g2d.drawString(tag1,x,y+8);
 
-                String tag1 = "" + rowInt+"," + tierInt;
-                g2d.setFont(font2);
-                g2d.setPaint(Color.black);
-                g2d.drawString(tag1,x,y+18);
+
 
                 System.out.println("Slot:"+ rowInt + "," + tierInt +"   Draw:[" + x + "," + y + "]");
 

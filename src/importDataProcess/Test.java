@@ -27,6 +27,7 @@ public class Test {
 //        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
+        ImportData.vesselStructureInfoList = vesselStructureInfoList;
         VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
         vesselStructureFrame.setVisible(true);
 

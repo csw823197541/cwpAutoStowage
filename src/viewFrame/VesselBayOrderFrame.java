@@ -23,7 +23,7 @@ public class VesselBayOrderFrame extends JFrame{
         getContentPane().setLayout(new BorderLayout());
         VesselBayOrderPanel panel = new VesselBayOrderPanel(preStowageDataList);
         getContentPane().add(panel,BorderLayout.CENTER);
-        setSize(512,600);
+        setSize(620,620);
     }
 
 

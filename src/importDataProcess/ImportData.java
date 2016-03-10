@@ -1,6 +1,7 @@
 package importDataProcess;
 
 import importDataInfo.BayPositionInfo;
+import importDataInfo.VesselStructureInfo;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,4 +17,9 @@ public class ImportData {
     public static List<BayPositionInfo> bayPositionInfoList;//倍位中心绝对位置
 
     public static HashMap<String,String[]> autostowresult; //自动配载结果
+
+
+    public static List<VesselStructureInfo> vesselStructureInfoList; //船舶结构
+
+
 }
