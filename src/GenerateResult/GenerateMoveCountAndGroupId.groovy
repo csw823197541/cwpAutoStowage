@@ -12,6 +12,7 @@ class GenerateMoveCountAndGroupId {
         try{
             List<PreStowageData> resultList = new ArrayList<>()
             List<Integer> moveCounts = new ArrayList<>()
+            Map<String, Integer> moveCountQuery = new HashMap<>()
 
             Map<String, String> groupQuery = new HashMap<>()  //统计预配信息里的属性组，将属性组信息保存
             Set<String> cportSet = new HashSet<String>();   //包含港口类型
@@ -43,6 +44,7 @@ class GenerateMoveCountAndGroupId {
                 }
                 stringListMap.put(str, dataList1)
             }
+            int t = 0
             for(String str : VHTIDs) {
                 List<PreStowageData> dataList = stringListMap.get(str)
                 List<Integer> orders = new ArrayList<>()
@@ -51,22 +53,12 @@ class GenerateMoveCountAndGroupId {
                         orders.add(preStowageData1.getMOVE_ORDER())
                     }
                 }
-    //            println orders.size()
-                moveCounts.add(orders.size())
+                println "舱id:"+str+"-moveCount数："+ orders.size()
+                t += orders.size()
+                moveCountQuery.put(str, orders.size())
             }
-            //将空的船舱的moveCount设置为0
-            List<Integer> moveCounts_new = new ArrayList<>()
-            for(int i = 0; i <= 5; i++) {
-                moveCounts_new.add(moveCounts.get(i))
-            }
-            moveCounts_new.add(0)
-            for(int i = 6; i <= 17; i++) {
-                moveCounts_new.add(moveCounts.get(i))
-            }
-            moveCounts_new.add(0)
-            moveCounts_new.add(moveCounts.get(18))
-            moveCounts_new.add(0)
-            ImportData.movecounts = moveCounts_new
+            println "总movecount数：" + t
+            ImportData.moveCountQuery = moveCountQuery
 
             //先生成属性组
 //            int groupNum=1;
@@ -85,10 +77,10 @@ class GenerateMoveCountAndGroupId {
             //根据在场箱的属性组生成可查找的Map形式
 
             //将预配信息里的属性组赋值
-            for(PreStowageData preStowageData : preStowageDataList) {
-                String key = preStowageData.getDSTPORT() +"."+preStowageData.getCTYPECD() +"."+preStowageData.getSIZE()
-                preStowageData.setGROUP_ID(groupQuery.get(key))
-            }
+//            for(PreStowageData preStowageData : preStowageDataList) {
+//                String key = preStowageData.getDSTPORT() +"."+preStowageData.getCTYPECD() +"."+preStowageData.getSIZE()
+//                preStowageData.setGROUP_ID(groupQuery.get(key))
+//            }
             return preStowageDataList
         }catch (Exception e) {
             e.printStackTrace()

@@ -3,7 +3,8 @@ package GenerateResult
 import importDataInfo.PreStowageData
 
 /**
- * 版本1.2， 当小倍位里有2个以上的箱子要做单箱吊的时候，则该舱重新排序列
+ * 版本1.2， 先将卸的箱子的序列排好，再考虑装的箱子
+ * 当小倍位里有2个以上的箱子要做单箱吊的时候，则该舱重新排序列
  * Created by csw on 2016/3/8.
  */
 class GeneratePreStowageFromKnowStowage2 {
@@ -48,8 +49,8 @@ class GeneratePreStowageFromKnowStowage2 {
         for(String str : VHTIDs) {//对每个舱进行作业序列和作业工艺的生成
             if(i++ >= 0) {
                 int seq = 1
-                List<PreStowageData> dataList = stringListMap.get(str)
-                println "倍位"+str+"有"+dataList.size()+"个船箱位"
+                List<PreStowageData> dataList = stringListMap.get(str)//当前舱的船箱位数据
+                println "舱位"+str+"有"+dataList.size()+"个船箱位"
                 List<Integer> VBY_BAYIDs = new ArrayList<>()//倍位
                 List<Integer> VTR_TIERNOs = new ArrayList<>()//层
                 List<String> VBY_BAYIDss = new ArrayList<>()//倍位
@@ -80,11 +81,14 @@ class GeneratePreStowageFromKnowStowage2 {
                 List<Integer> largeBay = new ArrayList<>()
                 if(VBY_BAYIDs.size() == 1) {//舱内只有一个倍，一般为40或45尺的箱子
                     largeBay.add(VBY_BAYIDs.get(0))
-                    this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-//                    this.workBayNumIsOne(seq, dataList, VBY_BAYIDs, VTR_TIERNOs, VRW_ROWNO_D_40, VRW_ROWNO_L_40,
-//                            stringListMap_D_40, stringListMap_L_40, resultList)
-                    this.workBayLoad(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    int seqL = 1//取出卸完箱子后的序列
+                    for(PreStowageData preStowageData1: resultReturnD) {
+                        if(preStowageData1.getMOVE_ORDER() > seqL)
+                            seqL = preStowageData1.getMOVE_ORDER()
+                    }//取得最大值，给装船当作开始序列
+                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                 }
                 if(VBY_BAYIDs.size() == 2) {//舱内有两个倍，一般全是20尺的箱子
@@ -93,7 +97,12 @@ class GeneratePreStowageFromKnowStowage2 {
                     List<PreStowageData> result = new ArrayList<>()
                     List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-                    List<PreStowageData> resultReturnL = this.workBayLoad(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    int seqL = 1//取出卸完箱子后的序列
+                    for(PreStowageData preStowageData1: resultReturnD) {
+                        if(preStowageData1.getMOVE_ORDER() > seqL)
+                            seqL = preStowageData1.getMOVE_ORDER()
+                    }//取得最大值，给装船当作开始序列
+                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     for(PreStowageData preStowageData2 : resultReturnD) {
                         result.add(preStowageData2)
@@ -113,7 +122,6 @@ class GeneratePreStowageFromKnowStowage2 {
                         this.reWork(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                                 VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     }
-//                    this.workBayNumIsTwo(seq, dataList, VBY_BAYIDs, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, resultList)
                 }
                 if(VBY_BAYIDs.size() == 3) {//有3个倍位的处理方法
                     smallBay.add(VBY_BAYIDs.get(0))
@@ -122,7 +130,12 @@ class GeneratePreStowageFromKnowStowage2 {
                     List<PreStowageData> result = new ArrayList<>()
                     List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-                    List<PreStowageData> resultReturnL = this.workBayLoad(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    int seqL = 1//取出卸完箱子后的序列
+                    for(PreStowageData preStowageData1: resultReturnD) {
+                        if(preStowageData1.getMOVE_ORDER() > seqL)
+                            seqL = preStowageData1.getMOVE_ORDER()
+                    }//取得最大值，给装船当作开始序列
+                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     for(PreStowageData preStowageData2 : resultReturnD) {
                         result.add(preStowageData2)
@@ -143,7 +156,6 @@ class GeneratePreStowageFromKnowStowage2 {
                                 VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     }
                 }
-//                break;
             }
         }
             return resultList
@@ -159,11 +171,11 @@ class GeneratePreStowageFromKnowStowage2 {
                                          List<Integer> VRW_ROWNO_D_40, Map<String, PreStowageData> stringListMap_D_40,
                                          List<Integer> VRW_ROWNO_L_40, Map<String, PreStowageData> stringListMap_L_40,
                                          List<PreStowageData> resultList) {
-        println "去除需要重排的记录前："+resultList.size()
+        println "去除需要重排的记录前有"+resultList.size()+"个船箱位"
         for(PreStowageData preStowageData : dataList) {//去除resultList里面已经编好序列的数据
             resultList.remove(preStowageData)
         }
-        println "去除需要重排的记录后："+resultList.size()
+        println "去除需要重排的记录后有"+resultList.size()+"个船箱位"
         List<PreStowageData> preStowageDataList01 = new ArrayList<>()
         List<PreStowageData> preStowageDataList03 = new ArrayList<>()
         List<PreStowageData> preStowageDataList02 = new ArrayList<>()
@@ -192,22 +204,16 @@ class GeneratePreStowageFromKnowStowage2 {
                 }//统计层数
             }
             Collections.sort(tiers)
-            for(int i = tiers.size()-1; i >= 0; i-- ) {
+            for(int i = tiers.size()-1; i >= 0; i-- ) {//开始逐层卸箱子，从上往下
                 for(PreStowageData preStowageData : preStowageDataList02) {
                     if(tiers.get(i) == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                             "D".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
                         VRW_ROWNO_D_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                        String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                        String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                         stringListMap_D_40.put(key, preStowageData)
                     }
-//                    if(tiers.get(i) == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                            "L".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
-//                        VRW_ROWNO_L_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                        String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                        stringListMap_L_40.put(key, preStowageData)
-//                    }
                 }
-                if(tiers.get(i) < 82) {
+                if(tiers.get(i) < 50) {
                     //卸40或45尺的箱子，甲板下由中央向两边
                     Collections.sort(VRW_ROWNO_D_40)
                     println tiers.get(i)+"  40尺卸船的排号有："+VRW_ROWNO_D_40
@@ -216,16 +222,8 @@ class GeneratePreStowageFromKnowStowage2 {
                         stringListMap_D_40.get(largeBay.get(0)+"."+tiers.get(i)+"."+row).setWORKFLOW(1+"")
                         seq++
                     }
-                    //装40或45尺的箱子，甲板下由中央向两边
-//                    Collections.sort(VRW_ROWNO_L_40)
-//                    println tiers.get(i)+"  40尺装船的排号有："+VRW_ROWNO_D_40
-//                    for(Integer row : VRW_ROWNO_L_40) {
-//                        stringListMap_L_40.get(largeBay.get(0)+"."+tiers.get(i)+"."+row).setMOVE_ORDER(seq)
-//                        stringListMap_L_40.get(largeBay.get(0)+"."+tiers.get(i)+"."+row).setWORKFLOW(1+"")
-//                        seq++
-//                    }
                 }
-                if(tiers.get(i) >= 82) {
+                if(tiers.get(i) > 50) {
                     //卸40尺的箱子
                     println tiers.get(i)+"  40尺卸船的排号有："+VRW_ROWNO_D_40
                     List<Integer> even = new ArrayList<>()//排号为偶数
@@ -295,9 +293,10 @@ class GeneratePreStowageFromKnowStowage2 {
             }
         }
         //02倍，卸船结束
+
+        //01倍卸船,开始
         tiers.clear()
         VTR_TIERNOss.clear()
-        //01倍卸船,开始
         for(PreStowageData preStowageData : preStowageDataList01) {
             if(!VTR_TIERNOss.contains(preStowageData.getVTR_TIERNO())) {
                 VTR_TIERNOss.add(preStowageData.getVTR_TIERNO())
@@ -311,17 +310,11 @@ class GeneratePreStowageFromKnowStowage2 {
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "D".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//01小倍卸船的箱子取出
                     VRW_ROWNO_D_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_D_20.put(key, preStowageData)
                 }
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "L".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、01小倍装船的船箱位取出
-//                    VRW_ROWNO_L_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_L_20.put(key, preStowageData)
-//                }
             }
-            if(tier < 82) {
+            if(tier < 50) {
                 //先处理卸船，全是单吊具，甲板下由中央向两边
                 Collections.sort(VRW_ROWNO_D_20)
                 println tier+"  20尺卸船的排号有："+VRW_ROWNO_D_20
@@ -331,7 +324,7 @@ class GeneratePreStowageFromKnowStowage2 {
                     seq++
                 }
             }
-            if(tier >= 82) {
+            if(tier > 50) {
                 //先处理卸船，全是单吊具，甲板上由陆侧向海侧
                 List<Integer> even = new ArrayList<>()//排号为偶数
                 List<Integer> odd = new ArrayList<>()//排号为奇数
@@ -370,9 +363,10 @@ class GeneratePreStowageFromKnowStowage2 {
             stringListMap_L_20.clear()
         }
         //01倍,结束
+
+        //03倍卸船,开始
         tiers.clear()
         VTR_TIERNOss.clear()
-        //03倍卸船,开始
         for(PreStowageData preStowageData : preStowageDataList03) {
             if(!VTR_TIERNOss.contains(preStowageData.getVTR_TIERNO())) {
                 VTR_TIERNOss.add(preStowageData.getVTR_TIERNO())
@@ -386,17 +380,11 @@ class GeneratePreStowageFromKnowStowage2 {
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "D".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//01小倍卸船的箱子取出
                     VRW_ROWNO_D_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_D_20.put(key, preStowageData)
                 }
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "L".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、01小倍装船的船箱位取出
-//                    VRW_ROWNO_L_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_L_20.put(key, preStowageData)
-//                }
             }
-            if(tier < 82) {
+            if(tier < 50) {
                 //先处理卸船，全是单吊具，甲板下由中央向两边
                 Collections.sort(VRW_ROWNO_D_20)
                 println tier+"  20尺卸船的排号有："+VRW_ROWNO_D_20
@@ -406,7 +394,7 @@ class GeneratePreStowageFromKnowStowage2 {
                     seq++
                 }
             }
-            if(tier >= 82) {
+            if(tier > 50) {
                 //先处理卸船，全是单吊具，甲板上由陆侧向海侧
                 List<Integer> even = new ArrayList<>()//排号为偶数
                 List<Integer> odd = new ArrayList<>()//排号为奇数
@@ -436,20 +424,15 @@ class GeneratePreStowageFromKnowStowage2 {
             for(Map.Entry<String, PreStowageData> entry : stringListMap_D_20) {
                 resultList.add(entry.getValue())
             }
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_L_20) {
-                resultList.add(entry.getValue())
-            }
             //清空数据
             VRW_ROWNO_D_20.clear()
-            VRW_ROWNO_L_20.clear()
             stringListMap_D_20.clear()
-            stringListMap_L_20.clear()
         }
         //03倍卸船,结束
 
+        //01倍装船，开始
         tiers.clear()
         VTR_TIERNOss.clear()
-        //01倍装船，开始
         for(PreStowageData preStowageData : preStowageDataList01) {
             if(!VTR_TIERNOss.contains(preStowageData.getVTR_TIERNO())) {
                 VTR_TIERNOss.add(preStowageData.getVTR_TIERNO())
@@ -460,22 +443,15 @@ class GeneratePreStowageFromKnowStowage2 {
         for(int n = 0; n <= tiers.size()-1; n++) {
             int tier = tiers.get(n)
             for(PreStowageData preStowageData : preStowageDataList01) {
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "D".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//01小倍卸船的箱子取出
-//                    VRW_ROWNO_D_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_D_20.put(key, preStowageData)
-//                }
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "L".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、01小倍装船的船箱位取出
                     VRW_ROWNO_L_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_L_20.put(key, preStowageData)
                 }
             }
-            if(tier < 82) {
-
-                //再处理装船,全是单吊具，甲板下由中央向两边
+            if(tier < 50) {
+                //处理装船,全是单吊具，甲板下由中央向两边
                 Collections.sort(VRW_ROWNO_L_20)
                 println tier+"  20尺装船的排号有："+VRW_ROWNO_L_20
                 for(int i = 0; i <VRW_ROWNO_L_20.size(); i++) {
@@ -484,12 +460,11 @@ class GeneratePreStowageFromKnowStowage2 {
                     seq++
                 }
             }
-            if(tier >= 82) {
+            if(tier > 50) {
                 //先处理卸船，全是单吊具，甲板上由陆侧向海侧
                 List<Integer> even = new ArrayList<>()//排号为偶数
-                List<Integer> odd = new ArrayList<>()//排号为奇数
-//
-                //再处理装船,全是单吊具，甲板上由海侧向陆侧
+                List<Integer> odd = new ArrayList<>()//排号为奇数//
+                //处理装船,全是单吊具，甲板上由海侧向陆侧
                 println tier+"  20尺装船的排号有："+VRW_ROWNO_L_20
                 even.clear()
                 odd.clear()
@@ -514,23 +489,18 @@ class GeneratePreStowageFromKnowStowage2 {
                 }
             }
             //保存处理结果
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_D_20) {
-                resultList.add(entry.getValue())
-            }
             for(Map.Entry<String, PreStowageData> entry : stringListMap_L_20) {
                 resultList.add(entry.getValue())
             }
             //清空数据
-            VRW_ROWNO_D_20.clear()
             VRW_ROWNO_L_20.clear()
-            stringListMap_D_20.clear()
             stringListMap_L_20.clear()
         }
         //01倍装船，结束
 
+        //03倍装船，开始
         tiers.clear()
         VTR_TIERNOss.clear()
-        //03倍装船，开始
         for(PreStowageData preStowageData : preStowageDataList03) {
             if(!VTR_TIERNOss.contains(preStowageData.getVTR_TIERNO())) {
                 VTR_TIERNOss.add(preStowageData.getVTR_TIERNO())
@@ -540,20 +510,14 @@ class GeneratePreStowageFromKnowStowage2 {
         Collections.sort(tiers)
         for(Integer tier : tiers) {
             for(PreStowageData preStowageData : preStowageDataList03) {
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "D".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//01小倍卸船的箱子取出
-//                    VRW_ROWNO_D_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_D_20.put(key, preStowageData)
-//                }
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "L".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、01小倍装船的船箱位取出
                     VRW_ROWNO_L_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_L_20.put(key, preStowageData)
                 }
             }
-            if(tier < 82) {
+            if(tier < 50) {
                 //处理20尺装船,全是单吊具，甲板下由中央向两边
                 Collections.sort(VRW_ROWNO_L_20)
                 println tier+"  20尺装船的排号有："+VRW_ROWNO_L_20
@@ -563,7 +527,7 @@ class GeneratePreStowageFromKnowStowage2 {
                     seq++
                 }
             }
-            if(tier >= 82) {
+            if(tier > 50) {
                 List<Integer> even = new ArrayList<>()//排号为偶数
                 List<Integer> odd = new ArrayList<>()//排号为奇数
                 //处理20尺装船,全是单吊具，甲板上由海侧向陆侧
@@ -591,23 +555,18 @@ class GeneratePreStowageFromKnowStowage2 {
                 }
             }
             //保存处理结果
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_D_20) {
-                resultList.add(entry.getValue())
-            }
             for(Map.Entry<String, PreStowageData> entry : stringListMap_L_20) {
                 resultList.add(entry.getValue())
             }
             //清空数据
-            VRW_ROWNO_D_20.clear()
             VRW_ROWNO_L_20.clear()
-            stringListMap_D_20.clear()
             stringListMap_L_20.clear()
         }
         //03倍装船，结束
 
+        //02倍，装船开始
         tiers.clear()
         VTR_TIERNOss.clear()
-        //02倍，装船开始
         if(preStowageDataList02.size() > 0) {
             for(PreStowageData preStowageData : preStowageDataList02) {
                 if(!VTR_TIERNOss.contains(preStowageData.getVTR_TIERNO())) {
@@ -618,20 +577,14 @@ class GeneratePreStowageFromKnowStowage2 {
             Collections.sort(tiers)
             for(Integer tier : tiers) {
                 for(PreStowageData preStowageData : preStowageDataList02) {
-//                    if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                            "D".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
-//                        VRW_ROWNO_D_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                        String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                        stringListMap_D_40.put(key, preStowageData)
-//                    }
                     if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                             "L".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
                         VRW_ROWNO_L_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                        String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                        String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                         stringListMap_L_40.put(key, preStowageData)
                     }
                 }
-                if(tier < 82) {
+                if(tier < 50) {
                     //装40或45尺的箱子，甲板下由中央向两边
                     Collections.sort(VRW_ROWNO_L_40)
                     println tier+"  40尺装船的排号有："+VRW_ROWNO_D_40
@@ -641,7 +594,7 @@ class GeneratePreStowageFromKnowStowage2 {
                         seq++
                     }
                 }
-                if(tier >= 82) {
+                if(tier > 50) {
                     List<Integer> even = new ArrayList<>()//排号为偶数
                     List<Integer> odd = new ArrayList<>()//排号为奇数
                     //再装40尺的箱子
@@ -700,23 +653,15 @@ class GeneratePreStowageFromKnowStowage2 {
                     }
                 }
                 //保存处理结果
-                for(Map.Entry<String, PreStowageData> entry : stringListMap_D_40) {
-                    resultList.add(entry.getValue())
-                }
                 for(Map.Entry<String, PreStowageData> entry : stringListMap_L_40) {
                     resultList.add(entry.getValue())
                 }
                 //清空数据
-                VRW_ROWNO_D_40.clear()
                 VRW_ROWNO_L_40.clear()
-                stringListMap_D_40.clear()
                 stringListMap_L_40.clear()
             }
         }
         //02倍，装船结束
-
-
-
     }
 
     public static List<PreStowageData> workBayDischarge(int seq, List<PreStowageData> dataList, List<Integer> smallBay, List<Integer> largeBay, List<Integer> VTR_TIERNOs,
@@ -733,30 +678,17 @@ class GeneratePreStowageFromKnowStowage2 {
                 if(VTR_TIERNOs.get(n) == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "D".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、卸船的船箱位取出
                     VRW_ROWNO_D_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_D_20.put(key, preStowageData)
                 }
                 if(VTR_TIERNOs.get(n) == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "D".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
                     VRW_ROWNO_D_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_D_40.put(key, preStowageData)
                 }
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "L".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、卸船的船箱位取出
-//                    VRW_ROWNO_L_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_L_20.put(key, preStowageData)
-//                }
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "L".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
-//                    VRW_ROWNO_L_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_L_40.put(key, preStowageData)
-//                }
             }
-            if(tier < 82) {//甲板下
-
+            if(tier < 50) {//甲板下
                 //先对同一层卸船的舱位进行处理，开始
                 List<Integer> even = new ArrayList<>()//排号为偶数
                 List<Integer> odd = new ArrayList<>()//排号为奇数
@@ -849,7 +781,7 @@ class GeneratePreStowageFromKnowStowage2 {
                 }
                 //对同一层卸船的舱位进行处理，结束
             }
-            if(tier >= 82) {//甲板上
+            if(tier > 50) {//甲板上
                 //先对同一层卸船的舱位进行处理，开始
                 List<Integer> even = new ArrayList<>()//排号为偶数
                 List<Integer> odd = new ArrayList<>()//排号为奇数
@@ -990,23 +922,11 @@ class GeneratePreStowageFromKnowStowage2 {
                 resultList.add(entry.getValue())
                 resultReturn.add(entry.getValue())
             }
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_L_20) {
-                resultList.add(entry.getValue())
-                resultReturn.add(entry.getValue())
-            }
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_L_40) {
-                resultList.add(entry.getValue())
-                resultReturn.add(entry.getValue())
-            }
             //清空数据
             VRW_ROWNO_D_20.clear()
             VRW_ROWNO_D_40.clear()
-            VRW_ROWNO_L_20.clear()
-            VRW_ROWNO_L_40.clear()
             stringListMap_D_20.clear()
             stringListMap_D_40.clear()
-            stringListMap_L_20.clear()
-            stringListMap_L_40.clear()
         }
         return resultReturn
     }
@@ -1021,33 +941,23 @@ class GeneratePreStowageFromKnowStowage2 {
         List<PreStowageData> resultReturn = new ArrayList<>()
         for(Integer tier : VTR_TIERNOs) {
             for(PreStowageData preStowageData : dataList) {//分别将20尺、40尺的卸船和装船的数据取出来，分开计算
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "D".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、卸船的船箱位取出
-//                    VRW_ROWNO_D_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_D_20.put(key, preStowageData)
-//                }
-//                if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
-//                        "D".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
-//                    VRW_ROWNO_D_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-//                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
-//                    stringListMap_D_40.put(key, preStowageData)
-//                }
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "L".equals(preStowageData.getLDULD()) && "20".equals(preStowageData.getSIZE())) {//将同一层、卸船的船箱位取出
                     VRW_ROWNO_L_20.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
+                    //println "fffff:" +key
                     stringListMap_L_20.put(key, preStowageData)
                 }
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
                         "L".equals(preStowageData.getLDULD()) && ("40".equals(preStowageData.getSIZE()) || "45".equals(preStowageData.getSIZE()))) {//将同一层、卸船的船箱位取出
                     VRW_ROWNO_L_40.add(Integer.valueOf(preStowageData.getVRW_ROWNO()))
-                    String key = preStowageData.getVBY_BAYID() + "." +preStowageData.getVTR_TIERNO() + "." + preStowageData.getVRW_ROWNO()
+                    String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
+                    //println "sdafjlskadjfksjf"+key
                     stringListMap_L_40.put(key, preStowageData)
                 }
             }
-            if(tier < 82) {//甲板下
-                //再对同一层装船的舱位进行处理，甲板下由中央向两边,开始
+            if(tier < 50) {//甲板下
+                //对同一层装船的舱位进行处理，甲板下由中央向两边,开始
                 //先装20尺的箱子
                 println tier+"  20尺装船的排号有："+VRW_ROWNO_L_20
                 Collections.sort(VRW_ROWNO_L_20)//排序
@@ -1091,7 +1001,7 @@ class GeneratePreStowageFromKnowStowage2 {
                 }
                 //对同一层装船的舱位进行处理，结束
             }
-            if(tier >= 82) {//甲板上
+            if(tier > 50) {//甲板上
                 List<Integer> even = new ArrayList<>()//排号为偶数
                 List<Integer> odd = new ArrayList<>()//排号为奇数
                 //再对同一层装船的舱位进行处理，甲板上装船编顺序，由海侧向陆侧,开始
@@ -1225,15 +1135,6 @@ class GeneratePreStowageFromKnowStowage2 {
                 //对同一层装船的舱位进行处理，结束
             }
             //保存处理结果
-
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_D_20) {
-                resultList.add(entry.getValue())
-                resultReturn.add(entry.getValue())
-            }
-            for(Map.Entry<String, PreStowageData> entry : stringListMap_D_40) {
-                resultList.add(entry.getValue())
-                resultReturn.add(entry.getValue())
-            }
             for(Map.Entry<String, PreStowageData> entry : stringListMap_L_20) {
                 resultList.add(entry.getValue())
                 resultReturn.add(entry.getValue())
@@ -1243,17 +1144,11 @@ class GeneratePreStowageFromKnowStowage2 {
                 resultReturn.add(entry.getValue())
             }
             //清空数据
-            VRW_ROWNO_D_20.clear()
-            VRW_ROWNO_D_40.clear()
             VRW_ROWNO_L_20.clear()
             VRW_ROWNO_L_40.clear()
-            stringListMap_D_20.clear()
-            stringListMap_D_40.clear()
             stringListMap_L_20.clear()
             stringListMap_L_40.clear()
         }
         return resultReturn
     }
-
-
 }

@@ -38,8 +38,8 @@ class GenerateCwpResult {
 //        List<PreStowageData> preStowageResult = GeneratePreStowageFromKnowStowage2.getPreStowageResult(preStowageDataList)
         //计算movecounts和对预配图编属性组
         List<PreStowageData> preStowageDatas = GenerateMoveCountAndGroupId.getMoveCountAndGroupId(preStowageDataList)
-        List<Integer> movecounts = ImportData.movecounts
-        List<HatchInfo> hatchInfoList = getHatchInfo(voyageInfoList, hatchPositionInfoList, movecounts);
+        Map<String, Integer> moveCountQuery = ImportData.moveCountQuery
+        List<HatchInfo> hatchInfoList = getHatchInfo(voyageInfoList, hatchPositionInfoList, moveCountQuery);
         List<WorkMoveInfo> workMoveInfoList = getWorkMoveInfo(preStowageDataList)
         //生成cwp算法要用的3个json串
         String craneJsonStr = CraneInfoProcess.getCraneInfoJsonStr(craneInfoList)
@@ -55,9 +55,14 @@ class GenerateCwpResult {
         //调用cwp算法
         if(craneJsonStr != null && hatchJsonStr != null && moveJsonStr != null) {
             String cwpResultStr = null
-            cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr)
+            cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr, "7") //最后一个7，代表桥机数
             System.out.println("cwp算法返回的json字符串:" + cwpResultStr);
             if(cwpResultStr != null){
+                try{
+                    FileUtil.writeToFile("toCwpData/cwpResult.txt", cwpResultStr)
+                }catch (Exception e) {
+                    e.printStackTrace()
+                }
                 cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
             } else {
                 System.out.println("cwp算法没有返回结果！")
@@ -76,7 +81,7 @@ class GenerateCwpResult {
      * @return
      */
     public
-    static List<HatchInfo> getHatchInfo(List<VoyageInfo> voyageInfoList, List<HatchPositionInfo> hatchPositionInfoList, List<Integer> movecounts) {
+    static List<HatchInfo> getHatchInfo(List<VoyageInfo> voyageInfoList, List<HatchPositionInfo> hatchPositionInfoList, Map<String, Integer> moveCountQuery) {
         System.out.println("开始生成船舱信息：");
         List<HatchInfo> hatchInfoList = new ArrayList<>()
         HatchInfo newhatchInfo;
@@ -96,7 +101,8 @@ class GenerateCwpResult {
             newhatchInfo.setID(hatchPositionInfo.getVHT_ID());
             newhatchInfo.setLENGTH(hatchPositionInfo.getLENGTH());
             newhatchInfo.setVESSELID(vesselID);
-            newhatchInfo.setMOVECOUNT(movecounts.get(i++));
+            int count = moveCountQuery.get(hatchPositionInfo.getVHT_ID()) != null ? moveCountQuery.get(hatchPositionInfo.getVHT_ID()) : 0;
+            newhatchInfo.setMOVECOUNT(count);
             newhatchInfo.setNO(hatchPositionInfo.getVHT_ID());
             newhatchInfo.setSEQ(hatchPositionInfo.getVHT_ID());
             newhatchInfo.setWORKINGTIMERANGES(workingTimeRangeList);//工作时间
@@ -137,22 +143,27 @@ class GenerateCwpResult {
 //        println VHTIDs.size() +"-----"+VBYBAYIDs.size()
         Map<String, Double> VHTPOSITIONs = new HashMap<>();
         int i = 0;
+        int length = vesselStructureInfoList.get(0).getLENGTH()
+        Double cjj = 3.28//舱间距3.28英尺
         for(String vhtiDs : VHTIDs) {
-            VHTPOSITIONs.put(vhtiDs, Double.valueOf(df.format(i*49.28)))//Todo假设舱间距为2米，这个数据码头还没回复我是否合理
+            VHTPOSITIONs.put(vhtiDs, Double.valueOf(df.format(i*(length + cjj))))//Todo假设舱间距为2米，这个数据码头还没回复我是否合理
             i++
         }
         Map<String, Double> VBYPOSIYIONs = new HashMap<>();
         i = 1;
-        Double d = 11.5
+        Double d = length/4
         Double pre = 0.0
         for(String vBYBAYIDs : VBYBAYIDs) {
             if(i == 1) {
-                d = 11.5
+//                d = 11.5
+                d = length/4
             }
             else if(i%2 != 0) {
-                d = 26.28
+//                d = 26.28
+                d = length/2 + cjj
             } else {
-                d = 23
+//                d = 23
+                d = length/2
             }
             pre = pre + d;
             VBYPOSIYIONs.put(vBYBAYIDs, Double.valueOf(df.format(pre)))
@@ -204,14 +215,17 @@ class GenerateCwpResult {
 
         List<WorkMoveInfo> workMoveInfoList = new ArrayList<WorkMoveInfo>();
         List<BayPositionInfo> bayPositionInfoList = ImportData.bayPositionInfoList//倍位中心绝对位置
-        Map<String, Double> bayPositionQuery = new HashMap<>()
-        for(BayPositionInfo bayPositionInfo : bayPositionInfoList) {
-            bayPositionQuery.put(bayPositionInfo.getVBY_BAYID().replace("0", ""), bayPositionInfo.getVBY_POSITION())
+        Map<String, Double> bayPositionQuery = new HashMap<>()//存放每个的绝对中心位置,以便生成作业关信息是查找
+        for(BayPositionInfo bayPositionInfo : bayPositionInfoList) {//每个舱有两个小倍，这个已经通过计算保存过
+            String bayStr = bayPositionInfo.getVBY_BAYID().startsWith("0") ? bayPositionInfo.getVBY_BAYID().replace("0", "") : bayPositionInfo.getVBY_BAYID()
+            bayPositionQuery.put(bayStr, bayPositionInfo.getVBY_POSITION())
+//            println bayPositionInfo.getVBY_BAYID().replace("0", "") + "----" + bayPositionInfo.getVBY_POSITION()
         }
-        for(int i = 0; i < bayPositionInfoList.size(); i = i+2) {//将每个倍的中心位置保存起来，生成作业关的时候查找
-            String s1 = Integer.valueOf(bayPositionInfoList.get(i).getVBY_BAYID().replace("0", ""))+1+""//大倍号
+        for(int i = 0; i < bayPositionInfoList.size(); i = i+2) {//计算每个舱的大倍，大倍的位置就是两个小倍的位置除以2
+            String bayStr = bayPositionInfoList.get(i).getVBY_BAYID().startsWith("0") ? bayPositionInfoList.get(i).getVBY_BAYID().replace("0", "") : bayPositionInfoList.get(i).getVBY_BAYID()
+            String s1 = Integer.valueOf(bayStr)+1+""//大倍号
             Double d = (bayPositionInfoList.get(i).getVBY_POSITION()+bayPositionInfoList.get(i+1).getVBY_POSITION())/2
-            println s1 + "----" + d
+//            println s1 + "----" + d
             bayPositionQuery.put(s1, d)
         }
         System.out.println("开始生成舱内作业关信息：");
@@ -225,7 +239,7 @@ class GenerateCwpResult {
         }
         Collections.sort(VHTIDs)
         println "舱位数：" + VHTIDs.size()
-        for(String str : VHTIDs) {//
+        for(String str : VHTIDs) {//将数据存放在不同舱位里
             List<PreStowageData> dataList1 = new ArrayList<>()
             for(PreStowageData preStowageData : preStowageDataList) {
                 if(str.equals(preStowageData.getVHT_ID())) {
@@ -250,7 +264,8 @@ class GenerateCwpResult {
                         moveDataList.add(preStowageData2)
                     }
                 }
-                if(moveDataList.size() == 2) {//双箱吊或者双吊具
+//                println "是否取到相同作业序列:"+str+"-"+order+"-"+moveDataList.size()
+                if(moveDataList.size() == 2) {//作业序列相同,可能是双箱吊或者双吊具
                     if(moveDataList.get(0).getVRW_ROWNO().equals(
                             moveDataList.get(1).getVRW_ROWNO())) {//排号相同，为双箱吊
                         workMoveInfo.setCWPWORKMOVENUM(order)
@@ -263,7 +278,11 @@ class GenerateCwpResult {
                         workMoveInfo.setMOVETYPE(moveDataList.get(0).getWORKFLOW())
                         workMoveInfo.setLD(moveDataList.get(0).getLDULD())
                         //倍位中心的绝对位置
-                        Double d = (bayPositionQuery.get(moveDataList.get(0).getVBY_BAYID())+bayPositionQuery.get(moveDataList.get(1).getVBY_BAYID()))/2
+                        String bayStr0 = moveDataList.get(0).getVBY_BAYID()//去掉倍为号前面的0
+                        bayStr0 = bayStr0.startsWith("0") ? bayStr0.replace("0", "") : bayStr0
+                        String bayStr1 = moveDataList.get(1).getVBY_BAYID()//
+                        bayStr1 = bayStr1.startsWith("0") ? bayStr1.replace("0", "") : bayStr1
+                        Double d = (bayPositionQuery.get(bayStr0)+bayPositionQuery.get(bayStr1))/2
                         workMoveInfo.setHORIZONTALPOSITION(d)
                     }
                     if(moveDataList.get(0).getVBY_BAYID().equals(
@@ -278,7 +297,9 @@ class GenerateCwpResult {
                         workMoveInfo.setMOVETYPE(moveDataList.get(0).getWORKFLOW())
                         workMoveInfo.setLD(moveDataList.get(0).getLDULD())
                         //倍位中心的绝对位置
-                        Double d = bayPositionQuery.get(moveDataList.get(0).getVBY_BAYID())
+                        String bayStr = moveDataList.get(0).getVBY_BAYID()//
+                        bayStr = bayStr.startsWith("0") ? bayStr.replace("0", "") : bayStr
+                        Double d = bayPositionQuery.get(bayStr)
                         workMoveInfo.setHORIZONTALPOSITION(d)
                     }
                 } else {//单吊具
@@ -292,7 +313,9 @@ class GenerateCwpResult {
                     workMoveInfo.setMOVETYPE(moveDataList.get(0).getWORKFLOW())
                     workMoveInfo.setLD(moveDataList.get(0).getLDULD())
                     //倍位中心的绝对位置
-                    Double d = bayPositionQuery.get(moveDataList.get(0).getVBY_BAYID())
+                    String bayStr0 = moveDataList.get(0).getVBY_BAYID()//去掉倍为号前面的0
+                    bayStr0 = bayStr0.startsWith("0") ? bayStr0.replace("0", "") : bayStr0
+                    Double d = bayPositionQuery.get(bayStr0)
                     workMoveInfo.setHORIZONTALPOSITION(d)
                 }
                 workMoveInfoList.add(workMoveInfo)

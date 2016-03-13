@@ -1,7 +1,9 @@
 package importDataProcess
 
+import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import importDataInfo.VesselStructureInfo
+import importDataInfo.WorkMoveInfo
 
 /**
  * Created by csw on 2016/1/16.
@@ -23,7 +25,7 @@ class VesselStructureInfoProcess {
                 VesselStructureInfo vesselStructureInfo = new VesselStructureInfo()
                 assert vesselStructure instanceof Map
                 vesselStructureInfo.VHTID = vesselStructure.VHTID
-                vesselStructureInfo.LENGTH = Integer.valueOf(vesselStructure.LENGTH) + 32
+                vesselStructureInfo.LENGTH = Integer.valueOf(vesselStructure.LENGTH)
 //                vesselStructureInfo.VHTPOISITION = Integer.valueOf(vesselStructure.VHTPOSITION)
                 vesselStructureInfo.VBYBAYID = vesselStructure.VBYBAYID
                 vesselStructureInfo.VBYPOSITION = vesselStructure.VBYPOSITION
@@ -47,4 +49,5 @@ class VesselStructureInfoProcess {
             return vesselStructureInfoList
         }
     }
+
 }
