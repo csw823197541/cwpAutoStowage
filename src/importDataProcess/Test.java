@@ -14,8 +14,10 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) {
 
+
+
         String vo = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
-        String sh = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvesselstructure.json")).toString();
+        String sh = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvesselstructure1.json")).toString();
 //        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
         String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
         String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
@@ -65,9 +67,11 @@ public class Test {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-//        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
 //        CwpViewFrame cwpViewFrame = new CwpViewFrame();
 //        cwpViewFrame.setVisible(true);
+        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
+        cwpResultFrame.setVisible(true);
         //测试自动配载算法
 //        String cwpResultStr = FileUtil.readFileToString(new File("E:/NewTestData/cwpBlock.txt")).toString();
 //        List<CwpResultInfo> cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
