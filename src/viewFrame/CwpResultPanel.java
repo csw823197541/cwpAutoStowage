@@ -40,6 +40,7 @@ public class CwpResultPanel extends JPanel{
     public Font font = new Font("Courier New", Font.BOLD, 12);
 
     private void initComponents() {
+        this.setPreferredSize(new Dimension(width,height));
         this.setSize(width, height);
         this.setOpaque(true);
     }

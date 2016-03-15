@@ -32,12 +32,15 @@ public class CwpResultFrame extends JFrame{
     private void initComponents() {
         this.setTitle("cwp计划结果图");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(1350, 750);
-        this.setExtendedState(Frame.MAXIMIZED_BOTH);
+        this.setSize(1000, 600);
+        this.setResizable(true);
+//        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);// 居中显示
         this.getContentPane().setLayout(new BorderLayout());
         CwpResultPanel cwpResultPanel = new CwpResultPanel(cwpResultInfoList, craneInfoList, hatchInfoList);
-        this.getContentPane().add(cwpResultPanel, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(cwpResultPanel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.getContentPane().add(scrollPane, BorderLayout.CENTER);
     }
 
 //    public static void main(String[] args) {
