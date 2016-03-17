@@ -25,8 +25,8 @@ public class Test {
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
-//        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
-//        voyageFrame.setVisible(true);
+        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
+        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
         ImportData.vesselStructureInfoList = vesselStructureInfoList;

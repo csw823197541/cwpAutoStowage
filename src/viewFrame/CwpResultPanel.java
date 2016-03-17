@@ -114,12 +114,18 @@ public class CwpResultPanel extends JPanel{
             g2d.drawLine(leftMargin-5, j*(cwpBlock-hatchWidth)/timeStep + topMargin + hatchWidth, leftMargin, j*(cwpBlock-hatchWidth)/timeStep + topMargin + hatchWidth);
         }
         //画作业块
+        Map<String, Integer> countQuery = new HashMap<>();
         for(CwpResultInfo cwpResultInfo : cwpResultInfoList) {
             String craneId = cwpResultInfo.getCRANEID();//得到桥机号
             int bayId = Integer.valueOf(cwpResultInfo.getHATCHBWID());//得到倍位号
             int startTime = cwpResultInfo.getWORKINGSTARTTIME();
             int endTime = cwpResultInfo.getWORKINGENDTIME();
             int moveCount = cwpResultInfo.getMOVECOUNT();
+            if(countQuery.get(bayId+"") != null) {
+                countQuery.put(bayId+"", countQuery.get(bayId + "") + moveCount);
+            } else {
+                countQuery.put(bayId + "", moveCount);
+            }
             int x = bayQuery.get(bayId);
             int y = topMargin + hatchWidth + startTime*(cwpBlock - hatchWidth - topMargin)/maxEndTime;
             int w = bayId%2 == 0 ? hatchLength : hatchLength-4;//作业块宽度
@@ -127,6 +133,21 @@ public class CwpResultPanel extends JPanel{
             g2d.setPaint(craneQuery.get(craneId));
             g2d.drawRect(x, y, w, h);
             g2d.fillRect(x, y, w, h);
+//            g2d.drawString(moveCount+"", x+w+2, y);
+        }
+        //遍历Map，画出作业块的moveCount数
+        if(countQuery != null) {
+            for(Map.Entry<String, Integer> entry : countQuery.entrySet()) {
+//                System.out.println(entry.getKey().toString().split(" ")[0] +"----"+entry.getValue());
+                int x = bayQuery.get(Integer.valueOf(entry.getKey()));
+                g2d.setPaint(Color.red);
+                if(Integer.valueOf(entry.getKey())%2 == 0) {
+                    g2d.drawString(entry.getValue()+"", x+2, 20);
+                }else{
+                    g2d.drawString(entry.getValue()+"", x+2, 50);
+                }
+
+            }
         }
     }
 
