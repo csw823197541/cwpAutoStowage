@@ -56,7 +56,7 @@ public class Test {
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageInfoList1);
 //        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
-        List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage2.getPreStowageResult(preStowageDataList);
+        List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
         System.out.println(resultList.size());
         PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(resultList);
         preStowageFrame1.setVisible(true);
@@ -67,11 +67,9 @@ public class Test {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
-//        CwpViewFrame cwpViewFrame = new CwpViewFrame();
-//        cwpViewFrame.setVisible(true);
-        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
-        cwpResultFrame.setVisible(true);
+//        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+//        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
+//        cwpResultFrame.setVisible(true);
         //测试自动配载算法
 //        String cwpResultStr = FileUtil.readFileToString(new File("E:/NewTestData/cwpBlock.txt")).toString();
 //        List<CwpResultInfo> cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);

@@ -7,7 +7,7 @@ import importDataInfo.PreStowageData
  * 当小倍位里有2个以上的箱子要做单箱吊的时候，则该舱重新排序列
  * Created by csw on 2016/3/8.
  */
-class GeneratePreStowageFromKnowStowage2 {
+class GeneratePreStowageFromKnowStowage6 {
 
     /**
      * 根据实配图生成预配图，生成作业序列和作业工艺的方法
@@ -104,24 +104,24 @@ class GeneratePreStowageFromKnowStowage2 {
                     }//取得最大值，给装船当作开始序列
                     List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-                    for(PreStowageData preStowageData2 : resultReturnD) {
-                        result.add(preStowageData2)
-                    }
-                    for(PreStowageData preStowageData3 : resultReturnL) {
-                        result.add(preStowageData3)
-                    }
-                    //统计结果中20尺、作业工艺为1的箱子的个数
-                    int num = 0
-                    for(PreStowageData preStowageData1 : result) {
-                        if("20".equals(preStowageData1.getSIZE()) && "1".equals(preStowageData1.getWORKFLOW())) {
-                            num++
-                        }
-                    }
-                    if(num > 200) {//当小倍位里有2个以上的箱子要做单箱吊的时候，则按新规则重新排序列：先小倍，从左到右，后大倍
-                        seq = 1
-                        this.reWork(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
-                                VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-                    }
+//                    for(PreStowageData preStowageData2 : resultReturnD) {
+//                        result.add(preStowageData2)
+//                    }
+//                    for(PreStowageData preStowageData3 : resultReturnL) {
+//                        result.add(preStowageData3)
+//                    }
+//                    //统计结果中20尺、作业工艺为1的箱子的个数
+//                    int num = 0
+//                    for(PreStowageData preStowageData1 : result) {
+//                        if("20".equals(preStowageData1.getSIZE()) && "1".equals(preStowageData1.getWORKFLOW())) {
+//                            num++
+//                        }
+//                    }
+//                    if(num > 200) {//当小倍位里有2个以上的箱子要做单箱吊的时候，则按新规则重新排序列：先小倍，从左到右，后大倍
+//                        seq = 1
+//                        this.reWork(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
+//                                VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
+//                    }
                 }
                 if(VBY_BAYIDs.size() == 3) {//有3个倍位的处理方法
                     smallBay.add(VBY_BAYIDs.get(0))
@@ -137,24 +137,24 @@ class GeneratePreStowageFromKnowStowage2 {
                     }//取得最大值，给装船当作开始序列
                     List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-                    for(PreStowageData preStowageData2 : resultReturnD) {
-                        result.add(preStowageData2)
-                    }
-                    for(PreStowageData preStowageData3 : resultReturnL) {
-                        result.add(preStowageData3)
-                    }
-                    //统计结果中20尺、作业工艺为1的箱子的个数
-                    int num = 0
-                    for(PreStowageData preStowageData1 : result) {
-                        if("20".equals(preStowageData1.getSIZE()) && "1".equals(preStowageData1.getWORKFLOW())) {
-                            num++
-                        }
-                    }
-                    if(num > 200) {//当小倍位里有2个以上的箱子要做单箱吊的时候，按新规则重新排序列：先小倍，从左到右，后大倍
-                        seq = 1
-                        this.reWork(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
-                                VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
-                    }
+//                    for(PreStowageData preStowageData2 : resultReturnD) {
+//                        result.add(preStowageData2)
+//                    }
+//                    for(PreStowageData preStowageData3 : resultReturnL) {
+//                        result.add(preStowageData3)
+//                    }
+//                    //统计结果中20尺、作业工艺为1的箱子的个数
+//                    int num = 0
+//                    for(PreStowageData preStowageData1 : result) {
+//                        if("20".equals(preStowageData1.getSIZE()) && "1".equals(preStowageData1.getWORKFLOW())) {
+//                            num++
+//                        }
+//                    }
+//                    if(num > 200) {//当小倍位里有2个以上的箱子要做单箱吊的时候，按新规则重新排序列：先小倍，从左到右，后大倍
+//                        seq = 1
+//                        this.reWork(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20, VRW_ROWNO_L_20,  stringListMap_L_20,
+//                                VRW_ROWNO_D_40, stringListMap_D_40, VRW_ROWNO_L_40, stringListMap_L_40, resultList)
+//                    }
                 }
             }
         }
@@ -671,7 +671,7 @@ class GeneratePreStowageFromKnowStowage2 {
                                       List<Integer> VRW_ROWNO_L_40, Map<String, PreStowageData> stringListMap_L_40,
                                       List<PreStowageData> resultList) {
         List<PreStowageData> resultReturn = new ArrayList<>()
-
+        List<PreStowageData> preStowageDataAloneMap = new ArrayList<>();
         for(int n = VTR_TIERNOs.size()-1; n >= 0; n--) {
             int tier = VTR_TIERNOs.get(n)
             for(PreStowageData preStowageData : dataList) {//分别将20尺、40尺的卸船和装船的数据取出来，分开计算
@@ -688,6 +688,7 @@ class GeneratePreStowageFromKnowStowage2 {
                     stringListMap_D_40.put(key, preStowageData)
                 }
             }
+
             if(tier < 50) {//甲板下
                 //先对同一层卸船的舱位进行处理，开始
                 List<Integer> even = new ArrayList<>()//排号为偶数
@@ -752,11 +753,15 @@ class GeneratePreStowageFromKnowStowage2 {
                 for(int j = 0; j < VRW_ROWNO_D_20.size(); ) {//从小到大，甲板下由中央向两边
                     if(j == VRW_ROWNO_D_20.size()-1) {
                         if(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)) != null) {
-                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)))
+                            seq--
                         } else {
-                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)))
+                            seq--
                         }
                         j = j+1
                     } else {
@@ -768,17 +773,22 @@ class GeneratePreStowageFromKnowStowage2 {
                             j = j+2
                         } else {//同一层、不同排，对20尺的箱子来说用单吊具1
                             if(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)) != null) {
-                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+                                seq--
+                                preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_D_20.get(j)))
                             } else {
-                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_D_20.get(j)))
+                                seq--
                             }
                             j = j+1
                         }
                     }
                     seq++
                 }
+
                 //对同一层卸船的舱位进行处理，结束
             }
             if(tier > 50) {//甲板上
@@ -853,11 +863,15 @@ class GeneratePreStowageFromKnowStowage2 {
                 for(int j = even.size()-1; j >= 0;) {//先对偶数排处理,从大到小;甲板上卸船编顺序，由陆侧向海侧
                     if(j == 0) {
                         if(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)) != null) {
-                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)))
+                            seq--
                         } else {
-                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)))
+                            seq--
                         }
                         j = j-1
                     } else {
@@ -869,11 +883,15 @@ class GeneratePreStowageFromKnowStowage2 {
                             j = j-2
                         } else {//同一层、不同排，对20尺的箱子来说用单吊具1
                             if(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)) != null) {
-                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                                    seq--
+                                preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)))
                             } else {
-                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                                    seq--
+                                preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)))
                             }
                             j = j-1
                         }
@@ -883,11 +901,15 @@ class GeneratePreStowageFromKnowStowage2 {
                 for(int j = 0; j <odd.size(); ) {//再对奇数排处理，从小到大
                     if(j == odd.size()-1) {
                         if(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)) != null) {
-                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                            seq--
+                            preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)))
                         } else {
-                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                            seq--
+                            preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)))
                         }
                         j = j+1
                     } else {
@@ -899,11 +921,15 @@ class GeneratePreStowageFromKnowStowage2 {
                             j = j+2
                         } else {//同一层、不同排，对20尺的箱子来说用单吊具1
                             if(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)) != null) {
-                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                                seq--
+                                preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)))
                             } else {
-                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                                seq--
+                                preStowageDataAloneMap.add(stringListMap_D_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)))
                             }
                             j = j+1
                         }
@@ -928,6 +954,15 @@ class GeneratePreStowageFromKnowStowage2 {
             stringListMap_D_20.clear()
             stringListMap_D_40.clear()
         }
+        for(int i = 0; i < preStowageDataAloneMap.size(); i++) {
+            PreStowageData preStowageData = preStowageDataAloneMap.get(i)
+            println "层号-------"+preStowageData.getVTR_TIERNO()
+            preStowageData.setMOVE_ORDER(seq++)
+            preStowageData.setWORKFLOW("1")
+            resultList.add(preStowageData)
+            resultReturn.add(preStowageData)
+
+        }
         return resultReturn
     }
 
@@ -938,7 +973,9 @@ class GeneratePreStowageFromKnowStowage2 {
                                                          List<Integer> VRW_ROWNO_D_40, Map<String, PreStowageData> stringListMap_D_40,
                                                          List<Integer> VRW_ROWNO_L_40, Map<String, PreStowageData> stringListMap_L_40,
                                                          List<PreStowageData> resultList) {
+        int seqAlone = seq;
         List<PreStowageData> resultReturn = new ArrayList<>()
+        List<PreStowageData> preStowageDataAloneList = new ArrayList<>()
         for(Integer tier : VTR_TIERNOs) {
             for(PreStowageData preStowageData : dataList) {//分别将20尺、40尺的卸船和装船的数据取出来，分开计算
                 if(tier == Integer.valueOf(preStowageData.getVTR_TIERNO()) &&
@@ -964,11 +1001,15 @@ class GeneratePreStowageFromKnowStowage2 {
                 for(int j = 0; j < VRW_ROWNO_L_20.size(); ) {//从小到大，甲板下由中央向两边
                     if(j == VRW_ROWNO_L_20.size()-1) {
                         if(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)) != null) {
-                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+                            seq--
+                            preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)))
                         } else {
-                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)))
+                            seq--
                         }
                         j = j+1
                     } else {
@@ -980,11 +1021,15 @@ class GeneratePreStowageFromKnowStowage2 {
                             j = j+2
                         } else {//同一层、不同排，对20尺的箱子来说用单吊具1
                             if(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)) != null) {
-                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+VRW_ROWNO_L_20.get(j)))
+                                seq--
                             } else {
-                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+VRW_ROWNO_L_20.get(j)))
+                                seq--
                             }
                             j = j+1
                         }
@@ -1021,11 +1066,15 @@ class GeneratePreStowageFromKnowStowage2 {
                 for(int j = odd.size()-1; j >= 0;) {//先对奇数排处理,从大到小;甲板上装船编顺序，由海侧向陆侧
                     if(j == 0) {
                         if(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)) != null) {
-                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)))
+                            seq--
                         } else {
-                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)))
+                            seq--
                         }
                         j = j-1
                     } else {
@@ -1037,11 +1086,15 @@ class GeneratePreStowageFromKnowStowage2 {
                             j = j-2
                         } else {//同一层、不同排，对20尺的箱子来说用单吊具1
                             if(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)) != null) {
-                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+odd.get(j)))
+                                seq--
                             } else {
-                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+odd.get(j)))
+                                seq--
                             }
                             j = j-1
                         }
@@ -1051,11 +1104,15 @@ class GeneratePreStowageFromKnowStowage2 {
                 for(int j = 0; j <even.size(); ) {//再对偶数排处理，从小到大
                     if(j == even.size()-1) {
                         if(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)) != null) {
-                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)))
+                            seq--
                         } else {
-                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                            stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                            preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)))
+                            seq--
                         }
                         j = j+1
                     } else {
@@ -1067,11 +1124,15 @@ class GeneratePreStowageFromKnowStowage2 {
                             j = j+2
                         } else {//同一层、不同排，对20尺的箱子来说用单吊具1
                             if(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)) != null) {
-                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(0)+"."+tier+"."+even.get(j)))
+                                seq--
                             } else {
-                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
-                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+//                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setMOVE_ORDER(seq)
+//                                stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)).setWORKFLOW(1+"")
+                                preStowageDataAloneList.add(stringListMap_L_20.get(smallBay.get(1)+"."+tier+"."+even.get(j)))
+                                seq--
                             }
                             j = j+1
                         }
@@ -1149,6 +1210,19 @@ class GeneratePreStowageFromKnowStowage2 {
             stringListMap_L_20.clear()
             stringListMap_L_40.clear()
         }
-        return resultReturn
+        for(int j = 0; j <preStowageDataAloneList.size(); j++) {
+            preStowageDataAloneList.get(j).setMOVE_ORDER(j+1+seqAlone)
+            preStowageDataAloneList.get(j).setWORKFLOW("1")
+        }
+        for(int i = 0; i < resultList.size(); i++) {
+            int order = resultList.get(i).getMOVE_ORDER()
+            resultList.get(i).setMOVE_ORDER(order+preStowageDataAloneList.size())
+        }
+        for(int i = 0; i < resultReturn.size(); i++) {
+            int order = resultReturn.get(i).getMOVE_ORDER()
+            resultReturn.get(i).setMOVE_ORDER(order + preStowageDataAloneList.size())
+        }
+        preStowageDataAloneList.addAll(resultList)
+        return preStowageDataAloneList
     }
 }
