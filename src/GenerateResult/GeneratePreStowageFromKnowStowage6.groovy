@@ -155,7 +155,7 @@ class GeneratePreStowageFromKnowStowage6 {
                     String key = Integer.valueOf(preStowageData.getVBY_BAYID()) + "." +Integer.valueOf(preStowageData.getVTR_TIERNO()) + "." + Integer.valueOf(preStowageData.getVRW_ROWNO())
                     stringListMap_D_40.put(key, preStowageData)
                 }
-            }//保存当前层的数据
+            }//保存当前层的船箱位
 
             if(tier < 50) {//甲板下
                 //先对同一层卸船的舱位进行处理，开始
