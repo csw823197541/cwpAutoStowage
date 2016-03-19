@@ -25,13 +25,13 @@ public class Test {
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
-        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
-        voyageFrame.setVisible(true);
+//        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
+//        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
         ImportData.vesselStructureInfoList = vesselStructureInfoList;
-        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
-        vesselStructureFrame.setVisible(true);
+//        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+//        vesselStructureFrame.setVisible(true);
 
 
 //        //桥机
@@ -53,13 +53,13 @@ public class Test {
         //实配图
         String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
-//        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageInfoList1);
+//        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
         List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
         System.out.println(resultList.size());
-        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(resultList);
-        preStowageFrame1.setVisible(true);
+        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
+        preStowageFrame2.setVisible(true);
         //测试两个绝对位置
 //        GenerateCwpResult.getHatchPositionInfo(voyageInfoList, vesselStructureInfoList);
         //测试生成属性组和moveCount
@@ -67,9 +67,9 @@ public class Test {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-//        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
-//        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
-//        cwpResultFrame.setVisible(true);
+        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
+        cwpResultFrame.setVisible(true);
         //测试自动配载算法
 //        String cwpResultStr = FileUtil.readFileToString(new File("E:/NewTestData/cwpBlock.txt")).toString();
 //        List<CwpResultInfo> cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
