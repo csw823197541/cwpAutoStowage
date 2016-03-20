@@ -83,13 +83,13 @@ class GeneratePreStowageFromKnowStowage6 {
                     largeBay.add(VBY_BAYIDs.get(0))
                     List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, resultList)
-                    int seqL = 1//取出卸完箱子后的序列
+                    int seqL = 0//取出卸完箱子后的序列
                     for(PreStowageData preStowageData1: resultReturnD) {
                         if(preStowageData1.getMOVE_ORDER() > seqL)
                             seqL = preStowageData1.getMOVE_ORDER()
                     }//取得最大值，给装船当作开始序列
                     println "卸完箱子后的序列" +seqL
-                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL+1, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     resultList.addAll(resultReturnL)
                 }
@@ -98,13 +98,13 @@ class GeneratePreStowageFromKnowStowage6 {
                     smallBay.add(VBY_BAYIDs.get(1))
                     List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, resultList)
-                    int seqL = 1//取出卸完箱子后的序列
+                    int seqL = 0//取出卸完箱子后的序列
                     for(PreStowageData preStowageData1: resultReturnD) {
                         if(preStowageData1.getMOVE_ORDER() > seqL)
                             seqL = preStowageData1.getMOVE_ORDER()
                     }//取得最大值，给装船当作开始序列
                     println "卸完箱子后的序列" +seqL
-                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL+1, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     resultList.addAll(resultReturnL)
                 }
@@ -114,13 +114,13 @@ class GeneratePreStowageFromKnowStowage6 {
                     largeBay.add(VBY_BAYIDs.get(1))
                     List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, resultList)
-                    int seqL = 1//取出卸完箱子后的序列
+                    int seqL = 0//取出卸完箱子后的序列
                     for(PreStowageData preStowageData1: resultReturnD) {
                         if(preStowageData1.getMOVE_ORDER() > seqL)
                             seqL = preStowageData1.getMOVE_ORDER()
                     }//取得最大值，给装船当作开始序列
                     println "卸完箱子后的序列" +seqL
-                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_L_20,  stringListMap_L_20,
+                    List<PreStowageData> resultReturnL = this.workBayLoad(seqL+1, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_L_20,  stringListMap_L_20,
                             VRW_ROWNO_L_40, stringListMap_L_40, resultList)
                     resultList.addAll(resultReturnL)
                 }
@@ -703,13 +703,13 @@ class GeneratePreStowageFromKnowStowage6 {
         }
         //对边角料进行编序号
         for(int j = 0; j <preStowageDataAloneList.size(); j++) {
-            preStowageDataAloneList.get(j).setMOVE_ORDER(j+1+seqAlone)
+            preStowageDataAloneList.get(j).setMOVE_ORDER(seqAlone++)
             preStowageDataAloneList.get(j).setWORKFLOW("1")
         }
         //将已经编好序号的船箱位，加上边角料的序号重新编序
         for(int i = 0; i < resultReturn.size(); i++) {
             int order = resultReturn.get(i).getMOVE_ORDER()
-            resultReturn.get(i).setMOVE_ORDER(order + preStowageDataAloneList.size() + 1)
+            resultReturn.get(i).setMOVE_ORDER(order + preStowageDataAloneList.size())
         }
         //加上边角料的船箱位
         for(PreStowageData preStowageData : preStowageDataAloneList) {
