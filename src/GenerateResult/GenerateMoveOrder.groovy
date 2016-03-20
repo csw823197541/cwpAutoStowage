@@ -102,16 +102,21 @@ class GenerateMoveOrder {
         }
         return Collections.sort(resultList)
     }
-    //获得排号
-    private List<Integer> rowIntegers(Set<String> keySet){
-        List<Integer> resultList = new ArrayList<>();
-        keySet.each {key->
-            int rowInt = key.split(".")[-1].toInteger()
-            if(!resultList.contains(rowInt)){
-                resultList.add(rowInt)
-            }
+    //获得每层排号
+    private Map<Integer,List<Integer>> rowIntegersMap(Set<String> keySet){
+        Map<Integer,List<Integer>> resultMap = new HashMap<>()
+        List<Integer> tierIntList = tierIntegers(keySet)
+        tierIntList.each { tierInt->
+            List<Integer> rowIntegerList = new ArrayList<>()
+            resultMap.put(tierInt,rowIntegerList)
         }
-        return Collections.sort(resultList)
+        keySet.each {key->
+            int rowInt = key.split(".")[1].toInteger()
+            int tierInt = key.split(".")[2].toInteger()
+            resultMap.get(tierInt).add(rowInt)
+        }
+
+        return resultMap
     }
     //获得贝位号
     private List<Integer> bayIntegers(Set<String> keySet){
