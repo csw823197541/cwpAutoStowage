@@ -55,7 +55,7 @@ class GenerateCwpResult {
         //调用cwp算法
         if(craneJsonStr != null && hatchJsonStr != null && moveJsonStr != null) {
             String cwpResultStr = null
-            cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr, "7") //最后一个7，代表桥机数
+            cwpResultStr = CallCwpTest.cwp(craneJsonStr, hatchJsonStr, moveJsonStr, "7", "180", "0.2") //后三个参数分别代表桥机数量、moveCount数量模值、效率缩小
             System.out.println("cwp算法返回的json字符串:" + cwpResultStr);
             if(cwpResultStr != null){
                 try{

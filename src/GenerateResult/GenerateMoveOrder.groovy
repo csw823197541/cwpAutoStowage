@@ -77,7 +77,13 @@ class GenerateMoveOrder {
     }
     //卸船
     public List<PreStowageData> processAbove40D(){
-
+        Set<String> keySet = above40DMap.keySet() //得到甲板上40尺卸船的倍.排.层
+        List<Integer> tierList = this.tierIntegers(keySet) //得到所有层号
+        Map<Integer,List<Integer>> tierRowQuery = this.rowIntegersMap(keySet)
+        for(int i = tierList.size()-1; i >= 0; i--) {
+            int tier = tierList.get(i)
+//            List<Integer>
+        }
     }
     public List<PreStowageData> processAbove20D(){}
     public List<PreStowageData> processBelow40D(){}
