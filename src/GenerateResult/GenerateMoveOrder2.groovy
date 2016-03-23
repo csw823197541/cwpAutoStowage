@@ -156,9 +156,8 @@ class GenerateMoveOrder2 {
             int curRowNo = rowSeqList.get(i)
             //取出对应slotStack1的顶层
             SlotStack2 slotStack = slotStacks1[curRowNo]
-            if(!slotStack.isEmpty()){
+            if(!slotStack.isEmptyOrFull()){
                 String key = slotStack.getKey(slotStack.getTopTierNo())
-                println "顶层Key"
                 println key
             }
 

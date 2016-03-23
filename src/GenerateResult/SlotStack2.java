@@ -36,7 +36,7 @@ public class SlotStack2 {
         this.bottomTierNo = bottomTierNo;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmptyOrFull(){
         return topTierNo < bottomTierNo;
     }
 
