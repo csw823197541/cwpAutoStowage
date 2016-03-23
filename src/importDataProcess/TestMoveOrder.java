@@ -32,7 +32,7 @@ public class TestMoveOrder {
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
 //        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
 //        vesselStructureFrame.setVisible(true);
-//        ImportData.vesselStructureInfoList = vesselStructureInfoList;
+        ImportData.vesselStructureInfoList = vesselStructureInfoList;
 //        //桥机
 //        List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
 //        CraneFrame craneFrame = new CraneFrame(craneInfoList);
