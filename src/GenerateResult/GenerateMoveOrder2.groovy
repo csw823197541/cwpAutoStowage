@@ -36,6 +36,12 @@ class GenerateMoveOrder2 {
         }
         println "最大排号:" +  vMaxRowNo + ",最小排号:" + vMinRowNo
 
+        //生成遍历顺序
+        //甲板上,从左往右
+        for(int i = vMaxRowNo%2==0?vMaxRowNo:vMaxRowNo-1;i>=vMinRowNo;i=i-2){//偶数侧
+            rowListLR.add(i)
+        }
+
         List<String> hatchIdList = new ArrayList<>()//存放舱位ID
         Map<String, List<PreStowageData>> hatchDataMap = new HashMap<>()//放在不同的舱位的数据
         for(PreStowageData preStowageData : preStowageDataList) {
@@ -145,11 +151,7 @@ class GenerateMoveOrder2 {
 
         }
 
-        //生成遍历顺序
-        //甲板上,从左往右
-        for(int i = vMaxRowNo%2==0?vMaxRowNo:vMaxRowNo-1;i>=vMinRowNo;i=i-2){//偶数侧
-            rowListLR.add(i)
-        }
+
         for(int i = vMinRowNo%2==0?vMinRowNo+1:vMinRowNo;i<=vMaxRowNo;i=i+2){//奇数侧
             rowListLR.add(i)
         }
