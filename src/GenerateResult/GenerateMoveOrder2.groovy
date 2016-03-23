@@ -14,7 +14,7 @@ class GenerateMoveOrder2 {
     public int boardSepratorTierNo = 50;
 
     public Map<String,PreStowageData> allPreStowageDataMap
-    public Map<String,SlotStack2[]> slotStackMap
+    public Map<String,SlotStack[]> slotStackMap
 
 
     GenerateMoveOrder2(List<VesselStructureInfo> vesselStructureInfoList){
@@ -54,18 +54,18 @@ class GenerateMoveOrder2 {
 
         //生成这么多个slotStack表示一组,共分为8组(2小贝*甲板上下*装卸)
         slotStackMap = new HashMap<>()
-        slotStackMap.put("1AD",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("3AD",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("1BD",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("3BD",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("1BL",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("3BL",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("1AL",new SlotStack2[vMaxRowNo+1])
-        slotStackMap.put("3AL",new SlotStack2[vMaxRowNo+1])
+        slotStackMap.put("1AD",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("3AD",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("1BD",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("3BD",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("1BL",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("3BL",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("1AL",new SlotStack[vMaxRowNo+1])
+        slotStackMap.put("3AL",new SlotStack[vMaxRowNo+1])
 
         slotStackMap.values().each {slotStacks->
             for(int i = 0;i<slotStacks.length;i++){
-                slotStacks[i] = new SlotStack2();
+                slotStacks[i] = new SlotStack();
             }
         }
 
@@ -85,7 +85,7 @@ class GenerateMoveOrder2 {
             String abFlag = tierInt >= this.boardSepratorTierNo?"A":"B"
             if(bayInt%4==2){//大贝位,找到两个小贝的指针位置,比较更新
                 String ssKey = "" + "1" + abFlag + dlFlag
-                SlotStack2 slotStack = slotStackMap.get(ssKey)[rowInt]
+                SlotStack slotStack = slotStackMap.get(ssKey)[rowInt]
                 slotStack.putKey(tierInt,key)
                 if(tierInt>slotStack.getTopTierNo()){
                     slotStack.setTopTierNo(tierInt)
@@ -104,7 +104,7 @@ class GenerateMoveOrder2 {
             }
             else {//小贝位,找到对应slotStack
                 String ssKey = "" + bayInt%4 + abFlag + dlFlag  //拼接key
-                SlotStack2 slotStack = slotStackMap.get(ssKey)[rowInt]
+                SlotStack slotStack = slotStackMap.get(ssKey)[rowInt]
                 slotStack.putKey(tierInt,key)
                 if(tierInt>slotStack.getTopTierNo()){
                     slotStack.setTopTierNo(tierInt)
@@ -149,13 +149,13 @@ class GenerateMoveOrder2 {
 
 
     //生成卸船队列,无论甲板上甲板下,返回最后的MoveOrderSeq.参数:开始序号,开始位置,排遍历顺序,块数据,小贝slotStacks1,小贝slotStacks3
-    private int genDschMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks1, SlotStack2[] slotStacks3){
+    private int genDschMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack[] slotStacks1, SlotStack[] slotStacks3){
         int seq = startSeq;
         //按排号遍历顶层
         for(int i =0;i<rowSeqList.size();i++){
             int curRowNo = rowSeqList.get(i)
             //取出对应slotStack1的顶层
-            SlotStack2 slotStack = slotStacks1[curRowNo]
+            SlotStack slotStack = slotStacks1[curRowNo]
             if(!slotStack.isEmpty()){
                 String key = slotStack.getKey(slotStack.getTopTierNo())
                 println "顶层Key"
@@ -176,7 +176,7 @@ class GenerateMoveOrder2 {
         return startSeq
     }
     //生成装船队列,无论甲板上甲板下,返回最后的MoveOrderSeq.参数:开始序号,开始位置,排遍历顺序,块数据
-    private int genLoadMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks){
+    private int genLoadMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack[] slotStacks){
         int seq = startSeq;
 
         return startSeq
