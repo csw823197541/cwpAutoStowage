@@ -13,17 +13,28 @@ class GenerateMoveOrder2 {
 
     public int boardSepratorTierNo = 50;
 
-    public Map<String,PreStowageData> allPreStowageDataMapDsch
-    public Map<String,PreStowageData> allPreStowageDataMapLoad
-    public Map<String,SlotStack2[]> slotStackMap
-
     public List<Integer> rowListLR = new ArrayList<>()
+
+    int vMaxRowNo,vMinRowNo;
 
     GenerateMoveOrder2(List<VesselStructureInfo> vesselStructureInfoList){
         this.vesselStructureInfoList = vesselStructureInfoList
     }
 
     public List<PreStowageData> generateMoveOrder(List<PreStowageData> preStowageDataList){
+
+        vMaxRowNo = 1;
+        vMinRowNo = 1;
+        vesselStructureInfoList.each { vesselStructureInfo->
+            int rowNo = vesselStructureInfo.getVRWROWNO().toInteger()
+            if(rowNo> vMaxRowNo){
+                vMaxRowNo = rowNo
+            }
+            if(rowNo<vMinRowNo){//判断是否有00排
+                rowNo = vMinRowNo
+            }
+        }
+        println "最大排号:" +  vMaxRowNo + ",最小排号:" + vMinRowNo
 
         List<String> hatchIdList = new ArrayList<>()//存放舱位ID
         Map<String, List<PreStowageData>> hatchDataMap = new HashMap<>()//放在不同的舱位的数据
@@ -45,7 +56,8 @@ class GenerateMoveOrder2 {
         }
 
         List<PreStowageData> resultList = new ArrayList<>()
-        for(int i = 0; i < 1; i++) {
+        for(int i = 1; i < 2; i++) {
+            println hatchIdList.get(i)
             resultList.addAll(generateMoveOrderInHatch(hatchDataMap.get(hatchIdList.get(i))))
         }
         return resultList
@@ -55,20 +67,10 @@ class GenerateMoveOrder2 {
     //单个舱内排序
     public List<PreStowageData> generateMoveOrderInHatch(List<PreStowageData> preStowageDataListInHatch){
         //获取该舱的船舶结构,获取最大的排数,最小排数
-        int vMaxRowNo = 1,vMinRowNo = 1;
-        vesselStructureInfoList.each { vesselStructureInfo->
-            int rowNo = vesselStructureInfo.getVRWROWNO().toInteger()
-            if(rowNo> vMaxRowNo){
-                 vMaxRowNo = rowNo
-            }
-            if(rowNo<vMinRowNo){//判断是否有00排
-                rowNo = vMinRowNo
-            }
-        }
-        println "最大排号:" +  vMaxRowNo + ",最小排号:" + vMinRowNo
+
 
         //生成这么多个slotStack表示一组,共分为8组(2小贝*甲板上下*装卸)
-        slotStackMap = new HashMap<>()
+        Map<String,SlotStack2[]> slotStackMap = new HashMap<>()
         slotStackMap.put("1AD",new SlotStack2[vMaxRowNo+1])
         slotStackMap.put("3AD",new SlotStack2[vMaxRowNo+1])
         slotStackMap.put("1BD",new SlotStack2[vMaxRowNo+1])
@@ -85,8 +87,8 @@ class GenerateMoveOrder2 {
         }
 
         //生成整个舱的Map
-        allPreStowageDataMapDsch = new HashMap<>()
-        allPreStowageDataMapLoad = new HashMap<>()
+        Map<String,PreStowageData> allPreStowageDataMapDsch = new HashMap<>()
+        Map<String,PreStowageData> allPreStowageDataMapLoad = new HashMap<>()
         preStowageDataListInHatch.each { preStowageData->
             preStowageData.setMOVE_ORDER(0)
             preStowageData.setWORKFLOW("")
@@ -112,10 +114,6 @@ class GenerateMoveOrder2 {
                 if(bayInt%4==2){//大贝位,找到两个小贝的指针位置,比较更新
                     String ssKey = "" + "1" + abFlag + dlFlag
                     SlotStack2 slotStack = slotStackMap.get(ssKey)[rowInt]
-                    if(rowInt == 12){
-                        println "ssKey " + ssKey
-                        println "before key " + key + " top,bottom " + slotStack.getTopTierNo() + "," + slotStack.getBottomTierNo()
-                    }
                     slotStack.putKey(tierInt,key)
                     if(tierInt>slotStack.getTopTierNo()){
                         slotStack.setTopTierNo(tierInt)
@@ -130,9 +128,6 @@ class GenerateMoveOrder2 {
                     }
                     if(tierInt<slotStack.getBottomTierNo()){
                         slotStack.setBottomTierNo(tierInt)
-                    }
-                    if(rowInt == 12){
-                        println "after key " + key + " top,bottom " + slotStack.getTopTierNo() + "," + slotStack.getBottomTierNo()
                     }
                 }
                 else {//小贝位,找到对应slotStack
@@ -150,17 +145,14 @@ class GenerateMoveOrder2 {
 
         }
 
-
         //生成遍历顺序
         //甲板上,从左往右
-
         for(int i = vMaxRowNo%2==0?vMaxRowNo:vMaxRowNo-1;i>=vMinRowNo;i=i-2){//偶数侧
             rowListLR.add(i)
         }
         for(int i = vMinRowNo%2==0?vMinRowNo+1:vMinRowNo;i<=vMaxRowNo;i=i+2){//奇数侧
             rowListLR.add(i)
         }
-
         println(rowListLR)
 
         List<Integer> rowListBB = new ArrayList<>(rowListLR)
@@ -170,14 +162,12 @@ class GenerateMoveOrder2 {
 
         //计算甲板上
         int currentSeq = 1;
-        currentSeq = genDschMOByTier(currentSeq, null,rowListLR,slotStackMap.get("1AD"),slotStackMap.get("3AD"))
-        currentSeq = genDschMOByTier1(currentSeq, null, rowListBB, slotStackMap.get("1BD"), slotStackMap.get("3BD"))
+        currentSeq = genDschMOByTier1(currentSeq, null,rowListLR,slotStackMap.get("1AD"),slotStackMap.get("3AD"), allPreStowageDataMapDsch)
+        currentSeq = genDschMOByTier1(currentSeq, null, rowListBB, slotStackMap.get("1BD"), slotStackMap.get("3BD"), allPreStowageDataMapDsch)
 
         return allPreStowageDataMapDsch.values().toList()
 
     }
-
-
 
     //拼接位置
     public String getKey(PreStowageData preStowageData){
@@ -186,7 +176,7 @@ class GenerateMoveOrder2 {
     }
 
     //生成卸船队列,无论甲板上甲板下,返回最后的MoveOrderSeq.参数:开始序号,开始位置,排遍历顺序,块数据,小贝slotStacks1,小贝slotStacks3
-    private int genDschMOByTier1(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks1, SlotStack2[] slotStacks3){
+    private int genDschMOByTier1(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks1, SlotStack2[] slotStacks3, Map<String,PreStowageData> allPreStowageDataMapDsch){
         int seq = startSeq;
         boolean isNoneFlag, size40Flag, size20Flag, flag1, flag2, flag31, flag33, flag4;
         isNoneFlag = true
@@ -206,7 +196,6 @@ class GenerateMoveOrder2 {
                         if(!slotStack.isEmptyOrFull()){
                             int topTierNo = slotStack.getTopTierNo()
                             String key = slotStack.getKey(topTierNo)
-                            println key
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
                                 List<String> keys = new ArrayList<>()
                                 if(i+1 > rowListLR.size()) {
@@ -274,7 +263,6 @@ class GenerateMoveOrder2 {
                         if(!slotStack.isEmptyOrFull()){
                             int topTierNo = slotStack.getTopTierNo()
                             String key = slotStack.getKey(topTierNo)
-                            println key
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
                                 List<String> keys = new ArrayList<>()
                                 if(i+1 > rowListLR.size()) {
@@ -326,7 +314,6 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
-                            println  "key "+ key
                             size40Flag = true
                         }
                     }
@@ -461,7 +448,6 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
-                            println  "key "+ key
                             size20Flag = true
                         }
                     }
@@ -471,7 +457,6 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
-                            println  "key "+ key
                             size20Flag = true
                         }
                     }
@@ -483,7 +468,7 @@ class GenerateMoveOrder2 {
 
 
     //生成卸船队列,无论甲板上甲板下,返回最后的MoveOrderSeq.参数:开始序号,开始位置,排遍历顺序,块数据,小贝slotStacks1,小贝slotStacks3
-    private int genDschMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks1, SlotStack2[] slotStacks3){
+    private int genDschMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks1, SlotStack2[] slotStacks3, Map<String,PreStowageData> allPreStowageDataMapDsch){
         int seq = startSeq;
         boolean isNoneFlag, size40Flag, size20Flag, flag1, flag2, flag31, flag33, flag4;
         isNoneFlag = true
@@ -504,7 +489,6 @@ class GenerateMoveOrder2 {
                         if(!slotStack.isEmptyOrFull()){
                             int topTierNo = slotStack.getTopTierNo()
                             String key = slotStack.getKey(topTierNo)
-                            println key
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
                                 if(i+1 > rowSeqList.size()) {
                                     allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
@@ -553,7 +537,6 @@ class GenerateMoveOrder2 {
                         if(!slotStack.isEmptyOrFull()){
                             int topTierNo = slotStack.getTopTierNo()
                             String key = slotStack.getKey(topTierNo)
-                            println key
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
                                 if(i+1 > rowSeqList.size()) {
                                     continue
@@ -590,7 +573,6 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
-                            println  "key "+ key
                             size40Flag = true
                         }
                     }
@@ -679,7 +661,6 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
-                            println  "key "+ key
                             size20Flag = true
                         }
                     }
@@ -689,7 +670,6 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
-                            println  "key "+ key
                             size20Flag = true
                         }
                     }
