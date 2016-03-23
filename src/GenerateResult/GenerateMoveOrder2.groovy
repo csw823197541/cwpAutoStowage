@@ -158,6 +158,7 @@ class GenerateMoveOrder2 {
             SlotStack slotStack = slotStacks1[curRowNo]
             if(!slotStack.isEmpty()){
                 String key = slotStack.getKey(slotStack.getTopTierNo())
+                println "顶层Key"
                 println key
             }
 
