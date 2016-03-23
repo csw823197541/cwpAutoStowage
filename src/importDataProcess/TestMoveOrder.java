@@ -1,9 +1,12 @@
 package importDataProcess;
 
-import GenerateResult.*;
+import GenerateResult.GenerateCwpResult;
+import GenerateResult.GenerateMoveOrder2;
+import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import utils.FileUtil;
-import viewFrame.*;
+import viewFrame.CwpResultFrame;
+import viewFrame.PreStowageDataFrame;
 
 import java.io.File;
 import java.util.List;
@@ -11,15 +14,15 @@ import java.util.List;
 /**
  * Created by csw on 2016/1/21.
  */
-public class Test1 {
+public class TestMoveOrder {
     public static void main(String[] args) {
 
-        String vo = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitvoy.txt")).toString();
-        String sh = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
+        String vo = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
+        String sh = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvesselstructure1.json")).toString();
 //        String cr = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
-        String cr = FileUtil.readFileToString(new File("NewTestData1/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitcontainers.txt")).toString();
-        String ca = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitarea.txt")).toString();
+        String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
+        String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
+        String ca = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
@@ -29,13 +32,13 @@ public class Test1 {
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
 //        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
 //        vesselStructureFrame.setVisible(true);
-        ImportData.vesselStructureInfoList = vesselStructureInfoList;
+//        ImportData.vesselStructureInfoList = vesselStructureInfoList;
 //        //桥机
-        List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
+//        List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
 //        CraneFrame craneFrame = new CraneFrame(craneInfoList);
 //        craneFrame.setVisible(true);
 //        //在场箱
-        List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
+//        List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
 //        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
 //        containerFrame.setVisible(true);
         //箱区
@@ -47,15 +50,16 @@ public class Test1 {
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitperstowage.txt")).toString();
+        String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
-//        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
-//        preStowageFrame1.setVisible(true);
+        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
+        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
-        List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
+        GenerateMoveOrder2 generateMoveOrder2 = new GenerateMoveOrder2(vesselStructureInfoList);
+        List<PreStowageData> resultList = generateMoveOrder2.generateMoveOrder(preStowageDataList);
 //        System.out.println(resultList.size());
-        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
-        preStowageFrame2.setVisible(true);
+//        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
+//        preStowageFrame2.setVisible(true);
         //测试两个绝对位置
 //        GenerateCwpResult.getHatchPositionInfo(voyageInfoList, vesselStructureInfoList);
         //测试生成属性组和moveCount
