@@ -52,14 +52,14 @@ public class TestMoveOrder {
         //实配图
         String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
-        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
-        preStowageFrame1.setVisible(true);
+//        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
+//        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
         GenerateMoveOrder2 generateMoveOrder2 = new GenerateMoveOrder2(vesselStructureInfoList);
         List<PreStowageData> resultList = generateMoveOrder2.generateMoveOrder(preStowageDataList);
 //        System.out.println(resultList.size());
-//        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
-//        preStowageFrame2.setVisible(true);
+        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
+        preStowageFrame2.setVisible(true);
         //测试两个绝对位置
 //        GenerateCwpResult.getHatchPositionInfo(voyageInfoList, vesselStructureInfoList);
         //测试生成属性组和moveCount
