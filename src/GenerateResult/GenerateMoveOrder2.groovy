@@ -132,7 +132,8 @@ class GenerateMoveOrder2 {
         int currentSeq = 0;
         currentSeq = genDschMOByTier(currentSeq,null,rowListAB,slotStackMap.get("1AD"),slotStackMap.get("3AD"))
 
-        return null
+
+        return allPreStowageDataMap.values().toList()
 
 
 
@@ -151,17 +152,111 @@ class GenerateMoveOrder2 {
     //生成卸船队列,无论甲板上甲板下,返回最后的MoveOrderSeq.参数:开始序号,开始位置,排遍历顺序,块数据,小贝slotStacks1,小贝slotStacks3
     private int genDschMOByTier(int startSeq, String startKey, List<Integer> rowSeqList, SlotStack2[] slotStacks1, SlotStack2[] slotStacks3){
         int seq = startSeq;
-        //按排号遍历顶层
-        for(int i =0;i<rowSeqList.size();i++){
-            int curRowNo = rowSeqList.get(i)
-            //取出对应slotStack1的顶层
-            SlotStack2 slotStack = slotStacks1[curRowNo]
-            if(!slotStack.isEmptyOrFull()){
-                String key = slotStack.getKey(slotStack.getTopTierNo())
-                println key
+        boolean flag, flag1, flag2, flag3, flag4;
+        flag = true
+        while(flag) {
+            flag = false
+            flag1 = true
+            while (flag1) {
+                flag1 = false
+                //按排号遍历顶层
+                for(int i =0;i<rowSeqList.size();i++){
+                    int curRowNo = rowSeqList.get(i)
+                    //取出对应slotStack1的顶层
+                    SlotStack2 slotStack = slotStacks1[curRowNo]
+                    if(!slotStack.isEmptyOrFull()){
+                        int topTierNo = slotStack.getTopTierNo()
+                        String key = slotStack.getKey(topTierNo)
+                        println key
+                        if(allPreStowageDataMap.get(key).getSIZE().startsWith("4")) {
+                            if(i+1 > rowSeqList.size()) {
+                                allPreStowageDataMap.get(key).setMOVE_ORDER(seq++)
+                                allPreStowageDataMap.get(key).setWORKFLOW("1")
+                                slotStack.setTopTierNo(topTierNo-2)
+                                slotStacks3[curRowNo].setTopTierNo(topTierNo-2)
+                                flag1 = true
+                            } else {
+                                int nextRowNo = rowSeqList.get(i+1)
+                                SlotStack2 nextSlotStack = slotStacks1[nextRowNo]
+                                int nextTopTierNo = nextSlotStack.getTopTierNo()
+                                String nextKey = nextSlotStack.getKey(topTierNo)
+                                if(nextKey != null) {
+                                    if(allPreStowageDataMap.get(nextKey).getSIZE().startsWith("4")) {
+                                        if(topTierNo == nextTopTierNo) {
+                                            i++
+                                        }
+                                    } else {
+                                        allPreStowageDataMap.get(key).setMOVE_ORDER(seq++)
+                                        allPreStowageDataMap.get(key).setWORKFLOW("1")
+                                        slotStack.setTopTierNo(topTierNo-2)
+                                        slotStacks3[curRowNo].setTopTierNo(topTierNo-2)
+                                        flag1 = true
+                                    }
+                                } else {
+                                    allPreStowageDataMap.get(key).setMOVE_ORDER(seq++)
+                                    allPreStowageDataMap.get(key).setWORKFLOW("1")
+                                    slotStack.setTopTierNo(topTierNo-2)
+                                    slotStacks3[curRowNo].setTopTierNo(topTierNo-2)
+                                    flag1 = true
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
+            flag2 = true
+            while(flag2) {
+                flag2 = false
+                //按排号遍历顶层
+                for(int i =0;i<rowSeqList.size();i++){
+                    int curRowNo = rowSeqList.get(i)
+                    //取出对应slotStack1的顶层
+                    SlotStack2 slotStack = slotStacks1[curRowNo]
+                    if(!slotStack.isEmptyOrFull()){
+                        int topTierNo = slotStack.getTopTierNo()
+                        String key = slotStack.getKey(topTierNo)
+                        println key
+                        if(allPreStowageDataMap.get(key).getSIZE().startsWith("4")) {
+                            if(i+1 > rowSeqList.size()) {
+                                continue
+                            } else {
+                                int nextRowNo = rowSeqList.get(i+1)
+                                SlotStack2 nextSlotStack = slotStacks1[nextRowNo]
+                                int nextTopTierNo = nextSlotStack.getTopTierNo()
+                                String nextKey = nextSlotStack.getKey(topTierNo)
+                                if(nextKey != null) {
+                                    if (allPreStowageDataMap.get(nextKey).getSIZE().startsWith("4")) {
+                                        if (topTierNo == nextTopTierNo) {
+                                            allPreStowageDataMap.get(key).setMOVE_ORDER(seq++)
+                                            allPreStowageDataMap.get(key).setWORKFLOW("2")
+                                            slotStack.setTopTierNo(topTierNo - 2)
+                                            slotStacks3[curRowNo].setTopTierNo(topTierNo - 2)
+                                            nextSlotStack.setTopTierNo(nextTopTierNo - 2)
+                                            slotStacks3[nextRowNo].setTopTierNo(nextTopTierNo - 2)
+                                            flag2 = true
+                                            i++
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            slotStacks1.each {slotStack->
+                int topTierNo = slotStack.getTopTierNo()
+                String key = slotStack.getKey(topTierNo)
+                println "key "  +topTierNo +"kkkk "+ key
+                if(!slotStack.isEmptyOrFull()) {
+                    if(!allPreStowageDataMap.get(key).getSIZE().startsWith("4")) {
+                        flag = true
+                    }
+                }
+            }
         }
+
+
+
 
         //1.1处理1*40(顶上的40尺)
 
