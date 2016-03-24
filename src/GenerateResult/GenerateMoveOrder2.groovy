@@ -23,6 +23,7 @@ class GenerateMoveOrder2 {
 
     public List<PreStowageData> generateMoveOrder(List<PreStowageData> preStowageDataList){
 
+        //获取该舱的船舶结构,获取最大的排数,最小排数
         vMaxRowNo = 1;
         vMinRowNo = 1;
         vesselStructureInfoList.each { vesselStructureInfo->
@@ -41,6 +42,10 @@ class GenerateMoveOrder2 {
         for(int i = vMaxRowNo%2==0?vMaxRowNo:vMaxRowNo-1;i>=vMinRowNo;i=i-2){//偶数侧
             rowListLR.add(i)
         }
+        for(int i = vMinRowNo%2==0?vMinRowNo+1:vMinRowNo;i<=vMaxRowNo;i=i+2){//奇数侧
+            rowListLR.add(i)
+        }
+        println(rowListLR)
 
         List<String> hatchIdList = new ArrayList<>()//存放舱位ID
         Map<String, List<PreStowageData>> hatchDataMap = new HashMap<>()//放在不同的舱位的数据
@@ -62,9 +67,10 @@ class GenerateMoveOrder2 {
         }
 
         List<PreStowageData> resultList = new ArrayList<>()
-        for(int i = 1; i < 2; i++) {
+        for(int i = 3; i < 4; i++) {
             println hatchIdList.get(i)
-            resultList.addAll(generateMoveOrderInHatch(hatchDataMap.get(hatchIdList.get(i))))
+            List<PreStowageData> list = hatchDataMap.get(hatchIdList.get(i))
+            resultList.addAll(generateMoveOrderInHatch(list))
         }
         return resultList
 
@@ -72,8 +78,6 @@ class GenerateMoveOrder2 {
 
     //单个舱内排序
     public List<PreStowageData> generateMoveOrderInHatch(List<PreStowageData> preStowageDataListInHatch){
-        //获取该舱的船舶结构,获取最大的排数,最小排数
-
 
         //生成这么多个slotStack表示一组,共分为8组(2小贝*甲板上下*装卸)
         Map<String,SlotStack2[]> slotStackMap = new HashMap<>()
@@ -151,12 +155,6 @@ class GenerateMoveOrder2 {
 
         }
 
-
-        for(int i = vMinRowNo%2==0?vMinRowNo+1:vMinRowNo;i<=vMaxRowNo;i=i+2){//奇数侧
-            rowListLR.add(i)
-        }
-        println(rowListLR)
-
         List<Integer> rowListBB = new ArrayList<>(rowListLR)
 //        Collections.copy(rowListBB, rowListLR)
         Collections.sort(rowListBB)
@@ -185,7 +183,9 @@ class GenerateMoveOrder2 {
         while(isNoneFlag) {
             isNoneFlag = false
             size40Flag = true//顶层是否有40尺箱子标记
+            int count1 = 1
             while(size40Flag) {
+                count1++
                 size40Flag = false
                 //1.1处理1*40(顶上的40尺)
                 flag1 = true
@@ -194,13 +194,15 @@ class GenerateMoveOrder2 {
                     Map<Integer, List<String>> keyMap = new HashMap<>()
                     for(int i = 0; i < rowListLR.size(); i++) {
                         int curRowNo = rowListLR.get(i)
+                        println "i " + i + " curRowNo  " + curRowNo
                         SlotStack2 slotStack = slotStacks1[curRowNo]
                         if(!slotStack.isEmptyOrFull()){
                             int topTierNo = slotStack.getTopTierNo()
                             String key = slotStack.getKey(topTierNo)
-                            if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
+                            int oppositeTopTierNo = slotStacks3[curRowNo].getTopTierNo()
+                            if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4") && topTierNo == oppositeTopTierNo) {
                                 List<String> keys = new ArrayList<>()
-                                if(i+1 > rowListLR.size()) {
+                                if(i+1 >= rowListLR.size()) {
 //                                    allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
 //                                    allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
                                     keys.add(key)
@@ -213,12 +215,14 @@ class GenerateMoveOrder2 {
                                     SlotStack2 nextSlotStack = slotStacks1[nextRowNo]
                                     int nextTopTierNo = nextSlotStack.getTopTierNo()
                                     String nextKey = nextSlotStack.getKey(topTierNo)
-                                    if(nextKey != null) {
-                                        if(allPreStowageDataMapDsch.get(nextKey).getSIZE().startsWith("4")) {
-                                            if(topTierNo == nextTopTierNo) {
-                                                i++
-                                            }
+                                    println "nextKey  " + nextKey +"---"+nextTopTierNo
+                                    if(nextKey != null && nextKey != "") {
+                                        println "nextsize " + allPreStowageDataMapDsch.get(nextKey).getSIZE()
+                                        if(allPreStowageDataMapDsch.get(nextKey).getSIZE().startsWith("4") && topTierNo <= nextTopTierNo) {
+                                            i++
+                                            println "continue"
                                         } else {
+                                            println "do 40*1 at" + key
 //                                            allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
 //                                            allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
                                             keys.add(key)
@@ -230,6 +234,7 @@ class GenerateMoveOrder2 {
                                     } else {
 //                                        allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
 //                                        allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
+                                        println "do 40*1 at" + key
                                         keys.add(key)
                                         keyMap.put(curRowNo, keys)
                                         slotStack.setTopTierNo(topTierNo-2)
@@ -252,6 +257,7 @@ class GenerateMoveOrder2 {
                         }
                     }
                 }
+
                 //1.2处理2*40
                 flag2 = true
                 while(flag2) {
@@ -267,7 +273,7 @@ class GenerateMoveOrder2 {
                             String key = slotStack.getKey(topTierNo)
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
                                 List<String> keys = new ArrayList<>()
-                                if(i+1 > rowListLR.size()) {
+                                if(i+1 >= rowListLR.size()) {
                                     continue
                                 } else {
                                     int nextRowNo = rowListLR.get(i+1)
@@ -316,11 +322,13 @@ class GenerateMoveOrder2 {
                     String key = slotStack.getKey(topTierNo)
                     if(!slotStack.isEmptyOrFull()) {
                         if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4")) {
+//                            println key
                             size40Flag = true
                         }
                     }
                 }
             }
+            /*
             size20Flag = true //顶层是否有20尺箱子标记
             while(size20Flag) {
                 size20Flag = false
@@ -337,16 +345,18 @@ class GenerateMoveOrder2 {
                             List<String> keys = new ArrayList<>()
                             int topTierNo = slotStack1.getTopTierNo()
                             String key = slotStack1.getKey(topTierNo)
-                            if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
-                                SlotStack2 slotStack3 = slotStacks3[curRowNo]
-                                String oppositeKey = slotStack3.getKey(topTierNo)
-                                if(oppositeKey == null) {
+                            if(key != null) {
+                                if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
+                                    SlotStack2 slotStack3 = slotStacks3[curRowNo]
+                                    String oppositeKey = slotStack3.getKey(topTierNo)
+                                    if(oppositeKey == null) {
 //                                    allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
 //                                    allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
-                                    keys.add(key)
-                                    keyMap.put(curRowNo, keys)
-                                    slotStack1.setTopTierNo(topTierNo-2)
-                                    flag31 = true
+                                        keys.add(key)
+                                        keyMap.put(curRowNo, keys)
+                                        slotStack1.setTopTierNo(topTierNo-2)
+                                        flag31 = true
+                                    }
                                 }
                             }
                         }
@@ -464,6 +474,7 @@ class GenerateMoveOrder2 {
                     }
                 }
             }
+            */
         }
         return seq
     }
