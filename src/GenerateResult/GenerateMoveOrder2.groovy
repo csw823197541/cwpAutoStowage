@@ -110,6 +110,7 @@ class GenerateMoveOrder2 {
             }
 
         }
+        allPreStowageDataMapDsch.remove("15.6.96")
 
         //遍历,填栈
         [allPreStowageDataMapDsch,allPreStowageDataMapLoad].each { map->
@@ -193,13 +194,16 @@ class GenerateMoveOrder2 {
                     flag1 = false
                     Map<Integer, List<String>> keyMap = new HashMap<>()
                     for(int i = 0; i < rowListLR.size(); i++) {
+                        println "-------------"
                         int curRowNo = rowListLR.get(i)
-                        println "i " + i + " curRowNo  " + curRowNo
+                        println "iCount " + i + " curRowNo  " + curRowNo
                         SlotStack2 slotStack = slotStacks1[curRowNo]
                         if(!slotStack.isEmptyOrFull()){
                             int topTierNo = slotStack.getTopTierNo()
                             String key = slotStack.getKey(topTierNo)
                             int oppositeTopTierNo = slotStacks3[curRowNo].getTopTierNo()
+                            println "currKey " + key + " currTopTier " + topTierNo + " oppoTopTier " + oppositeTopTierNo
+
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("4") && topTierNo == oppositeTopTierNo) {
                                 List<String> keys = new ArrayList<>()
                                 if(i+1 >= rowListLR.size()) {
@@ -218,9 +222,21 @@ class GenerateMoveOrder2 {
                                     println "nextKey  " + nextKey +"---"+nextTopTierNo
                                     if(nextKey != null && nextKey != "") {
                                         println "nextsize " + allPreStowageDataMapDsch.get(nextKey).getSIZE()
-                                        if(allPreStowageDataMapDsch.get(nextKey).getSIZE().startsWith("4") && topTierNo <= nextTopTierNo) {
-                                            i++
-                                            println "continue"
+                                        if(allPreStowageDataMapDsch.get(nextKey).getSIZE().startsWith("4")) {
+                                            if(topTierNo == nextTopTierNo){
+                                                i++
+                                                println "continue"
+                                            }
+                                            else if(topTierNo>nextTopTierNo){
+                                                println "do 40*1 at" + key
+//                                            allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
+//                                            allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
+                                                keys.add(key)
+                                                keyMap.put(curRowNo, keys)
+                                                slotStack.setTopTierNo(topTierNo-2)
+                                                slotStacks3[curRowNo].setTopTierNo(topTierNo-2)
+                                                flag1 = true
+                                            }
                                         } else {
                                             println "do 40*1 at" + key
 //                                            allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
