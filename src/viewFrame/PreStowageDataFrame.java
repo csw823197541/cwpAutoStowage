@@ -108,6 +108,7 @@ public class PreStowageDataFrame extends JFrame{
                                 int row =((JTable)e.getSource()).rowAtPoint(e.getPoint()); //获得行位置
                                 String clickedBayId = (String) tableModel.getValueAt(row,tableWQL.getColumnModel().getColumnIndex("倍号"));
 
+                                System.out.println("倍位号：" + clickedBayId);
                                 //筛选该贝位的数据
                                 List<PreStowageData> bayLoadStowageData = new ArrayList<PreStowageData>();
                                 List<PreStowageData> bayDschStowageData = new ArrayList<PreStowageData>();

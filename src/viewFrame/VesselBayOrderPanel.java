@@ -17,8 +17,8 @@ public class VesselBayOrderPanel extends JPanel {
     public static int start_x = 300, start_y_b = 580,start_y_a = 300;
     public int size_width = 600;
     public int size_height = 600;
-    public Font font = new Font("宋体",Font.BOLD,10);
-    public Font font2 = new Font("宋体",Font.PLAIN,6);
+//    public Font font = new Font("宋体",Font.BOLD,10);
+//    public Font font2 = new Font("宋体",Font.PLAIN,6);
 
     public VesselBayOrderPanel(List<PreStowageData> inPreStowageDataList){
         preStowageDataList = inPreStowageDataList;
@@ -63,7 +63,7 @@ public class VesselBayOrderPanel extends JPanel {
             g2d.drawRect(vx,vy,rect_length,rect_length);
 
             String tag2 = "" + rowInt+"," + tierInt;
-            g2d.setFont(font2);
+//            g2d.setFont(font2);
             g2d.drawString(tag2,vx,vy+18);
         }
 
@@ -96,7 +96,7 @@ public class VesselBayOrderPanel extends JPanel {
 
                 g2d.drawRect(x,y,rect_length,rect_length);
                 String tag1 = preStowageData.getMOVE_ORDER().toString();
-                g2d.setFont(font);
+//                g2d.setFont(font);
                 g2d.setPaint(Color.red);
                 g2d.drawString(tag1,x,y+8);
 

@@ -6,10 +6,8 @@ import importDataInfo.HatchInfo;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by csw on 2016/3/13.
@@ -88,9 +86,9 @@ public class CwpResultPanel extends JPanel{
 
         //设置桥机颜色
         Color[] colors = new Color[]{new Color(0xCD00CD), new Color(0x1EC6CD), new Color(0xFF0325), new Color(0x9F79EE),
-                new Color(0x21FE06), new Color(0xFFFF22), new Color(0x050505), new Color(0x9AA309), new Color(0x120DFF),
+                new Color(0x21FE06), new Color(0xFFFF22), new Color(0xFF00FF), new Color(0x9AA309), new Color(0x120DFF),
                 new Color(0x8B0000), new Color(0x00FFFF), new Color(0x87CEFA), new Color(0xEE0000), new Color(0x000077),
-                new Color(0x22B522), new Color(0x3D3D3D), new Color(0xFF00FF)};//16部桥机的颜色
+                new Color(0x22B522), new Color(0x3D3D3D), new Color(0x050505)};//16部桥机的颜色
         Map<String, Color> craneQuery = new HashMap<>();
         int k = 0;
         for(CraneInfo craneInfo : craneInfoList) {
@@ -114,7 +112,10 @@ public class CwpResultPanel extends JPanel{
             g2d.drawLine(leftMargin-5, j*(cwpBlock-hatchWidth)/timeStep + topMargin + hatchWidth, leftMargin, j*(cwpBlock-hatchWidth)/timeStep + topMargin + hatchWidth);
         }
         //画作业块
-        Map<String, Integer> countQuery = new HashMap<>();
+        Map<String, Integer> countQuery = new HashMap<>();//每个倍位的moveCount数统计
+        Map<String, List<String>> blockCountQuery = new HashMap<>();//每个作业块的moveCount数统计
+        List<String> strList;
+        String strNew;
         for(CwpResultInfo cwpResultInfo : cwpResultInfoList) {
             String craneId = cwpResultInfo.getCRANEID();//得到桥机号
             int bayId = Integer.valueOf(cwpResultInfo.getHATCHBWID());//得到倍位号
@@ -126,6 +127,29 @@ public class CwpResultPanel extends JPanel{
             } else {
                 countQuery.put(bayId + "", moveCount);
             }
+            String key = bayId+" "+craneId;
+            strList = new ArrayList<>();
+            List<String> startTimeEndTimeMoveCount = blockCountQuery.get(key);
+            if(startTimeEndTimeMoveCount != null) {
+                boolean flag = false;
+                for(String str : startTimeEndTimeMoveCount) {
+                    if((Integer.valueOf(str.split(" ")[1]) == startTime) || (Integer.valueOf(str.split(" ")[1]) == startTime+1)) {//结束时间与开始时间相同，是同一个作业块的
+                        int count = Integer.valueOf(str.split(" ")[2])+moveCount;
+                        strNew = str.split(" ")[0]+" "+endTime+" "+count;
+                        strList.add(strNew);
+                        flag = true;
+                    }
+                }
+                if(!flag) {
+                    strNew = startTime+" "+endTime+" "+moveCount;
+                    strList.add(strNew);
+                }
+                blockCountQuery.put(key, strList);
+            } else {
+                strNew = startTime+" "+endTime+" "+moveCount;
+                strList.add(strNew);
+                blockCountQuery.put(key, strList);
+            }
             int x = bayQuery.get(bayId);
             int y = topMargin + hatchWidth + startTime*(cwpBlock - hatchWidth - topMargin)/maxEndTime;
             int w = bayId%2 == 0 ? hatchLength : hatchLength-4;//作业块宽度
@@ -133,18 +157,33 @@ public class CwpResultPanel extends JPanel{
             g2d.setPaint(craneQuery.get(craneId));
             g2d.drawRect(x, y, w, h);
             g2d.fillRect(x, y, w, h);
-//            g2d.drawString(moveCount+"", x+w+2, y);
         }
-        //遍历Map，画出作业块的moveCount数
+        //遍历Map，画出每个倍位的moveCount数
         if(countQuery != null) {
             for(Map.Entry<String, Integer> entry : countQuery.entrySet()) {
-//                System.out.println(entry.getKey().toString().split(" ")[0] +"----"+entry.getValue());
                 int x = bayQuery.get(Integer.valueOf(entry.getKey()));
                 g2d.setPaint(Color.red);
                 if(Integer.valueOf(entry.getKey())%2 == 0) {
                     g2d.drawString(entry.getValue()+"", x+2, 20);
                 }else{
                     g2d.drawString(entry.getValue()+"", x+2, 50);
+                }
+            }
+        }
+        //遍历Map, 画出每个作业块的moveCount数
+        if(blockCountQuery != null) {
+            for(Map.Entry<String, List<String>> entry : blockCountQuery.entrySet()) {
+                int x = bayQuery.get(Integer.valueOf(entry.getKey().split(" ")[0]));
+                List<String> stringList = entry.getValue();
+                for(String str : stringList) {
+                    int startTime = Integer.valueOf(str.split(" ")[0]);
+                    int endTime = Integer.valueOf(str.split(" ")[1]);
+                    String moveCount = str.split(" ")[2];
+                    g2d.setPaint(Color.BLACK);
+                    int y = topMargin + hatchWidth + startTime*(cwpBlock - hatchWidth - topMargin)/maxEndTime;
+                    int h = (endTime - startTime)*(cwpBlock - hatchWidth - topMargin)/maxEndTime;//作业块长度
+                    y = y + h/2;
+                    g2d.drawString(moveCount, x+2, y);
                 }
 
             }

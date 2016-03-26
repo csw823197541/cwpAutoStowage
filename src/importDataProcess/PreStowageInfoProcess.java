@@ -113,6 +113,7 @@ public class PreStowageInfoProcess {
         {
             String temp="";
             temp+=cwpResultInfo.getCRANEID().toString()+",";
+            temp+=cwpResultInfo.getCranesPosition().toString()+",";
             temp+=cwpResultInfo.getHATCHBWID().toString()+",";
             temp+=cwpResultInfo.getHATCHID().toString()+",";
             temp+=cwpResultInfo.getStartMoveID().toString()+",";
@@ -120,6 +121,7 @@ public class PreStowageInfoProcess {
             temp+=cwpResultInfo.getQDC().toString()+",";
             temp+=cwpResultInfo.getVESSELID().toString()+",";
             temp+=cwpResultInfo.getMOVETYPE().toString()+",";
+            temp+="L,";
             temp+=cwpResultInfo.getWORKINGENDTIME().toString()+",";
             temp+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
             cwpoutput+=temp;

@@ -16,6 +16,8 @@ public class CwpResultInfo {
     private Integer WORKINGENDTIME;//起始时间
     private Integer WORKINGSTARTTIME;//结束时间
     private String MOVETYPE;//作业工艺
+    private Double CranesPosition;//桥机当前位置
+    private String LDULD;    //装卸船标志
 
     public String getMOVETYPE() {
         return MOVETYPE;
@@ -103,5 +105,21 @@ public class CwpResultInfo {
 
     public void setWORKINGSTARTTIME(Integer WORKINGSTARTTIME) {
         this.WORKINGSTARTTIME = WORKINGSTARTTIME;
+    }
+
+    public Double getCranesPosition() {
+        return CranesPosition;
+    }
+
+    public void setCranesPosition(Double cranesPosition) {
+        CranesPosition = cranesPosition;
+    }
+
+    public String getLDULD() {
+        return LDULD;
+    }
+
+    public void setLDULD(String LDULD) {
+        this.LDULD = LDULD;
     }
 }

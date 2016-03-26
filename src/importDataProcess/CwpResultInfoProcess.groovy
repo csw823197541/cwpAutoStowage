@@ -3,10 +3,14 @@ package importDataProcess
 import groovy.json.JsonSlurper
 import importDataInfo.CwpResultInfo
 
+import java.text.DecimalFormat
+
 /**
  * Created by csw on 2016/1/16.
  */
 class CwpResultInfoProcess {
+
+    public static DecimalFormat df = new DecimalFormat("#.00");
 
     //Json字符串解析编码
     public static List<CwpResultInfo> getCwpResultInfo(String jsonStr) {
@@ -22,6 +26,7 @@ class CwpResultInfoProcess {
                 CwpResultInfo cwpResultInfo = new CwpResultInfo()
                 assert cwpResult instanceof Map
                 cwpResultInfo.CRANEID = cwpResult.CRANEID
+                cwpResultInfo.CranesPosition = Double.valueOf(df.format(cwpResult.CranesPosition))
                 cwpResultInfo.HATCHBWID = cwpResult.HATCHBWID
                 cwpResultInfo.HATCHID = cwpResult.HATCHID
                 cwpResultInfo.MOVECOUNT = cwpResult.MOVECOUNT
