@@ -1,9 +1,15 @@
 package importDataProcess;
 
-import GenerateResult.*;
+import GenerateResult.GenerateCwpResult;
+import GenerateResult.GenerateCwpResult1;
+import GenerateResult.GenerateGroupResult;
+import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import utils.FileUtil;
-import viewFrame.*;
+import viewFrame.CwpResultFrame;
+import viewFrame.PreStowageDataFrame;
+import viewFrame.VesselStructureFrame;
+import viewFrame.VoyageFrame;
 
 import java.io.File;
 import java.util.List;
@@ -11,17 +17,16 @@ import java.util.List;
 /**
  * Created by csw on 2016/1/21.
  */
-public class Test {
+public class Test2 {
     public static void main(String[] args) {
 
-
-
-        String vo = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
-        String sh = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvesselstructure1.json")).toString();
+        String vo = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitvoy.txt")).toString();
+        String sh = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
 //        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
-        String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
-        String ca = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
+        String cr = FileUtil.readFileToString(new File("NewTestData2/crane1.txt")).toString();
+        String co = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitcontainers.txt")).toString();
+//        String co = FileUtil.readFileToString(new File("E:/cnt.txt")).toString();
+        String ca = FileUtil.readFileToString(new File("NewTestData2/Area.txt")).toString();
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
@@ -48,16 +53,17 @@ public class Test {
 //        containerAreaFrame.setVisible(true);
 //        //属性组
         List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
-//        GroupFrame groupFrame = new GroupFrame(groupInfoList);
+//        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
+        String pr = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitperstowage.txt")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
         List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
 //        List<PreStowageData> resultList = new GenerateMoveOrder().generateMoveOrder(preStowageDataList);
+        System.out.println(resultList.size());
         PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
         preStowageFrame2.setVisible(true);
         //测试两个绝对位置

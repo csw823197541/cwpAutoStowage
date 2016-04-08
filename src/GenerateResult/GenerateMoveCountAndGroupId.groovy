@@ -23,8 +23,8 @@ class GenerateMoveCountAndGroupId {
             List<String> VHTIDs = new ArrayList<>()//存放舱位ID
             Map<String, List<PreStowageData>> stringListMap = new HashMap<>()//放在不同的舱位的数据
             for(PreStowageData preStowageData : preStowageDataList) {
-                if(!VHTIDs.contains(preStowageData.getVHT_ID())) {
-                    VHTIDs.add(preStowageData.getVHT_ID())
+                if(!VHTIDs.contains(preStowageData.getVHTID())) {
+                    VHTIDs.add(preStowageData.getVHTID())
                 }
                 String port = preStowageData.getDSTPORT()
                 cportSet.add(port);                                      //统计港口类型
@@ -38,7 +38,7 @@ class GenerateMoveCountAndGroupId {
             for(String str : VHTIDs) {//
                 List<PreStowageData> dataList1 = new ArrayList<>()
                 for(PreStowageData preStowageData : preStowageDataList) {
-                    if(str.equals(preStowageData.getVHT_ID())) {
+                    if(str.equals(preStowageData.getVHTID())) {
                         dataList1.add(preStowageData)
                     }
                 }
@@ -49,8 +49,8 @@ class GenerateMoveCountAndGroupId {
                 List<PreStowageData> dataList = stringListMap.get(str)
                 List<Integer> orders = new ArrayList<>()
                 for(PreStowageData preStowageData1 : dataList) {
-                    if(!orders.contains(preStowageData1.getMOVE_ORDER())) {
-                        orders.add(preStowageData1.getMOVE_ORDER())
+                    if(!orders.contains(preStowageData1.getMOVEORDER())) {
+                        orders.add(preStowageData1.getMOVEORDER())
                     }
                 }
                 println "舱id:"+str+"-moveCount数："+ orders.size()

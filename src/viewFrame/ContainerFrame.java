@@ -61,18 +61,18 @@ public class ContainerFrame extends JFrame{
                         System.out.print("生成内容");
                         for (ContainerInfo containerInfo : containerInfoList) {
                             Object[] rowData = new Object[12];
-                            rowData[0] = containerInfo.getIYC_VOYID();
-                            rowData[1] = containerInfo.getIYC_CNTRNO();
-                            rowData[2] = containerInfo.getIYC_CNTR_AREA_ID();
-                            rowData[3] = containerInfo.getIYC_YLOCATION();
-                            rowData[4] = containerInfo.getIYC_CTYPECD();
-                            rowData[5] = containerInfo.getIYC_CSZ_CSIZECD();
-                            rowData[6] = containerInfo.getIYC_PORTCD();
-                            rowData[7] = containerInfo.getIYC_WEIGHT();
-                            rowData[8] = containerInfo.getIYC_DNGFG();
-                            rowData[9] = containerInfo.getIYC_REFFG();
-                            rowData[10] = containerInfo.getIYC_PLANFG();
-                            rowData[11] = containerInfo.getIYC_RETIME();
+                            rowData[0] = containerInfo.getIYCVOYID();
+                            rowData[1] = containerInfo.getIYCCNTRNO();
+                            rowData[2] = containerInfo.getIYCCNTRAREAID();
+                            rowData[3] = containerInfo.getIYCYLOCATION();
+                            rowData[4] = containerInfo.getIYCCTYPECD();
+                            rowData[5] = containerInfo.getIYCCSZCSIZECD();
+                            rowData[6] = containerInfo.getIYCPORTCD();
+                            rowData[7] = containerInfo.getIYCWEIGHT();
+                            rowData[8] = containerInfo.getIYCDNGFG();
+                            rowData[9] = containerInfo.getIYCREFFG();
+                            rowData[10] = containerInfo.getIYCPLANFG();
+                            rowData[11] = containerInfo.getIYCRETIME();
                             tableModel.addRow(rowData);
                         }
                         this.tableWQL.setModel(tableModel);

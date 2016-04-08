@@ -15,20 +15,20 @@ public class PreStowageInfoProcess {
         containerInfoList1 = containerInfoList;
         for (ContainerInfo containerInfo: containerInfoList1)
         {
-            if("Y".equals(containerInfo.getIYC_PLANFG())) {
+            if("Y".equals(containerInfo.getIYCPLANFG())) {
                 String temp="";
-                temp+=containerInfo.getIYC_CNTRNO()+",";
-                temp+=containerInfo.getIYC_CNTR_AREA_ID()+",";
-                temp+=containerInfo.getIYC_VOYID()+",";
-                temp+=containerInfo.getIYC_CTYPECD()+",";
-                temp+=containerInfo.getIYC_CSZ_CSIZECD()+",";
-                temp+=containerInfo.getIYC_PORTCD()+",";
-                temp+=containerInfo.getIYC_WEIGHT()+",";
-                temp+=containerInfo.getIYC_DNGFG()+",";
-                temp+=containerInfo.getIYC_REFFG()+",";
-                temp+=containerInfo.getIYC_YLOCATION()+",";
-                temp+=containerInfo.getIYC_PLANFG()+",";
-                temp+=containerInfo.getIYC_RETIME()+"#";
+                temp+=containerInfo.getIYCCNTRNO()+",";
+                temp+=containerInfo.getIYCCNTRAREAID()+",";
+                temp+=containerInfo.getIYCVOYID()+",";
+                temp+=containerInfo.getIYCCTYPECD()+",";
+                temp+=containerInfo.getIYCCSZCSIZECD()+",";
+                temp+=containerInfo.getIYCPORTCD()+",";
+                temp+=containerInfo.getIYCWEIGHT()+",";
+                temp+=containerInfo.getIYCDNGFG()+",";
+                temp+=containerInfo.getIYCREFFG()+",";
+                temp+=containerInfo.getIYCYLOCATION()+",";
+                temp+=containerInfo.getIYCPLANFG()+",";
+                temp+=containerInfo.getIYCRETIME()+"#";
                 container+=temp;
             }
         }
@@ -88,17 +88,17 @@ public class PreStowageInfoProcess {
         for (PreStowageData preStowageData:preStowageInfoList1)
         {
             String temp="";
-            temp+=preStowageData.getVHT_ID().toString()+",";
-            temp+=preStowageData.getVBY_BAYID().toString()+",";
-            temp+=preStowageData.getVTR_TIERNO().toString()+",";
-            temp+=preStowageData.getVRW_ROWNO().toString()+",";
+            temp+=preStowageData.getVHTID().toString()+",";
+            temp+=preStowageData.getVBYBAYID().toString()+",";
+            temp+=preStowageData.getVTRTIERNO().toString()+",";
+            temp+=preStowageData.getVRWROWNO().toString()+",";
 //            String GroupID = groupQuery.get(preStowageData.getDSTPORT()+"."+preStowageData.getSIZE()+"."+preStowageData.getCTYPECD());
 //            System.out.println(GroupID);
             temp+=preStowageData.getSIZE()+",";
             temp+=preStowageData.getDSTPORT()+",";
             temp+=preStowageData.getCTYPECD()+",";
             temp+=preStowageData.getWEIGHT().toString()+",";
-            temp+=preStowageData.getMOVE_ORDER().toString()+"#";
+            temp+=preStowageData.getMOVEORDER().toString()+"#";
             prestowage+=temp;
         }
 //        System.out.println(prestowage);

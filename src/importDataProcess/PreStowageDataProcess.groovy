@@ -20,15 +20,15 @@ class PreStowageDataProcess {
             root.each {preStowage->
                 PreStowageData preStowageData = new PreStowageData()
                 assert preStowage instanceof Map
-                preStowageData.VHT_ID = preStowage.VHTID
-                preStowageData.VBY_BAYID = preStowage.VBYBAYID
-                preStowageData.VTR_TIERNO = preStowage.VTRTIERNO
-                preStowageData.VRW_ROWNO = preStowage.VRWROWNO
+                preStowageData.VHTID = preStowage.VHTID
+                preStowageData.VBYBAYID = preStowage.VBYBAYID
+                preStowageData.VTRTIERNO = preStowage.VTRTIERNO
+                preStowageData.VRWROWNO = preStowage.VRWROWNO
                 preStowageData.SIZE = preStowage.CNTSIZE
                 preStowageData.CTYPECD = preStowage.CTYPECD
-                preStowageData.GROUP_ID = ""
+                preStowageData.GROUPID = ""
                 preStowageData.WEIGHT = 0
-                preStowageData.MOVE_ORDER = preStowage.WORKSEQ != "" ? Integer.valueOf(preStowage.WORKSEQ) : 0
+                preStowageData.MOVEORDER = preStowage.WORKSEQ != "" ? Integer.valueOf(preStowage.WORKSEQ) : 0
                 preStowageData.LDULD = preStowage.LDULD
                 preStowageData.WORKFLOW = preStowage.WORKFLOW
                 preStowageData.QCNO = preStowage.QCNO

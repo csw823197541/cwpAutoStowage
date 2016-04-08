@@ -20,18 +20,18 @@ class ContainerInfoProcess {
             root.each {container->
                 ContainerInfo containerInfo = new ContainerInfo()
                 assert container instanceof Map
-                containerInfo.IYC_CNTRNO = container.IYCCNTRNO
-                containerInfo.IYC_CNTR_AREA_ID = container.IYCCNTRAREAID
-                containerInfo.IYC_VOYID = Integer.valueOf(container.IYCEVOYID)
-                containerInfo.IYC_CTYPECD = container.IYCCTYPECD
-                containerInfo.IYC_CSZ_CSIZECD = container.IYCCSZCSIZECD
-                containerInfo.IYC_PORTCD = container.IYCPOTDSTPORT//目的港
-                containerInfo.IYC_WEIGHT = Integer.valueOf(container.IYCWEIGHT)
-                containerInfo.IYC_DNGFG = container.IYCDNGFG
-                containerInfo.IYC_REFFG = container.IYCREFFG
-                containerInfo.IYC_YLOCATION = container.IYCYLOCATION
-                containerInfo.IYC_PLANFG = container.IYCPLANFG
-                containerInfo.IYC_RETIME = container.IYCRETIME
+                containerInfo.IYCCNTRNO = container.IYCCNTRNO
+                containerInfo.IYCCNTRAREAID = container.IYCCNTRAREAID
+                containerInfo.IYCVOYID = Integer.valueOf(container.IYCEVOYID)
+                containerInfo.IYCCTYPECD = container.IYCCTYPECD
+                containerInfo.IYCCSZCSIZECD = container.IYCCSZCSIZECD
+                containerInfo.IYCPORTCD = container.IYCPOTDSTPORT//目的港
+                containerInfo.IYCWEIGHT = Integer.valueOf(container.IYCWEIGHT)
+                containerInfo.IYCDNGFG = container.IYCDNGFG
+                containerInfo.IYCREFFG = container.IYCREFFG
+                containerInfo.IYCYLOCATION = container.IYCYLOCATION
+                containerInfo.IYCPLANFG = container.IYCPLANFG
+                containerInfo.IYCRETIME = container.IYCRETIME
                 containerInfoList.add(containerInfo)
             }
         }

@@ -26,7 +26,7 @@ class CwpResultInfoProcess {
                 CwpResultInfo cwpResultInfo = new CwpResultInfo()
                 assert cwpResult instanceof Map
                 cwpResultInfo.CRANEID = cwpResult.CRANEID
-                cwpResultInfo.CranesPosition = Double.valueOf(df.format(cwpResult.CranesPosition))
+//                cwpResultInfo.CranesPosition = Double.valueOf(df.format(cwpResult.CranesPosition))
                 cwpResultInfo.HATCHBWID = cwpResult.HATCHBWID
                 cwpResultInfo.HATCHID = cwpResult.HATCHID
                 cwpResultInfo.MOVECOUNT = cwpResult.MOVECOUNT

@@ -53,7 +53,7 @@ public class VesselBayOrderPanel extends JPanel {
             else{
                 vx = start_x - (rowInt/2)*rect_length;
             }
-            if(tierInt>=82){
+            if(tierInt>=50){
                 vy = start_y_a - ((tierInt-80)/2)*rect_length;
             }
             else {
@@ -72,9 +72,9 @@ public class VesselBayOrderPanel extends JPanel {
             g2d.setPaint(Color.BLACK);
             PreStowageData preStowageData = preStowageDataList.get(i);
             int x = 0,y = 0;
-            int bayInt = Integer.valueOf(preStowageData.getVBY_BAYID());
-            int rowInt = Integer.valueOf(preStowageData.getVRW_ROWNO());
-            int tierInt = Integer.valueOf(preStowageData.getVTR_TIERNO());
+            int bayInt = Integer.valueOf(preStowageData.getVBYBAYID());
+            int rowInt = Integer.valueOf(preStowageData.getVRWROWNO());
+            int tierInt = Integer.valueOf(preStowageData.getVTRTIERNO());
 
             if(bayInt>0){
                 System.out.println("Draw Start Pos:"+ x + "," + y);
@@ -87,7 +87,7 @@ public class VesselBayOrderPanel extends JPanel {
                 else{
                     x = start_x - (rowInt/2)*rect_length;
                 }
-                if(tierInt>=82){
+                if(tierInt>=50){
                     y = start_y_a - ((tierInt-80)/2)*rect_length;
                 }
                 else {
@@ -95,7 +95,7 @@ public class VesselBayOrderPanel extends JPanel {
                 }
 
                 g2d.drawRect(x,y,rect_length,rect_length);
-                String tag1 = preStowageData.getMOVE_ORDER().toString();
+                String tag1 = preStowageData.getMOVEORDER().toString();
 //                g2d.setFont(font);
                 g2d.setPaint(Color.red);
                 g2d.drawString(tag1,x,y+8);

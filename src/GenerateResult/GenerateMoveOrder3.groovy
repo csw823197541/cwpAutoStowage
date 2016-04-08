@@ -6,7 +6,7 @@ import importDataInfo.VesselStructureInfo
 /**
  * Created by liuminhang on 16/3/21.
  */
-class GenerateMoveOrder2 {
+class GenerateMoveOrder3 {
 
     public List<VesselStructureInfo> vesselStructureInfoList;
     public List<PreStowageData> preStowageDataList;
@@ -17,7 +17,7 @@ class GenerateMoveOrder2 {
 
     int vMaxRowNo,vMinRowNo;
 
-    GenerateMoveOrder2(List<VesselStructureInfo> vesselStructureInfoList){
+    GenerateMoveOrder3(List<VesselStructureInfo> vesselStructureInfoList){
         this.vesselStructureInfoList = vesselStructureInfoList
     }
 
