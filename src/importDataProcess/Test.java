@@ -48,7 +48,7 @@ public class Test {
 //        containerAreaFrame.setVisible(true);
 //        //属性组
         List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
-//        GroupFrame groupFrame = new GroupFrame( groupInfoList);
+//        GroupFrame groupFrame = new GroupFrame(groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
         String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
@@ -58,7 +58,6 @@ public class Test {
         //测试根据实配图生成预配图
         List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
 //        List<PreStowageData> resultList = new GenerateMoveOrder().generateMoveOrder(preStowageDataList);
-        System.out.println(resultList.size());
         PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
         preStowageFrame2.setVisible(true);
         //测试两个绝对位置
@@ -68,9 +67,9 @@ public class Test {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-//        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult1.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
-//        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
-//        cwpResultFrame.setVisible(true);
+        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
+        cwpResultFrame.setVisible(true);
         //测试自动配载算法
 //        String cwpResultStr = FileUtil.readFileToString(new File("toCwpData/cwpResult.txt")).toString();
 //        List<CwpResultInfo> cwpResultInfoList1 = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);

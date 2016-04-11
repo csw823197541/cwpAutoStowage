@@ -21,11 +21,11 @@ public class GenerateGroupResult {
 
         System.out.println("开始生成分组属性");
         for (ContainerInfo containerInfo : containerInfoList) {
-            String port = containerInfo.getIYC_PORTCD();
+            String port = containerInfo.getIYCPORTCD();
             cportSet.add(port);                                      //统计港口类型
-            String type = containerInfo.getIYC_CTYPECD();
+            String type = containerInfo.getIYCCTYPECD();
             ctypeSet.add(type);                                      //统计箱型类型
-            String size = containerInfo.getIYC_CSZ_CSIZECD();
+            String size = containerInfo.getIYCCSZCSIZECD();
             csizeSet.add(size);                                      //统计尺寸类型
         }
 

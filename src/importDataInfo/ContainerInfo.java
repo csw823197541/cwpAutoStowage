@@ -4,115 +4,115 @@ package importDataInfo;
  * Created by leko on 2016/1/15.
  */
 public class ContainerInfo {
-    private String IYC_CNTRNO;                    //唯一箱号
-    private String IYC_CNTR_AREA_ID;             //箱所在箱区号
-    private Integer IYC_VOYID;                     //航次ID
+    private String IYCCNTRNO;                    //唯一箱号
+    private String IYCCNTRAREAID;             //箱所在箱区号
+    private Integer IYCVOYID;                     //航次ID
 
-    private String IYC_CTYPECD;                   //箱型
-    private String IYC_CSZ_CSIZECD;              //尺寸
-    private String IYC_PORTCD;                    //目的港
+    private String IYCCTYPECD;                   //箱型
+    private String IYCCSZCSIZECD;              //尺寸
+    private String IYCPORTCD;                    //目的港
 
-    private Integer IYC_WEIGHT;                     //箱重
+    private Integer IYCWEIGHT;                     //箱重
 
-    private String IYC_DNGFG;                      //是否危险品(Y,N)
-    private String IYC_REFFG;                      //是否冷藏(Y,N)
-    private String IYC_YLOCATION;                 //场箱位
-    private String IYC_PLANFG;                    //是否可配载
-    private String IYC_RETIME;                    //当前作业该箱所需的倒箱时间
+    private String IYCDNGFG;                      //是否危险品(Y,N)
+    private String IYCREFFG;                      //是否冷藏(Y,N)
+    private String IYCYLOCATION;                 //场箱位
+    private String IYCPLANFG;                    //是否可配载
+    private String IYCRETIME;                    //当前作业该箱所需的倒箱时间
 
-    public Integer getIYC_VOYID() {
-        return IYC_VOYID;
+    public String getIYCCNTRNO() {
+        return IYCCNTRNO;
     }
 
-    public void setIYC_VOYID(Integer IYC_VOYID) {
-        this.IYC_VOYID = IYC_VOYID;
+    public void setIYCCNTRNO(String IYCCNTRNO) {
+        this.IYCCNTRNO = IYCCNTRNO;
     }
 
-    public Integer getIYC_WEIGHT() {
-        return IYC_WEIGHT;
+    public String getIYCCNTRAREAID() {
+        return IYCCNTRAREAID;
     }
 
-    public void setIYC_WEIGHT(Integer IYC_WEIGHT) {
-        this.IYC_WEIGHT = IYC_WEIGHT;
+    public void setIYCCNTRAREAID(String IYCCNTRAREAID) {
+        this.IYCCNTRAREAID = IYCCNTRAREAID;
     }
 
-    public String getIYC_CNTRNO() {
-        return IYC_CNTRNO;
+    public Integer getIYCVOYID() {
+        return IYCVOYID;
     }
 
-    public void setIYC_CNTRNO(String IYC_CNTRNO) {
-        this.IYC_CNTRNO = IYC_CNTRNO;
+    public void setIYCVOYID(Integer IYCVOYID) {
+        this.IYCVOYID = IYCVOYID;
     }
 
-    public String getIYC_CNTR_AREA_ID() {
-        return IYC_CNTR_AREA_ID;
+    public String getIYCCTYPECD() {
+        return IYCCTYPECD;
     }
 
-    public void setIYC_CNTR_AREA_ID(String IYC_CNTR_AREA_ID) {
-        this.IYC_CNTR_AREA_ID = IYC_CNTR_AREA_ID;
+    public void setIYCCTYPECD(String IYCCTYPECD) {
+        this.IYCCTYPECD = IYCCTYPECD;
     }
 
-    public String getIYC_CTYPECD() {
-        return IYC_CTYPECD;
+    public String getIYCCSZCSIZECD() {
+        return IYCCSZCSIZECD;
     }
 
-    public void setIYC_CTYPECD(String IYC_CTYPECD) {
-        this.IYC_CTYPECD = IYC_CTYPECD;
+    public void setIYCCSZCSIZECD(String IYCCSZCSIZECD) {
+        this.IYCCSZCSIZECD = IYCCSZCSIZECD;
     }
 
-    public String getIYC_CSZ_CSIZECD() {
-        return IYC_CSZ_CSIZECD;
+    public String getIYCPORTCD() {
+        return IYCPORTCD;
     }
 
-    public void setIYC_CSZ_CSIZECD(String IYC_CSZ_CSIZECD) {
-        this.IYC_CSZ_CSIZECD = IYC_CSZ_CSIZECD;
+    public void setIYCPORTCD(String IYCPORTCD) {
+        this.IYCPORTCD = IYCPORTCD;
     }
 
-    public String getIYC_PORTCD() {
-        return IYC_PORTCD;
+    public Integer getIYCWEIGHT() {
+        return IYCWEIGHT;
     }
 
-    public void setIYC_PORTCD(String IYC_PORTCD) {
-        this.IYC_PORTCD = IYC_PORTCD;
+    public void setIYCWEIGHT(Integer IYCWEIGHT) {
+        this.IYCWEIGHT = IYCWEIGHT;
     }
 
-   public String getIYC_DNGFG() {
-        return IYC_DNGFG;
+    public String getIYCDNGFG() {
+        return IYCDNGFG;
     }
 
-    public void setIYC_DNGFG(String IYC_DNGFG) {
-        this.IYC_DNGFG = IYC_DNGFG;
+    public void setIYCDNGFG(String IYCDNGFG) {
+        this.IYCDNGFG = IYCDNGFG;
     }
 
-    public String getIYC_REFFG() {
-        return IYC_REFFG;
+    public String getIYCREFFG() {
+        return IYCREFFG;
     }
 
-    public void setIYC_REFFG(String IYC_REFFG) {
-        this.IYC_REFFG = IYC_REFFG;
+    public void setIYCREFFG(String IYCREFFG) {
+        this.IYCREFFG = IYCREFFG;
     }
 
-    public String getIYC_YLOCATION() {
-        return IYC_YLOCATION;
+    public String getIYCYLOCATION() {
+        return IYCYLOCATION;
     }
 
-    public void setIYC_YLOCATION(String IYC_YLOCATION) {
-        this.IYC_YLOCATION = IYC_YLOCATION;
+    public void setIYCYLOCATION(String IYCYLOCATION) {
+        this.IYCYLOCATION = IYCYLOCATION;
     }
 
-    public String getIYC_PLANFG() {
-        return IYC_PLANFG;
+    public String getIYCPLANFG() {
+        return IYCPLANFG;
     }
 
-    public void setIYC_PLANFG(String IYC_PLANFG) {
-        this.IYC_PLANFG = IYC_PLANFG;
+    public void setIYCPLANFG(String IYCPLANFG) {
+        this.IYCPLANFG = IYCPLANFG;
     }
 
-    public String getIYC_RETIME() {
-        return IYC_RETIME;
+    public String getIYCRETIME() {
+        return IYCRETIME;
     }
 
-    public void setIYC_RETIME(String IYC_RETIME) {
-        this.IYC_RETIME = IYC_RETIME;
+    public void setIYCRETIME(String IYCRETIME) {
+        this.IYCRETIME = IYCRETIME;
     }
 }

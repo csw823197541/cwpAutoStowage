@@ -44,9 +44,9 @@ public class CwpResultFrame extends JFrame{
     }
 
 //    public static void main(String[] args) {
-//        String str = FileUtil.readFileToString(new File("toCwpData/cwpResult.txt")).toString();
-//        String str1 = FileUtil.readFileToString(new File("toCwpData/crane.txt")).toString();
-//        String str2 = FileUtil.readFileToString(new File("toCwpData/hatch.txt")).toString();
+//        String str = FileUtil.readFileToString(new File("toCwpData/cwpBlock11.txt")).toString();
+//        String str1 = FileUtil.readFileToString(new File("toCwpData/crane11.txt")).toString();
+//        String str2 = FileUtil.readFileToString(new File("toCwpData/hatch11.txt")).toString();
 //        List<CwpResultInfo> cwpResultInfoList1 = CwpResultInfoProcess.getCwpResultInfo(str);
 //        List<CraneInfo> craneInfoList1 = CraneInfoProcess.getCraneInfo(str1);
 //        new CwpResultFrame(cwpResultInfoList1, craneInfoList1, null).setVisible(true);

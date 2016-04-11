@@ -77,15 +77,15 @@ public class PreStowageDataFrame extends JFrame{
                     Object[] rowData = new Object[14];
                     for (PreStowageData preStowageInfo:preStowageInfoList)
                     {
-                        rowData[0] = preStowageInfo.getVHT_ID();
-                        rowData[1] = preStowageInfo.getVBY_BAYID();
-                        rowData[2] = preStowageInfo.getVTR_TIERNO();
-                        rowData[3] = preStowageInfo.getVRW_ROWNO();
+                        rowData[0] = preStowageInfo.getVHTID();
+                        rowData[1] = preStowageInfo.getVBYBAYID();
+                        rowData[2] = preStowageInfo.getVTRTIERNO();
+                        rowData[3] = preStowageInfo.getVRWROWNO();
                         rowData[4] = preStowageInfo.getSIZE();
                         rowData[5] = preStowageInfo.getCTYPECD();
-                        rowData[6] = preStowageInfo.getGROUP_ID();
+                        rowData[6] = preStowageInfo.getGROUPID();
                         rowData[7] = preStowageInfo.getWEIGHT();
-                        rowData[8] = preStowageInfo.getMOVE_ORDER();
+                        rowData[8] = preStowageInfo.getMOVEORDER();
                         rowData[9] = preStowageInfo.getLDULD();
                         rowData[10] = preStowageInfo.getWORKFLOW();
                         rowData[11] = preStowageInfo.getQCNO();
@@ -114,7 +114,7 @@ public class PreStowageDataFrame extends JFrame{
                                 List<PreStowageData> bayDschStowageData = new ArrayList<PreStowageData>();
                                 for(int i = 0;i<preStowageInfoList.size();i++){
                                     PreStowageData preStowageData = preStowageInfoList.get(i);
-                                    if(preStowageData.getVBY_BAYID().equals(clickedBayId)){
+                                    if(preStowageData.getVBYBAYID().equals(clickedBayId)){
                                         if(preStowageData.getLDULD().equals("L")){
                                             bayLoadStowageData.add(preStowageData);
                                         }

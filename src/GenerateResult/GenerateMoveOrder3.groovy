@@ -6,7 +6,7 @@ import importDataInfo.VesselStructureInfo
 /**
  * Created by liuminhang on 16/3/21.
  */
-class GenerateMoveOrder2 {
+class GenerateMoveOrder3 {
 
     public List<VesselStructureInfo> vesselStructureInfoList;
     public List<PreStowageData> preStowageDataList;
@@ -17,7 +17,7 @@ class GenerateMoveOrder2 {
 
     int vMaxRowNo,vMinRowNo;
 
-    GenerateMoveOrder2(List<VesselStructureInfo> vesselStructureInfoList){
+    GenerateMoveOrder3(List<VesselStructureInfo> vesselStructureInfoList){
         this.vesselStructureInfoList = vesselStructureInfoList
     }
 
@@ -358,7 +358,7 @@ class GenerateMoveOrder2 {
                         //取出对应slotStack1的顶层
                         SlotStack2 slotStack1 = slotStacks1[curRowNo]
                         if(!slotStack1.isEmptyOrFull()) {
-                            List<String> moContainerMap = new ArrayList<>()
+                            List<String> keys = new ArrayList<>()
                             int topTierNo = slotStack1.getTopTierNo()
                             String key = slotStack1.getKey(topTierNo)
                             if(key != null) {
@@ -368,8 +368,8 @@ class GenerateMoveOrder2 {
                                     if(oppositeKey == null) {
 //                                    allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
 //                                    allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
-                                        moContainerMap.add(key)
-                                        keyMap.put(curRowNo, moContainerMap)
+                                        keys.add(key)
+                                        keyMap.put(curRowNo, keys)
                                         slotStack1.setTopTierNo(topTierNo-2)
                                         flag31 = true
                                     }
@@ -398,7 +398,7 @@ class GenerateMoveOrder2 {
                         //取出对应slotStack1的顶层
                         SlotStack2 slotStack3 = slotStacks3[curRowNo]
                         if(!slotStack3.isEmptyOrFull()) {
-                            List<String> moContainerMap = new ArrayList<>()
+                            List<String> keys = new ArrayList<>()
                             int topTierNo = slotStack3.getTopTierNo()
                             String key = slotStack3.getKey(topTierNo)
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
@@ -407,8 +407,8 @@ class GenerateMoveOrder2 {
                                 if(oppositeKey == null) {
 //                                    allPreStowageDataMapDsch.get(key).setMOVE_ORDER(seq++)
 //                                    allPreStowageDataMapDsch.get(key).setWORKFLOW("1")
-                                    moContainerMap.add(key)
-                                    keyMap.put(curRowNo, moContainerMap)
+                                    keys.add(key)
+                                    keyMap.put(curRowNo, keys)
                                     slotStacks3[curRowNo].setTopTierNo(topTierNo-2)
                                     flag33 = true
                                 }
@@ -436,7 +436,7 @@ class GenerateMoveOrder2 {
                         int curRowNo = rowListLR.get(i)
                         SlotStack2 slotStack1 = slotStacks1[curRowNo]
                         if(!slotStack1.isEmptyOrFull()) {
-                            List<String> moContainerMap = new ArrayList<>()
+                            List<String> keys = new ArrayList<>()
                             int topTierNo = slotStack1.getTopTierNo()
                             String key = slotStack1.getKey(topTierNo)
                             if(allPreStowageDataMapDsch.get(key).getSIZE().startsWith("2")) {
@@ -447,9 +447,9 @@ class GenerateMoveOrder2 {
 //                                    allPreStowageDataMapDsch.get(key).setWORKFLOW("2")
 //                                    allPreStowageDataMapDsch.get(oppositeKey).setMOVE_ORDER(seq)
 //                                    allPreStowageDataMapDsch.get(oppositeKey).setWORKFLOW("2")
-                                    moContainerMap.add(key)
-                                    moContainerMap.add(oppositeKey)
-                                    keyMap.put(curRowNo, moContainerMap)
+                                    keys.add(key)
+                                    keys.add(oppositeKey)
+                                    keyMap.put(curRowNo, keys)
                                     slotStack1.setTopTierNo(topTierNo-2)
                                     slotStack3.setTopTierNo(topTierNo-2)
 //                                    seq++

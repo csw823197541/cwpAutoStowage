@@ -1,9 +1,15 @@
 package importDataProcess;
 
-import GenerateResult.*;
+import GenerateResult.GenerateCwpResult;
+import GenerateResult.GenerateCwpResult1;
+import GenerateResult.GenerateGroupResult;
+import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import utils.FileUtil;
-import viewFrame.*;
+import viewFrame.CwpResultFrame;
+import viewFrame.PreStowageDataFrame;
+import viewFrame.VesselStructureFrame;
+import viewFrame.VoyageFrame;
 
 import java.io.File;
 import java.util.List;
@@ -11,15 +17,16 @@ import java.util.List;
 /**
  * Created by csw on 2016/1/21.
  */
-public class Test1 {
+public class Test2 {
     public static void main(String[] args) {
 
-        String vo = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitvoy.txt")).toString();
-        String sh = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
-//        String cr = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
-        String cr = FileUtil.readFileToString(new File("NewTestData1/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitcontainers.txt")).toString();
-        String ca = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitarea.txt")).toString();
+        String vo = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitvoy.txt")).toString();
+        String sh = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
+//        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
+        String cr = FileUtil.readFileToString(new File("NewTestData2/crane1.txt")).toString();
+        String co = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitcontainers.txt")).toString();
+//        String co = FileUtil.readFileToString(new File("E:/cnt.txt")).toString();
+        String ca = FileUtil.readFileToString(new File("NewTestData2/Area.txt")).toString();
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
@@ -27,9 +34,11 @@ public class Test1 {
 //        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
+        ImportData.vesselStructureInfoList = vesselStructureInfoList;
 //        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
 //        vesselStructureFrame.setVisible(true);
-        ImportData.vesselStructureInfoList = vesselStructureInfoList;
+
+
 //        //桥机
         List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
 //        CraneFrame craneFrame = new CraneFrame(craneInfoList);
@@ -38,22 +47,23 @@ public class Test1 {
         List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
 //        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
 //        containerFrame.setVisible(true);
-        //箱区
-//        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
+//        //箱区
+        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
 //        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
 //        containerAreaFrame.setVisible(true);
 //        //属性组
-//        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
+        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitperstowage.txt")).toString();
+        String pr = FileUtil.readFileToString(new File("NewTestData2/SHBTOS.CWPJUnitperstowage.txt")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);
         //测试根据实配图生成预配图
         List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
-//        System.out.println(resultList.size());
+//        List<PreStowageData> resultList = new GenerateMoveOrder().generateMoveOrder(preStowageDataList);
+        System.out.println(resultList.size());
         PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
         preStowageFrame2.setVisible(true);
         //测试两个绝对位置
@@ -63,12 +73,12 @@ public class Test1 {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult1.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
         CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
         cwpResultFrame.setVisible(true);
         //测试自动配载算法
-//        String cwpResultStr = FileUtil.readFileToString(new File("E:/NewTestData/cwpBlock.txt")).toString();
-//        List<CwpResultInfo> cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
+//        String cwpResultStr = FileUtil.readFileToString(new File("toCwpData/cwpResult.txt")).toString();
+//        List<CwpResultInfo> cwpResultInfoList1 = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
 //        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, resultList, cwpResultInfoList);
 //        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
 //        MoveFrame moveFrame = new MoveFrame(moveInfoList);
