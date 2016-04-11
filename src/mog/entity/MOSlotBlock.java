@@ -16,13 +16,13 @@ public class MOSlotBlock {
     private Map <Integer,MOSlotStack> bay01;    //01小贝,即第一个小贝
     private Map <Integer,MOSlotStack> bay03;    //03小贝,即第二个小贝
 
-    private List<Integer> rowListLR;
+    private List<Integer> rowSeqList;           //排号顺序,默认偶数侧在前
 
 
     private MOSlotBlock(){
         bay01 = new HashMap<>();
         bay03 = new HashMap<>();
-        rowListLR = new ArrayList<>();
+        rowSeqList = new ArrayList<>();
     }
 
     static public MOSlotBlock buildEmptyMOSlotBlock(int vMinRowNo,int vMaxRowNo){
@@ -35,26 +35,30 @@ public class MOSlotBlock {
         //生成遍历顺序
         //甲板上,从左往右
         for(int i = vMaxRowNo%2==0?vMaxRowNo:vMaxRowNo-1;i>=vMinRowNo;i=i-2){//偶数侧
-            moSlotBlock.rowListLR.add(i);
+            moSlotBlock.rowSeqList.add(i);
         }
         for(int i = vMinRowNo%2==0?vMinRowNo+1:vMinRowNo;i<=vMaxRowNo;i=i+2){//奇数侧
-            moSlotBlock.rowListLR.add(i);
+            moSlotBlock.rowSeqList.add(i);
         }
         return moSlotBlock;
     }
 
+    //反转排遍历顺序
+
 
     //待实现的函数
     //按位置填入箱
-    public void putMOContainer(){
+    public void putMOContainer(MOSlotPosition moSlotPosition,MOContainer moContainer){
 
     }
     //按位置读取箱
-    public MOContainer getMOContainer(){
+    public MOContainer getMOContainer(MOSlotPosition moSlotPosition){
 
         return null;
     }
-    //获取
+    //获取当前位置的箱的顶面高度
+
+
 
 
 }

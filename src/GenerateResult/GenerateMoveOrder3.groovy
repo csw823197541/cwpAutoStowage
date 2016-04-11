@@ -157,7 +157,7 @@ class GenerateMoveOrder3 {
         }
 
         List<Integer> rowListBB = new ArrayList<>(rowListLR)
-//        Collections.copy(rowListBB, rowListLR)
+//        Collections.copy(rowListBB, rowSeqList)
         Collections.sort(rowListBB)
         println rowListBB
 
