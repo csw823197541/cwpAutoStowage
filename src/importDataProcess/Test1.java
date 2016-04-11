@@ -62,7 +62,8 @@ public class Test1 {
 //        List<PreStowageData> resultList2 = GenerateMoveCountAndGroupId.getMoveCountAndGroupId(resultList);
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
-        //调用cwp算法得到结果
+        //调用cwp算法得到
+        // 结果
         List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult1.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
         CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
         cwpResultFrame.setVisible(true);
