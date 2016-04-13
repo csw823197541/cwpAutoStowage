@@ -31,4 +31,16 @@ public class MOSlotPosition {
     public String getPosStrByDot(){
         return "" + bayInt + "."+ rowInt + "."+ tierInt;
     }
+
+    public int getBayInt() {
+        return bayInt;
+    }
+
+    public int getRowInt() {
+        return rowInt;
+    }
+
+    public int getTierInt() {
+        return tierInt;
+    }
 }

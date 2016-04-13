@@ -1,6 +1,10 @@
 package GenerateResult;
 
+import importDataInfo.PreStowageData;
+import importDataInfo.VesselStructureInfo;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,4 +51,5 @@ public class SlotStack2 {
     public String getKey(int tierNo){
         return keys.get(tierNo);
     }
+
 }
