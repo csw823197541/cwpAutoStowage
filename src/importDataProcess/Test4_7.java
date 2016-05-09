@@ -1,9 +1,12 @@
 package importDataProcess;
 
-import GenerateResult.*;
+import GenerateResult.GenerateCwpResult;
+import GenerateResult.GenerateGroupResult;
+import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import utils.FileUtil;
 import viewFrame.*;
+import viewFrame.PreStowageDataFrame;
 
 import java.io.File;
 import java.util.List;
@@ -11,16 +14,15 @@ import java.util.List;
 /**
  * Created by csw on 2016/1/21.
  */
-public class Test {
+public class Test4_7 {
+
     public static void main(String[] args) {
 
-
-
-        String vo = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvoy.json")).toString();
-        String sh = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitvesselstructure1.json")).toString();
+        String vo = FileUtil.readFileToString(new File("4.7data/SHBTOS.CWPJUnitvoy.txt")).toString();
+        String sh = FileUtil.readFileToString(new File("4.7data/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
 //        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
         String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
+        String co = FileUtil.readFileToString(new File("4.7data/SHBTOS.CWPJUnitcontainers.txt")).toString();
         String ca = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
 
 //        //航次
@@ -30,8 +32,8 @@ public class Test {
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
         ImportData.vesselStructureInfoList = vesselStructureInfoList;
-//        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
-//        vesselStructureFrame.setVisible(true);
+        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+        vesselStructureFrame.setVisible(true);
 
 
 //        //桥机
@@ -40,18 +42,18 @@ public class Test {
 //        craneFrame.setVisible(true);
 //        //在场箱
         List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
-        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
-        containerFrame.setVisible(true);
+//        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
+//        containerFrame.setVisible(true);
 //        //箱区
         List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
-        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
-        containerAreaFrame.setVisible(true);
+//        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
+//        containerAreaFrame.setVisible(true);
 //        //属性组
         List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
 //        GroupFrame groupFrame = new GroupFrame(groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("NewTestData/preStowage.json")).toString();
+        String pr = FileUtil.readFileToString(new File("4.7data/SHBTOS.CWPJUnitperstowage.txt")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);

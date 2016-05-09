@@ -19,6 +19,9 @@ public class VesselStructureInfo {
 
     private String groupId;//属性组
 
+    private Integer CABPOSITION;//驾驶室位置信息
+    private Integer CABLENGTH;//驾驶室长度
+
     public String getVHTID() {
         return VHTID;
     }
@@ -105,5 +108,21 @@ public class VesselStructureInfo {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public Integer getCABPOSITION() {
+        return CABPOSITION;
+    }
+
+    public void setCABPOSITION(Integer CABPOSITION) {
+        this.CABPOSITION = CABPOSITION;
+    }
+
+    public Integer getCABLENGTH() {
+        return CABLENGTH;
+    }
+
+    public void setCABLENGTH(Integer CABLENGTH) {
+        this.CABLENGTH = CABLENGTH;
     }
 }

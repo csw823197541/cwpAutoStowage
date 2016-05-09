@@ -77,10 +77,7 @@ public class VesselBayOrderPanel extends JPanel {
             int tierInt = Integer.valueOf(preStowageData.getVTRTIERNO());
 
             if(bayInt>0){
-                System.out.println("Draw Start Pos:"+ x + "," + y);
-
-
-
+//                System.out.println("Draw Start Pos:"+ x + "," + y);
                 if(rowInt%2==1){//奇数
                     x = (rowInt/2)*rect_length + start_x;
                 }
@@ -99,11 +96,7 @@ public class VesselBayOrderPanel extends JPanel {
 //                g2d.setFont(font);
                 g2d.setPaint(Color.red);
                 g2d.drawString(tag1,x,y+8);
-
-
-
-
-                System.out.println("Slot:"+ rowInt + "," + tierInt +"   Draw:[" + x + "," + y + "]");
+//                System.out.println("Slot:"+ rowInt + "," + tierInt +"   Draw:[" + x + "," + y + "]");
 
             }
 

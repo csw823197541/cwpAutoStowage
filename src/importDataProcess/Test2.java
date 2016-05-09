@@ -6,10 +6,7 @@ import GenerateResult.GenerateGroupResult;
 import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import utils.FileUtil;
-import viewFrame.CwpResultFrame;
-import viewFrame.PreStowageDataFrame;
-import viewFrame.VesselStructureFrame;
-import viewFrame.VoyageFrame;
+import viewFrame.*;
 
 import java.io.File;
 import java.util.List;
@@ -30,8 +27,8 @@ public class Test2 {
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
-//        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
-//        voyageFrame.setVisible(true);
+        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
+        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
         ImportData.vesselStructureInfoList = vesselStructureInfoList;
@@ -45,12 +42,12 @@ public class Test2 {
 //        craneFrame.setVisible(true);
 //        //在场箱
         List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
-//        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
-//        containerFrame.setVisible(true);
+        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
+        containerFrame.setVisible(true);
 //        //箱区
         List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
-//        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
-//        containerAreaFrame.setVisible(true);
+        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
+        containerAreaFrame.setVisible(true);
 //        //属性组
         List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);

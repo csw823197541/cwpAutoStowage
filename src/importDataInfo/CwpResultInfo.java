@@ -13,8 +13,9 @@ public class CwpResultInfo {
     private Integer QDC;//是否启动舱
     private Integer StartMoveID;//开始时，舱内的MoveOrder
     private String VESSELID;//航次ID
-    private Integer WORKINGENDTIME;//起始时间
-    private Integer WORKINGSTARTTIME;//结束时间
+    private Integer WORKINGENDTIME;//结束时间
+    private Integer WORKINGSTARTTIME;//起始时间
+    private Integer REALWORKINGSTARTTIME;//起始时间
     private String MOVETYPE;//作业工艺
     private Double CranesPosition;//桥机当前位置
     private String LDULD;    //装卸船标志
@@ -121,5 +122,13 @@ public class CwpResultInfo {
 
     public void setLDULD(String LDULD) {
         this.LDULD = LDULD;
+    }
+
+    public Integer getREALWORKINGSTARTTIME() {
+        return REALWORKINGSTARTTIME;
+    }
+
+    public void setREALWORKINGSTARTTIME(Integer REALWORKINGSTARTTIME) {
+        this.REALWORKINGSTARTTIME = REALWORKINGSTARTTIME;
     }
 }

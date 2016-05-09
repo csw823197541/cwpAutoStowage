@@ -80,7 +80,14 @@ class GeneratePreStowageFromKnowStowage6 {
                 List<Integer> smallBay = new ArrayList<>()
                 List<Integer> largeBay = new ArrayList<>()
                 if(VBY_BAYIDs.size() == 1) {//舱内只有一个倍，一般为40或45尺的箱子
-                    largeBay.add(VBY_BAYIDs.get(0))
+//                    largeBay.add(VBY_BAYIDs.get(0))
+                    for(Integer bayID : VBY_BAYIDs) {
+                        if(bayID%2 == 0) {
+                            largeBay.add(bayID)
+                        } else {
+                            smallBay.add(bayID)
+                        }
+                    }
                     List<PreStowageData> resultReturnD = this.workBayDischarge(seq, dataList, smallBay, largeBay, VTR_TIERNOs, VRW_ROWNO_D_20, stringListMap_D_20,
                             VRW_ROWNO_D_40, stringListMap_D_40, resultList)
                     int seqL = 0//取出卸完箱子后的序列

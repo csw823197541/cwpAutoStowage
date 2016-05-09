@@ -21,19 +21,19 @@ class ContainerAreaInfoProcess {
             root.each { containerArea ->
                 ContainerAreaInfo containerAreaInfo = new ContainerAreaInfo()
                 assert containerArea instanceof Map
-                containerAreaInfo.ASCBOTTOMSPEED = containerArea.ASCBOTTOMSPEED
-                containerAreaInfo.ASCTOPSPEED = containerArea.ASCTOPSPEED
+                containerAreaInfo.ASCBOTTOMSPEED = Double.valueOf(containerArea.ASCBOTTOMSPEED)
+                containerAreaInfo.ASCTOPSPEED = Double.valueOf(containerArea.ASCTOPSPEED)
                 containerAreaInfo.ID = containerArea.ID
                 containerAreaInfo.LOCATIONLB = containerArea.LOCATIONLB
                 containerAreaInfo.LOCATIONLH = containerArea.LOCATIONLH
                 containerAreaInfo.LOCATIONRB = containerArea.LOCATIONRB
                 containerAreaInfo.LOCATIONRH = containerArea.LOCATIONRH
-                containerAreaInfo.VBYNUM = containerArea.VBYNUM
-                containerAreaInfo.VRWNUM = containerArea.VRWNUM
-                containerAreaInfo.VTRNUM = containerArea.VTRNUM
+                containerAreaInfo.VBYNUM = Integer.valueOf(containerArea.VBYNUM)
+                containerAreaInfo.VRWNUM = Integer.valueOf(containerArea.VRWNUM)
+                containerAreaInfo.VTRNUM = Integer.valueOf(containerArea.VTRNUM)
                 containerAreaInfo.SCTYPE = containerArea.SCTYPE
-                containerAreaInfo.WORKEFFICIENCYB = containerArea.WORKEFFICIENCYB
-                containerAreaInfo.WORKEFFICIENCYT = containerArea.WORKEFFICIENCYT
+                containerAreaInfo.WORKEFFICIENCYB = Integer.valueOf(containerArea.WORKEFFICIENCYB)
+                containerAreaInfo.WORKEFFICIENCYT = Integer.valueOf(containerArea.WORKEFFICIENCYT)
                 containerAreaInfo.DISPATCHEDWORK = containerArea.DISPATCHEDWORK == null ? 0 : Integer.valueOf(containerArea.DISPATCHEDWORK)
                 containerAreaInfo.PREDISPATCHEDWORK = containerArea.PREDISPATCHEDWORK == null ? 0 : Integer.valueOf(containerArea.PREDISPATCHEDWORK)
                 containerAreaInfoList.add(containerAreaInfo)

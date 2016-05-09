@@ -27,7 +27,7 @@ class PreStowageDataProcess {
                 preStowageData.SIZE = preStowage.CNTSIZE
                 preStowageData.CTYPECD = preStowage.CTYPECD
                 preStowageData.GROUPID = ""
-                preStowageData.WEIGHT = 0
+                preStowageData.WEIGHT = Integer.valueOf(preStowage.WEIGHT)
                 preStowageData.MOVEORDER = preStowage.WORKSEQ != "" ? Integer.valueOf(preStowage.WORKSEQ) : 0
                 preStowageData.LDULD = preStowage.LDULD
                 preStowageData.WORKFLOW = preStowage.WORKFLOW

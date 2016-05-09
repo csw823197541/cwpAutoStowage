@@ -58,29 +58,9 @@ class GenerateMoveCountAndGroupId {
                 moveCountQuery.put(str, orders.size())
             }
             println "总movecount数：" + t
+
             ImportData.moveCountQuery = moveCountQuery
 
-            //先生成属性组
-//            int groupNum=1;
-////            println cportSet.size() +"----"+ctypeSet.size()+"----"+csizeSet.size()
-//            for (String port: cportSet){
-//                for (String type:ctypeSet){
-//                    for (String size: csizeSet) {
-//                        String groupID = "G" + groupNum;
-//                        String key = port+"."+type+"."+size
-//    //                    println key +"----"+groupID
-//                        groupQuery.put(key, groupID)
-//                        groupNum++;
-//                    }
-//                }
-//            }
-            //根据在场箱的属性组生成可查找的Map形式
-
-            //将预配信息里的属性组赋值
-//            for(PreStowageData preStowageData : preStowageDataList) {
-//                String key = preStowageData.getDSTPORT() +"."+preStowageData.getCTYPECD() +"."+preStowageData.getSIZE()
-//                preStowageData.setGROUP_ID(groupQuery.get(key))
-//            }
             return preStowageDataList
         }catch (Exception e) {
             e.printStackTrace()

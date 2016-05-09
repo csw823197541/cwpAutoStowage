@@ -32,13 +32,12 @@ public class PreStowageInfoProcess {
                 container+=temp;
             }
         }
-//        System.out.println(container);
         return container;
     }
 
-    public static String getContainerareaString(List<ContainerAreaInfo> containerAreaInfoList){
+    public static String getContainerAreaString(List<ContainerAreaInfo> containerAreaInfoList){
         //箱区信息字符串
-        String containerarea="";
+        String containerArea="";
         List<ContainerAreaInfo> containerAreaInfoList1 = containerAreaInfoList;
         for (ContainerAreaInfo containerAreaInfo: containerAreaInfoList1)
         {
@@ -58,32 +57,15 @@ public class PreStowageInfoProcess {
             temp+=containerAreaInfo.getDISPATCHEDWORK().toString()+",";
             temp+=containerAreaInfo.getPREDISPATCHEDWORK().toString()+",";
             temp+=containerAreaInfo.getWORKEFFICIENCYT().toString()+"#";
-            containerarea+=temp;
+            containerArea+=temp;
         }
-//        System.out.println(containerarea);
-        return containerarea;
+        return containerArea;
     }
 
     public static String getPreStowageString(List<GroupInfo> groupInfoList,List<PreStowageData> preStowageDataList){
-        //处理属性值
-        List<GroupInfo> groupInfoList1 = groupInfoList;
-//        HashMap<String, ArrayList<String>> groupmap = new HashMap<String, ArrayList<String>>();
-//        for (GroupInfo groupInfo:groupInfoList1){
-//            ArrayList<String> groupattri = new ArrayList<String>();
-//            groupattri.add(groupInfo.getPort());
-//            groupattri.add(groupInfo.getType());
-//            groupattri.add(groupInfo.getSize());
-//            groupmap.put(groupInfo.getGroupID(),groupattri);
-//        }
-//        Map<String, String> groupQuery = new HashMap<>();
-//        for(GroupInfo groupInfo : groupInfoList1) {
-//            String key = groupInfo.getPort() +"."+groupInfo.getSize() +"."+groupInfo.getType();
-//            String value = groupInfo.getGroupID();
-//            groupQuery.put(key, value);
-//        }
 
         //预配信息字符串
-        String prestowage="";
+        String preStowage="";
         List<PreStowageData> preStowageInfoList1 = preStowageDataList;
         for (PreStowageData preStowageData:preStowageInfoList1)
         {
@@ -92,22 +74,19 @@ public class PreStowageInfoProcess {
             temp+=preStowageData.getVBYBAYID().toString()+",";
             temp+=preStowageData.getVTRTIERNO().toString()+",";
             temp+=preStowageData.getVRWROWNO().toString()+",";
-//            String GroupID = groupQuery.get(preStowageData.getDSTPORT()+"."+preStowageData.getSIZE()+"."+preStowageData.getCTYPECD());
-//            System.out.println(GroupID);
             temp+=preStowageData.getSIZE()+",";
             temp+=preStowageData.getDSTPORT()+",";
             temp+=preStowageData.getCTYPECD()+",";
             temp+=preStowageData.getWEIGHT().toString()+",";
             temp+=preStowageData.getMOVEORDER().toString()+"#";
-            prestowage+=temp;
+            preStowage+=temp;
         }
-//        System.out.println(prestowage);
-        return prestowage;
+        return preStowage;
     }
 
     public static String getCwpResultString(List<CwpResultInfo> cwpResultInfoList) {
         //生成cwp输出结果
-        String cwpoutput="";
+        String cwpOutput="";
         List<CwpResultInfo> cwpResultInfoList1 = cwpResultInfoList;
         for (CwpResultInfo cwpResultInfo:cwpResultInfoList1)
         {
@@ -121,12 +100,11 @@ public class PreStowageInfoProcess {
             temp+=cwpResultInfo.getQDC().toString()+",";
             temp+=cwpResultInfo.getVESSELID().toString()+",";
             temp+=cwpResultInfo.getMOVETYPE().toString()+",";
-            temp+="L,";
+            temp+=cwpResultInfo.getLDULD()+",";
             temp+=cwpResultInfo.getWORKINGENDTIME().toString()+",";
-            temp+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
-            cwpoutput+=temp;
+            temp+=cwpResultInfo.getREALWORKINGSTARTTIME().toString()+"#";
+            cwpOutput+=temp;
         }
-//        System.out.println(cwpoutput);
-        return cwpoutput;
+        return cwpOutput;
     }
 }

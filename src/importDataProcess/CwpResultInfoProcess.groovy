@@ -26,7 +26,7 @@ class CwpResultInfoProcess {
                 CwpResultInfo cwpResultInfo = new CwpResultInfo()
                 assert cwpResult instanceof Map
                 cwpResultInfo.CRANEID = cwpResult.CRANEID
-//                cwpResultInfo.CranesPosition = Double.valueOf(df.format(cwpResult.CranesPosition))
+                cwpResultInfo.CranesPosition = Double.valueOf(df.format(cwpResult.CranesPosition))
                 cwpResultInfo.HATCHBWID = cwpResult.HATCHBWID
                 cwpResultInfo.HATCHID = cwpResult.HATCHID
                 cwpResultInfo.MOVECOUNT = cwpResult.MOVECOUNT
@@ -34,9 +34,11 @@ class CwpResultInfoProcess {
                 cwpResultInfo.StartMoveID = cwpResult.StartMoveID
                 cwpResultInfo.VESSELID = cwpResult.VESSELD
                 cwpResultInfo.WORKINGENDTIME = cwpResult.WORKINGENDTIME
+                cwpResultInfo.REALWORKINGSTARTTIME = cwpResult.REALWORKINGSTARTTIME
                 cwpResultInfo.WORKINGSTARTTIME = cwpResult.WORKINGSTARTTIME
                 cwpResultInfo.endMoveID = cwpResult.EndMoveID
                 cwpResultInfo.MOVETYPE = cwpResult.MOVETYPE
+                cwpResultInfo.LDULD = cwpResult.mLD
 //                println cwpResultInfo.startMoveID +"--"+ cwpResultInfo.MOVECOUNT +"--"+ cwpResultInfo.endMoveID;
                 cwpResultInfoList.add(cwpResultInfo)
             }

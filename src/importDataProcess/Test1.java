@@ -19,7 +19,7 @@ public class Test1 {
 //        String cr = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
         String cr = FileUtil.readFileToString(new File("NewTestData1/crane1.txt")).toString();
         String co = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitcontainers.txt")).toString();
-        String ca = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitarea.txt")).toString();
+        String ca = FileUtil.readFileToString(new File("NewTestData1/SHBTOS.CWPJUnitarea1.txt")).toString();
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
@@ -27,8 +27,8 @@ public class Test1 {
 //        voyageFrame.setVisible(true);
         //船舶结构
         List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
-//        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
-//        vesselStructureFrame.setVisible(true);
+        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+        vesselStructureFrame.setVisible(true);
         ImportData.vesselStructureInfoList = vesselStructureInfoList;
 //        //桥机
         List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
@@ -36,14 +36,14 @@ public class Test1 {
 //        craneFrame.setVisible(true);
 //        //在场箱
         List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
-//        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
-//        containerFrame.setVisible(true);
+        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
+        containerFrame.setVisible(true);
         //箱区
-//        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
-//        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
-//        containerAreaFrame.setVisible(true);
+        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
+        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
+        containerAreaFrame.setVisible(true);
 //        //属性组
-//        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
+        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
@@ -63,16 +63,16 @@ public class Test1 {
 //        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
 //        preStowageFrame2.setVisible(true);
         //调用cwp算法得到结果
-        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult1.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
+        List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
         CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
         cwpResultFrame.setVisible(true);
         //测试自动配载算法
 //        String cwpResultStr = FileUtil.readFileToString(new File("E:/NewTestData/cwpBlock.txt")).toString();
 //        List<CwpResultInfo> cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
-//        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, resultList, cwpResultInfoList);
-//        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
-//        MoveFrame moveFrame = new MoveFrame(moveInfoList);
-//        moveFrame.setVisible(true);
+        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, resultList, cwpResultInfoList);
+        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
+        MoveFrame moveFrame = new MoveFrame(moveInfoList);
+        moveFrame.setVisible(true);
 
     }
 }

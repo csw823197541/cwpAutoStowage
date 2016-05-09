@@ -129,8 +129,8 @@ public class CwpResultPanel extends JPanel{
             }
             String key = bayId+" "+craneId;
             strList = new ArrayList<>();
-            List<String> startTimeEndTimeMoveCount = blockCountQuery.get(key);
-            if(startTimeEndTimeMoveCount != null) {
+            List<String> startTimeEndTimeMoveCount = blockCountQuery.get(key);//开始时间、结束时间、数量
+            if(startTimeEndTimeMoveCount != null) {//已经存在倍位、桥机相同的作业快
                 boolean flag = false;
                 for(String str : startTimeEndTimeMoveCount) {
                     if((Integer.valueOf(str.split(" ")[1]) == startTime) || (Integer.valueOf(str.split(" ")[1]) == startTime+1)) {//结束时间与开始时间相同，是同一个作业块的
@@ -143,6 +143,7 @@ public class CwpResultPanel extends JPanel{
                 if(!flag) {
                     strNew = startTime+" "+endTime+" "+moveCount;
                     strList.add(strNew);
+//                    key = key + " " + 1;
                 }
                 blockCountQuery.put(key, strList);
             } else {
