@@ -46,15 +46,52 @@ public class MOSlotBlock {
     //反转排遍历顺序
 
 
-    //待实现的函数
+
+    //按位置填入Slot
+    public void putMOSlot(MOSlotPosition moSlotPosition,MOSlot moSlot){
+        if(moSlotPosition.getBayInt()%4==1){ //第一个小贝
+            bay01.get(moSlotPosition.getRowInt()).putMOSlot(moSlotPosition.getTierInt(),moSlot);
+        }
+        if(moSlotPosition.getBayInt()%4==3){ //第二个小贝
+            bay03.get(moSlotPosition.getRowInt()).putMOSlot(moSlotPosition.getTierInt(),moSlot);
+        }
+        if(moSlotPosition.getBayInt()%4==2){ //第一和二个小贝
+            bay01.get(moSlotPosition.getRowInt()).putMOSlot(moSlotPosition.getTierInt(),moSlot);
+            bay03.get(moSlotPosition.getRowInt()).putMOSlot(moSlotPosition.getTierInt(),moSlot);
+        }
+    }
+
+
     //按位置填入箱
     public void putMOContainer(MOSlotPosition moSlotPosition,MOContainer moContainer){
+        MOSlot moSlot = new MOSlot();
+        moSlot.setMoContainer(moContainer);
+        putMOSlot(moSlotPosition,moSlot);
 
+    }
+    //按位置读取Slot
+    public MOSlot getMOSlot(MOSlotPosition moSlotPosition){
+        MOSlot moSlot = null;
+        if(moSlotPosition.getBayInt()%4==1){ //第一个小贝
+            moSlot = bay01.get(moSlotPosition.getRowInt()).getMOSlot(moSlotPosition.getTierInt());
+        }
+        if(moSlotPosition.getBayInt()%4==3){ //第二个小贝
+            moSlot = bay03.get(moSlotPosition.getRowInt()).getMOSlot(moSlotPosition.getTierInt());
+        }
+        if(moSlotPosition.getBayInt()%4==2){ //大贝,取第一个小贝
+            moSlot = bay01.get(moSlotPosition.getRowInt()).getMOSlot(moSlotPosition.getTierInt());
+        }
+        return moSlot;
     }
     //按位置读取箱
     public MOContainer getMOContainer(MOSlotPosition moSlotPosition){
-
-        return null;
+        MOSlot moSlot = getMOSlot(moSlotPosition);
+        if(moSlot!=null){
+            return moSlot.getMoContainer();
+        }
+        else {
+            return null;
+        }
     }
     //获取当前位置的箱的顶面高度
 
