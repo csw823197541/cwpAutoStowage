@@ -1,5 +1,7 @@
 package importDataInfo;
 
+import java.util.Date;
+
 /**
  * Created by csw on 2016/1/20.
  */
@@ -19,6 +21,34 @@ public class CwpResultInfo {
     private String MOVETYPE;//作业工艺
     private Double CranesPosition;//桥机当前位置
     private String LDULD;    //装卸船标志
+
+    private Date workingStartTime;//时间格式的开始时间
+    private Date workingEndTime;//时间格式的结束时间
+    private Integer craneSeq;//作业某个舱所有桥机的作业顺序
+
+    public Date getWorkingStartTime() {
+        return workingStartTime;
+    }
+
+    public void setWorkingStartTime(Date workingStartTime) {
+        this.workingStartTime = workingStartTime;
+    }
+
+    public Date getWorkingEndTime() {
+        return workingEndTime;
+    }
+
+    public void setWorkingEndTime(Date workingEndTime) {
+        this.workingEndTime = workingEndTime;
+    }
+
+    public Integer getCraneSeq() {
+        return craneSeq;
+    }
+
+    public void setCraneSeq(Integer craneSeq) {
+        this.craneSeq = craneSeq;
+    }
 
     public String getMOVETYPE() {
         return MOVETYPE;

@@ -35,7 +35,7 @@ class VesselStructureInfoProcess {
                 vesselStructureInfo.VRWROWSEQ = Integer.valueOf(vesselStructure.VRWROWSEQ)
                 vesselStructureInfo.VLCVWCID = Integer.valueOf(vesselStructure.VLCVWCID)
 //                vesselStructureInfo.CABLENGTH = Integer.valueOf(vesselStructure.CABLENGTH)
-//                vesselStructureInfo.CABPOSITION = Integer.valueOf(vesselStructure.CABPOSITION)
+                vesselStructureInfo.CABPOSITION = Integer.valueOf(vesselStructure.CABPOSITION)
                 vesselStructureInfoList.add(vesselStructureInfo)
             }
         }catch (Exception e){

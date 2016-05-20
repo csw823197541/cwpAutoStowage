@@ -28,6 +28,7 @@ public class PreStowageInfoProcess {
                 temp+=containerInfo.getIYCREFFG()+",";
                 temp+=containerInfo.getIYCYLOCATION()+",";
                 temp+=containerInfo.getIYCPLANFG()+",";
+//                temp+="Y,";
                 temp+=containerInfo.getIYCRETIME()+"#";
                 container+=temp;
             }

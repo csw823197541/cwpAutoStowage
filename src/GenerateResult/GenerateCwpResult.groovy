@@ -4,6 +4,7 @@ import cwp.CallCwpTest
 import importDataInfo.PreStowageData
 import importDataProcess.CraneInfoProcess
 import importDataProcess.CwpResultInfoProcess
+import importDataProcess.CwpResultInfoTransform
 import importDataProcess.HatchInfoProcess
 import importDataProcess.ImportData
 import importDataProcess.WorkMoveInfoProcess
@@ -66,6 +67,8 @@ class GenerateCwpResult {
                     e.printStackTrace()
                 }
                 cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
+                //对cwp结果进行处理，将时间转换成Date格式，以及对作业于每个舱所有的桥机进行编顺序
+                cwpResultInfoList =  CwpResultInfoTransform.getTransformResult(voyageInfoList, cwpResultInfoList);
             } else {
                 System.out.println("cwp算法没有返回结果！")
             }
@@ -96,7 +99,7 @@ class GenerateCwpResult {
         workingTimeRange.setWORKENDTIME(workingEndTime);
         List<WorkingTimeRange> workingTimeRangeList = new ArrayList<WorkingTimeRange>();
         workingTimeRangeList.add(workingTimeRange);
-        Integer i = 0;
+
         for (HatchPositionInfo hatchPositionInfo : hatchPositionInfoList) {
             newHatchInfo = new HatchInfo();
             newHatchInfo.setHORIZONTALSTARTPOSITION(hatchPositionInfo.getPOSITION());
@@ -139,16 +142,6 @@ class GenerateCwpResult {
                 bayWeiIdList.add(vesselStructureInfo.getVBYBAYID())
         }//统计倍舱位数和倍位数
 
-        //计算舱绝对位置坐标
-        Map<String, Double> hatchPositionMap = new HashMap<>();
-        int i = 0;
-        int length = vesselStructureInfoList.get(0).getLENGTH()
-        Double cjj = 3.28//舱间距3.28英尺
-        for(String hatchId : hatchIdList) {
-            hatchPositionMap.put(hatchId, Double.valueOf(df.format(startPosition + i*(length + cjj))))//Todo假设舱间距为2米，这个数据码头还没回复我是否合理
-            i++
-        }
-
         //统计每个舱有多少个倍
         Map<String, Set<String>> hatchBayWeiMap = new HashMap<>()
         for(String hatchId : hatchIdList) {
@@ -161,9 +154,39 @@ class GenerateCwpResult {
             hatchBayWeiMap.put(hatchId, bayWeiSet)
         }
 
+        //计算舱绝对位置坐标
+        Map<String, Double> hatchPositionMap = new HashMap<>();
+        int i = 0;
+        int length = vesselStructureInfoList.get(0).getLENGTH()//舱长度
+        int cabPosition = vesselStructureInfoList.get(0).getCABPOSITION();//驾驶室在哪个倍位号后面
+//        int cabPosition = 30
+        String cabBayWei = String.format("%02d", cabPosition);
+        String cabHatchId = null;
+        Collections.sort(hatchIdList)
+        for(int j = 0; j < hatchIdList.size(); j++) {//查找到驾驶室在哪个舱
+            List<String> bayWeiList = hatchBayWeiMap.get(hatchIdList.get(j)).toList()
+            if(bayWeiList.contains(cabBayWei)) {//取后面一个舱号
+                cabHatchId = hatchIdList.get(j+1)
+            }
+            if(bayWeiList.size() == 2) {
+                if(cabPosition == (Integer.valueOf(bayWeiList.get(0)) +
+                        Integer.valueOf(bayWeiList.get(1)))/2) {
+                    cabHatchId = hatchIdList.get(j+1)
+                }
+            }
+        }
+        Double cjj = 3.28//舱间距3.28英尺
+        Double cabLength = 0.0;
+        for(String hatchId : hatchIdList) {
+            if(hatchId.equals(cabHatchId)) {//当前舱前面有驾驶室
+                cabLength = 46 + cjj
+            }
+            hatchPositionMap.put(hatchId, Double.valueOf(df.format(startPosition + cabLength + i*(length + cjj))))//假设舱间距为2米，这个数据码头还没回复我是否合理
+            i++
+        }
+
         //计算倍位的中心绝对位置坐标
         Map<String, Double> bayWeiPositionMap = new HashMap<>();
-        Collections.sort(hatchIdList)
         for(String hatchId : hatchIdList) {
             Set<String> bayWeiSet = hatchBayWeiMap.get(hatchId)
             Double hatchPosition = hatchPositionMap.get(hatchId)//舱的位置
@@ -212,8 +235,8 @@ class GenerateCwpResult {
 
         }
         //为了查看船舶结构两个坐标是否正确，
-        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
-        vesselStructureFrame.setVisible(true);
+//        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+//        vesselStructureFrame.setVisible(true);
         //结束
 
         return hatchPositionInfoList;

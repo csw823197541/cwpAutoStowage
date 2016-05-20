@@ -16,7 +16,13 @@ public class CallAutoStow {
     public static native String callAutoStow(String str1, String str2, String str3, String str4);
 
     public static String autoStow(String str1, String str2, String str3, String str4) {
-        String str = callAutoStow(str1, str2, str3, str4);
+        String str = null;
+        try{
+            str = callAutoStow(str1, str2, str3, str4);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return str;
     }
 }

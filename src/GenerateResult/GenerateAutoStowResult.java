@@ -53,6 +53,11 @@ public class GenerateAutoStowResult {
         if(containerStr != null && containerAreaStr != null && preStowageStr != null && cwpResultStr != null) {
             //调用自动配载算法
             autoStowStr = CallAutoStow.autoStow(containerStr, containerAreaStr, preStowageStr, cwpResultStr);
+//            try {
+//                Thread.currentThread().sleep(5000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
             System.out.println("自动配载算法返回的结果："+autoStowStr);
             if(autoStowStr != null) {
                 autoStowResultInfoList = getAutoStowResult(autoStowStr);

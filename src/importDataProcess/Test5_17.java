@@ -11,16 +11,16 @@ import java.util.List;
 /**
  * Created by csw on 2016/1/21.
  */
-public class Test5_5 {
+public class Test5_17 {
     public static void main(String[] args) {
 
-        String vo = FileUtil.readFileToString(new File("5.5data/SHBTOS.CWPJUnitvoy.txt")).toString();
-        String sh = FileUtil.readFileToString(new File("5.5data/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
+        String vo = FileUtil.readFileToString(new File("5.17data/Json/SHBTOS.CWPJUnitvoy.txt")).toString();
+        String sh = FileUtil.readFileToString(new File("5.17data/Json/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
 //        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
-        String cr = FileUtil.readFileToString(new File("5.5data/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("5.5data/SHBTOS.CWPJUnitcontainers.txt")).toString();
+        String cr = FileUtil.readFileToString(new File("5.17data/Json/crane1.txt")).toString();
+        String co = FileUtil.readFileToString(new File("5.17data/Json/SHBTOS.CWPJUnitcontainers.txt")).toString();
 //        String co = FileUtil.readFileToString(new File("E:/cnt.txt")).toString();
-        String ca = FileUtil.readFileToString(new File("5.5data/SHBTOS.CWPJUnitarea1.txt")).toString();
+        String ca = FileUtil.readFileToString(new File("5.17data/Json/SHBTOS.CWPJUnitarea.txt")).toString();
 
 //        //航次
         List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
@@ -50,7 +50,7 @@ public class Test5_5 {
 //        GroupFrame groupFrame = new GroupFrame( groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("5.5data/SHBTOS.CWPJUnitperstowage.txt")).toString();
+        String pr = FileUtil.readFileToString(new File("5.17data/Json/SHBTOS.CWPJUnitperstowage.txt")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);

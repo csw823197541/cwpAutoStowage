@@ -27,10 +27,20 @@ class VoyageInfoProcess {
                 assert voyage instanceof Map
                 voyageInfo.VOTVOYID = Integer.valueOf(voyage.VOTVOYID)
                 voyageInfo.VESSELID = voyage.VESSELID
-                if(voyage.VOTPWKSTTM != null)
-                    voyageInfo.VOTPWKSTTM = sdf1.parse(String.valueOf(voyage.VOTPWKSTTM))
-                if(voyage.VOTPWKENTM != null)
-                    voyageInfo.VOTPWKENTM = sdf1.parse(String.valueOf(voyage.VOTPWKENTM))
+                if(voyage.VOTPWKSTTM != null) {
+                    if(String.valueOf(voyage.VOTPWKSTTM).charAt(4) == '-') {
+                        voyageInfo.VOTPWKSTTM = sdf.parse(String.valueOf(voyage.VOTPWKSTTM))
+                    } else {
+                        voyageInfo.VOTPWKSTTM = sdf1.parse(String.valueOf(voyage.VOTPWKSTTM))
+                    }
+                }
+                if(voyage.VOTPWKENTM != null) {
+                    if(String.valueOf(voyage.VOTPWKSTTM).charAt(4) == '-') {
+                        voyageInfo.VOTPWKENTM = sdf.parse(String.valueOf(voyage.VOTPWKENTM))
+                    } else {
+                        voyageInfo.VOTPWKENTM = sdf1.parse(String.valueOf(voyage.VOTPWKENTM))
+                    }
+                }
                 voyageInfo.STARTPOSITION = Double.valueOf(voyage.STARTPOSITION).intValue()
                 voyageInfo.ENDPOSITION = Double.valueOf(voyage.ENDPOSITION).intValue()
                 voyageInfoList.add(voyageInfo)
