@@ -87,7 +87,7 @@ public class GenerateAutoStowResult {
                 AutoStowResultInfo autoStowResultInfo = new AutoStowResultInfo();
                 autoStowResultInfo.setVesselPosition(wz);
                 String[] value = new String[3];//value,0放箱区位置，1放箱号，2放尺寸
-                if(!cxw.equals(" ")) {
+                if(!cxw.equals(" unstowed")) {
                     String[] cangxiangwei = cxw.split("%");
                     value[0] = cangxiangwei[0] + "." + cangxiangwei[1] + "." +cangxiangwei[2] + "." +cangxiangwei[3];
                 } else {

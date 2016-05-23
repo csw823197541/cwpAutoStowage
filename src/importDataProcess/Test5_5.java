@@ -70,16 +70,18 @@ public class Test5_5 {
         List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
         CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
         cwpResultFrame.setVisible(true);
+        //对cwp结果进行处理，将连续作业的cwp块放到一起，以及对作业于某个舱所有的桥机进行编顺序，和某桥机作业舱的顺序
+        List<CwpResultInfo> cwpResultInfoTransformList =  CwpResultInfoTransform.getTransformResult(cwpResultInfoList);
         //测试自动配载算法
-//        String cwpResultStr = FileUtil.readFileToString(new File("toCwpData/cwpResult.txt")).toString();
-//        List<CwpResultInfo> cwpResultInfoList1 = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
+        String cwpResultStr = FileUtil.readFileToString(new File("toCwpData/cwpResult.txt")).toString();
+        List<CwpResultInfo> cwpResultInfoList1 = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
         List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, resultList, cwpResultInfoList);
         List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList, autoStowInfoList);
         MoveFrame moveFrame = new MoveFrame(moveInfoList);
         moveFrame.setVisible(true);
-
-        //可视化显示配载结果
-        VesselImageFrame vesselImageFrame = new VesselImageFrame(vesselStructureInfoList);
-        vesselImageFrame.setVisible(true);
+//
+//        //可视化显示配载结果
+//        VesselImageFrame vesselImageFrame = new VesselImageFrame(vesselStructureInfoList);
+//        vesselImageFrame.setVisible(true);
     }
 }

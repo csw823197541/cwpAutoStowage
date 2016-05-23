@@ -19,7 +19,7 @@ public class GenerateMoveInfoResult {
         List<MoveInfo> moveInfoList = new ArrayList<MoveInfo>();
 
         Map<String,Integer> crane = new HashMap<>();     //桥机的moveID
-        Map<String,List<String>> moveRecords = ImportData.moveOrderRecords;   //根据舱和moveorder确定具体位置
+        Map<String,List<String>> moveOrderRecords = ImportData.moveOrderRecords;   //根据舱和moveorder确定具体位置
         Map<String,String[]> autoStowResult = ImportData.autoStowResult;        //自动配载结果
         List<CwpResultInfo> cwpResultInfoList1 = cwpResultInfoList;            //cwp结果
 
@@ -37,30 +37,30 @@ public class GenerateMoveInfoResult {
                 Integer endTime = cwpResultInfo.getWORKINGENDTIME();
                 String LD = cwpResultInfo.getLDULD();
                 String moveType = cwpResultInfo.getMOVETYPE();
-                Integer singleTime = (endTime-startTime)/cwpResultInfo.getMOVECOUNT();
-                for (int i = startMoveOrder; i < startMoveOrder + moveCount; i++)
-                {
-                    //System.out.println("新生成一条数据");
+                Integer singleTime = (endTime-startTime)/moveCount;
+                for (int i = startMoveOrder; i < startMoveOrder + moveCount; i++) {
                     String hatchMoveOrder = hatchID + "." + String.valueOf(i) + "." + moveType;          //舱号连接编号
-                    List<String> vesselPosition = moveRecords.get(hatchMoveOrder);
-                    for(String str : vesselPosition) {
-                        MoveInfo moveInfo = new MoveInfo();
-                        moveInfo.setBatchId(craneID);               //批号为桥机号
-                        moveInfo.setMoveKind(LD);
-                        if (!crane.containsKey(craneID))
-                            crane.put(craneID,0);
-                        Integer moveID = crane.get(craneID) + i - startMoveOrder + 1;     //桥机的move序列
-                        moveInfo.setMoveId(moveID);
-                        moveInfo.setGkey(craneID + "@" + moveID.toString());
-                        moveInfo.setExToPosition(str);
-                        moveInfo.setWORKINGSTARTTIME(startTime + singleTime*(i - startMoveOrder));
-                        String areaPosition = autoStowResult.get(str)[0];
-                        String unitID = autoStowResult.get(str)[1];
-                        String size = autoStowResult.get(str)[2];
-                        moveInfo.setExFromPosition(areaPosition);
-                        moveInfo.setUnitId(unitID);
-                        moveInfo.setUnitLength(size);
-                        moveInfoList.add(moveInfo);
+                    List<String> vesselPosition = moveOrderRecords.get(hatchMoveOrder);
+                    if(vesselPosition != null) {
+                        for(String str : vesselPosition) {
+                            MoveInfo moveInfo = new MoveInfo();
+                            moveInfo.setBatchId(craneID);               //批号为桥机号
+                            moveInfo.setMoveKind(LD);
+                            if (!crane.containsKey(craneID))
+                                crane.put(craneID,0);
+                            Integer moveID = crane.get(craneID) + i - startMoveOrder + 1;     //桥机的move序列
+                            moveInfo.setMoveId(moveID);
+                            moveInfo.setGkey(craneID + "@" + moveID.toString());
+                            moveInfo.setExToPosition(str);
+                            moveInfo.setWORKINGSTARTTIME(startTime + singleTime*(i - startMoveOrder));
+                            String areaPosition = autoStowResult.get(str)[0];
+                            String unitID = autoStowResult.get(str)[1];
+                            String size = autoStowResult.get(str)[2];
+                            moveInfo.setExFromPosition(areaPosition);
+                            moveInfo.setUnitId(unitID);
+                            moveInfo.setUnitLength(size);
+                            moveInfoList.add(moveInfo);
+                        }
                     }
                 }
                 crane.put(craneID, crane.get(craneID) + moveCount);

@@ -22,24 +22,24 @@ public class CwpResultInfo {
     private Double CranesPosition;//桥机当前位置
     private String LDULD;    //装卸船标志
 
-    private Date workingStartTime;//时间格式的开始时间
-    private Date workingEndTime;//时间格式的结束时间
+    private Integer workTimeMinute;//桥机连续作业的时间，单位是分钟
     private Integer craneSeq;//作业某个舱所有桥机的作业顺序
+    private Integer hatchSeq;//某个桥机作业哪些舱的顺序
 
-    public Date getWorkingStartTime() {
-        return workingStartTime;
+    public Integer getWorkTimeMinute() {
+        return workTimeMinute;
     }
 
-    public void setWorkingStartTime(Date workingStartTime) {
-        this.workingStartTime = workingStartTime;
+    public void setWorkTimeMinute(Integer workTimeMinute) {
+        this.workTimeMinute = workTimeMinute;
     }
 
-    public Date getWorkingEndTime() {
-        return workingEndTime;
+    public Integer getHatchSeq() {
+        return hatchSeq;
     }
 
-    public void setWorkingEndTime(Date workingEndTime) {
-        this.workingEndTime = workingEndTime;
+    public void setHatchSeq(Integer hatchSeq) {
+        this.hatchSeq = hatchSeq;
     }
 
     public Integer getCraneSeq() {
@@ -160,5 +160,10 @@ public class CwpResultInfo {
 
     public void setREALWORKINGSTARTTIME(Integer REALWORKINGSTARTTIME) {
         this.REALWORKINGSTARTTIME = REALWORKINGSTARTTIME;
+    }
+    public CwpResultInfo copyCwpResultInfo(){
+        CwpResultInfo dest = new CwpResultInfo();
+        dest.setLDULD(this.LDULD);
+        return dest;
     }
 }

@@ -21,8 +21,8 @@ public class Test30 {
 
     public static void main(String[] args) {
 
-        String vo = FileUtil.readFileToString(new File("E:\\testdatas\\15791（P）\\COS ENGL\\Json/SHBTOS.CWPJUnitvoy.txt")).toString();
-        String sh = FileUtil.readFileToString(new File("E:\\testdatas\\15791（P）\\COS ENGL\\Json/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
+        String vo = FileUtil.readFileToString(new File("E:\\testdatas516\\15791（P）\\COS SPAI\\Json/SHBTOS.CWPJUnitvoy.txt")).toString();
+        String sh = FileUtil.readFileToString(new File("E:\\testdatas516\\15791（P）\\COS SPAI\\Json/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
 //        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
         String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
         String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
@@ -56,7 +56,7 @@ public class Test30 {
 //        GroupFrame groupFrame = new GroupFrame(groupInfoList);
 //        groupFrame.setVisible(true);
         //实配图
-        String pr = FileUtil.readFileToString(new File("E:\\testdatas\\15791（P）\\COS ENGL\\Json/SHBTOS.CWPJUnitperstowage.txt")).toString();
+        String pr = FileUtil.readFileToString(new File("E:\\testdatas516\\15791（P）\\COS SPAI\\Json/SHBTOS.CWPJUnitperstowage.txt")).toString();
         List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);

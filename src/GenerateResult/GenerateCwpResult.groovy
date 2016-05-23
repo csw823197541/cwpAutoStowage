@@ -67,8 +67,6 @@ class GenerateCwpResult {
                     e.printStackTrace()
                 }
                 cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
-                //对cwp结果进行处理，将时间转换成Date格式，以及对作业于每个舱所有的桥机进行编顺序
-                cwpResultInfoList =  CwpResultInfoTransform.getTransformResult(voyageInfoList, cwpResultInfoList);
             } else {
                 System.out.println("cwp算法没有返回结果！")
             }
@@ -308,7 +306,7 @@ class GenerateCwpResult {
                         Double d = Double.valueOf(df.format((bayPositionQuery.get(bayStr0)+bayPositionQuery.get(bayStr1))/2))
                         workMoveInfo.setHORIZONTALPOSITION(d)
 
-                        //舱.倍位号.作业序列.作业工艺
+                        //舱.作业序列.作业工艺
                         String key = hatchId +"." + order + "." + moveDataList.get(0).getWORKFLOW()
                         String vesselPosition1 = hatchId + "." + moveDataList.get(0).getVBYBAYID() +"." + moveDataList.get(0).getVTRTIERNO() + "." + moveDataList.get(0).getVRWROWNO()
                         String vesselPosition2 = hatchId + "." + moveDataList.get(1).getVBYBAYID() +"." + moveDataList.get(1).getVTRTIERNO() + "." + moveDataList.get(1).getVRWROWNO()
@@ -332,7 +330,7 @@ class GenerateCwpResult {
                         Double d = bayPositionQuery.get(bayStr)
                         workMoveInfo.setHORIZONTALPOSITION(d)
 
-                        //舱.倍位号.作业序列.作业工艺
+                        //舱.作业序列.作业工艺
                         String key = hatchId +"." + order + "." + moveDataList.get(0).getWORKFLOW()
                         String vesselPosition1 = hatchId + "." + moveDataList.get(0).getVBYBAYID() +"." + moveDataList.get(0).getVTRTIERNO() + "." + moveDataList.get(0).getVRWROWNO()
                         String vesselPosition2 = hatchId + "." + moveDataList.get(1).getVBYBAYID() +"." + moveDataList.get(1).getVTRTIERNO() + "." + moveDataList.get(1).getVRWROWNO()
@@ -355,7 +353,7 @@ class GenerateCwpResult {
                     Double d = bayPositionQuery.get(bayStr0)
                     workMoveInfo.setHORIZONTALPOSITION(d)
 
-                    //舱.倍位号.作业序列.作业工艺
+                    //舱.作业序列.作业工艺
                     String key = hatchId +"." + order + "." + moveDataList.get(0).getWORKFLOW()
                     String vesselPosition1 = hatchId + "." + moveDataList.get(0).getVBYBAYID() +"." + moveDataList.get(0).getVTRTIERNO() + "." + moveDataList.get(0).getVRWROWNO()
                     List<String> positionList = new ArrayList<>()
