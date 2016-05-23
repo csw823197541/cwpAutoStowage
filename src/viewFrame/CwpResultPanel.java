@@ -132,7 +132,8 @@ public class CwpResultPanel extends JPanel{
             List<String> startTimeEndTimeMoveCount = blockCountQuery.get(key);//开始时间、结束时间、数量
             if(startTimeEndTimeMoveCount != null) {//已经存在倍位、桥机相同的作业快
                 boolean flag = false;
-                for(String str : startTimeEndTimeMoveCount) {
+                for(int i = startTimeEndTimeMoveCount.size()-1; i >= 0; i--) {
+                    String  str = startTimeEndTimeMoveCount.get(i);
                     if((Integer.valueOf(str.split(" ")[1]) == startTime) || (Integer.valueOf(str.split(" ")[1]) == startTime+1)) {//结束时间与开始时间相同，是同一个作业块的
                         int count = Integer.valueOf(str.split(" ")[2])+moveCount;
                         strNew = str.split(" ")[0]+" "+endTime+" "+count;

@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by csw on 2016/1/20.
  */
-public class CwpResultInfo {
+public class CwpResultInfo implements Cloneable{
 
     private String CRANEID;//桥机ID
     private Integer EndMoveID;//结束时，舱内的MoveOrder
@@ -27,7 +27,12 @@ public class CwpResultInfo {
     private Integer hatchSeq;//某个桥机作业哪些舱的顺序
 
     public Integer getWorkTimeMinute() {
-        return workTimeMinute;
+        if(WORKINGSTARTTIME == null || WORKINGENDTIME == null){
+            return null;
+        }
+        else{
+            return (WORKINGSTARTTIME-WORKINGENDTIME)/60;
+        }
     }
 
     public void setWorkTimeMinute(Integer workTimeMinute) {
@@ -67,7 +72,12 @@ public class CwpResultInfo {
     }
 
     public Integer getEndMoveID() {
-        return EndMoveID;
+        if(StartMoveID == null || MOVECOUNT == null){
+            return null;
+        }
+        else{
+            return StartMoveID + MOVECOUNT;
+        }
     }
 
     public void setEndMoveID(Integer endMoveID) {
@@ -165,5 +175,10 @@ public class CwpResultInfo {
         CwpResultInfo dest = new CwpResultInfo();
         dest.setLDULD(this.LDULD);
         return dest;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
