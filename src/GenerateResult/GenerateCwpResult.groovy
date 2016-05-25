@@ -66,7 +66,7 @@ class GenerateCwpResult {
                 }catch (Exception e) {
                     e.printStackTrace()
                 }
-                cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr)
+                cwpResultInfoList = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr, voyageInfoList)
             } else {
                 System.out.println("cwp算法没有返回结果！")
             }

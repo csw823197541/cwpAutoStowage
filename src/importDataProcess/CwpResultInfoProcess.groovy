@@ -2,6 +2,7 @@ package importDataProcess
 
 import groovy.json.JsonSlurper
 import importDataInfo.CwpResultInfo
+import importDataInfo.VoyageInfo
 
 import java.text.DecimalFormat
 
@@ -13,11 +14,15 @@ class CwpResultInfoProcess {
     public static DecimalFormat df = new DecimalFormat("#.00");
 
     //Json字符串解析编码
-    public static List<CwpResultInfo> getCwpResultInfo(String jsonStr) {
+    public static List<CwpResultInfo> getCwpResultInfo(String jsonStr, List<VoyageInfo> voyageInfoList) {
 
         boolean isError = false;
         List<CwpResultInfo> cwpResultInfoList = new ArrayList<CwpResultInfo>();
+
         try{
+            Date voyageStartTime = voyageInfoList.get(0).getVOTPWKSTTM();
+            long stLong = voyageStartTime.getTime();
+
             def root = new JsonSlurper().parseText(jsonStr)
 
             assert root instanceof List//根据读入数据的格式，可以直接把json转换成List
@@ -39,7 +44,10 @@ class CwpResultInfoProcess {
                 cwpResultInfo.endMoveID = cwpResult.EndMoveID
                 cwpResultInfo.MOVETYPE = cwpResult.MOVETYPE
                 cwpResultInfo.LDULD = cwpResult.mLD
-//                println cwpResultInfo.startMoveID +"--"+ cwpResultInfo.MOVECOUNT +"--"+ cwpResultInfo.endMoveID;
+
+                cwpResultInfo.workingStartTime = new Date(stLong + cwpResult.WORKINGSTARTTIME*1000)
+                cwpResultInfo.workingEndTime = new Date(stLong + cwpResult.WORKINGENDTIME*1000)
+
                 cwpResultInfoList.add(cwpResultInfo)
             }
         }catch (Exception e){

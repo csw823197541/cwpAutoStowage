@@ -24,8 +24,7 @@ public class GenerateMoveInfoResult {
         List<CwpResultInfo> cwpResultInfoList1 = cwpResultInfoList;            //cwp结果
 
 
-        for (CwpResultInfo cwpResultInfo: cwpResultInfoList1)
-        {
+        for (CwpResultInfo cwpResultInfo: cwpResultInfoList1) {
             try {
                 String craneID = cwpResultInfo.getCRANEID();                //桥机号
                 String hatchID = cwpResultInfo.getHATCHID();                //舱号
@@ -51,14 +50,23 @@ public class GenerateMoveInfoResult {
                             Integer moveID = crane.get(craneID) + i - startMoveOrder + 1;     //桥机的move序列
                             moveInfo.setMoveId(moveID);
                             moveInfo.setGkey(craneID + "@" + moveID.toString());
-                            moveInfo.setExToPosition(str);
                             moveInfo.setWORKINGSTARTTIME(startTime + singleTime*(i - startMoveOrder));
-                            String areaPosition = autoStowResult.get(str)[0];
-                            String unitID = autoStowResult.get(str)[1];
-                            String size = autoStowResult.get(str)[2];
-                            moveInfo.setExFromPosition(areaPosition);
-                            moveInfo.setUnitId(unitID);
-                            moveInfo.setUnitLength(size);
+
+                            if(LD.equals("L")) {
+                                moveInfo.setExToPosition(str);
+                                String areaPosition = autoStowResult.get(str)[0];
+                                String unitID = autoStowResult.get(str)[1];
+                                String size = autoStowResult.get(str)[2];
+                                moveInfo.setExFromPosition(areaPosition);
+                                moveInfo.setUnitId(unitID);
+                                moveInfo.setUnitLength(size);
+                            } else {
+                                moveInfo.setExToPosition(str);
+                                String size = autoStowResult.get(str)[2];
+                                moveInfo.setExFromPosition(" ");
+                                moveInfo.setUnitId(" ");
+                                moveInfo.setUnitLength(size);
+                            }
                             moveInfoList.add(moveInfo);
                         }
                     }

@@ -26,6 +26,25 @@ public class CwpResultInfo implements Cloneable{
     private Integer craneSeq;//作业某个舱所有桥机的作业顺序
     private Integer hatchSeq;//某个桥机作业哪些舱的顺序
 
+    private Date workingStartTime;     //开始作业时间
+    private Date workingEndTime;        //结束作业时间
+
+    public Date getWorkingStartTime() {
+        return workingStartTime;
+    }
+
+    public void setWorkingStartTime(Date workingStartTime) {
+        this.workingStartTime = workingStartTime;
+    }
+
+    public Date getWorkingEndTime() {
+        return workingEndTime;
+    }
+
+    public void setWorkingEndTime(Date workingEndTime) {
+        this.workingEndTime = workingEndTime;
+    }
+
     public Integer getWorkTimeMinute() {
         if(WORKINGSTARTTIME == null || WORKINGENDTIME == null){
             return null;
@@ -170,11 +189,6 @@ public class CwpResultInfo implements Cloneable{
 
     public void setREALWORKINGSTARTTIME(Integer REALWORKINGSTARTTIME) {
         this.REALWORKINGSTARTTIME = REALWORKINGSTARTTIME;
-    }
-    public CwpResultInfo copyCwpResultInfo(){
-        CwpResultInfo dest = new CwpResultInfo();
-        dest.setLDULD(this.LDULD);
-        return dest;
     }
 
     @Override
