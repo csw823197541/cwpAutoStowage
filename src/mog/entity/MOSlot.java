@@ -10,13 +10,18 @@ import java.util.Set;
 基本的slot对象,即为基本的船舶结构.放有MOContainer,PositionSet等对象
  */
 public class MOSlot {
+
+
+    private MOSlotPosition moSlotPosition;
     private MOContainer moContainer;
     private Set<MOSlotPosition> moSlotPositionSet;
     private int moveOrderSeq;
 
 
-    MOSlot(){
+    MOSlot(MOSlotPosition moSlotPosition){
+        this.moSlotPosition = moSlotPosition;
         moSlotPositionSet = new HashSet<>();
+        moveOrderSeq = -1;
     }
 
     public MOContainer getMoContainer() {
@@ -33,6 +38,9 @@ public class MOSlot {
 
     public void setMoSlotPositionSet(Set<MOSlotPosition> moSlotPositionSet) {
         this.moSlotPositionSet = moSlotPositionSet;
+    }
+    public MOSlotPosition getMoSlotPosition() {
+        return moSlotPosition;
     }
 
     public int getMoveOrderSeq() {
