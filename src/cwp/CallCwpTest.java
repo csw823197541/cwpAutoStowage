@@ -8,7 +8,7 @@ public class CallCwpTest {
 	static {
 //        System.loadLibrary("cwp_to_java3");
         String filePath = System.getProperty("user.dir") + File.separator + "lib" + File.separator;
-        System.load(filePath + "cwp_to_java3.dll");
+        System.load(filePath + "cwp_to_java4.dll");
     }
       
     public static native String callCwp(String str1, String str2, String str3, String str4, String str5, String str6);

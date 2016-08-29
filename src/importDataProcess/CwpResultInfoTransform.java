@@ -9,18 +9,18 @@ import java.util.*;
  */
 public class CwpResultInfoTransform {
 
-    public static List<CwpResultInfo> getTransformResult(List<CwpResultInfo> cwpResultInfoList) {
+    public static List<CwpResultInfo> getTransformResult(List<CwpResultInfo> cwpResultInfoListIn) {
         List<CwpResultInfo> resultInfoList = new ArrayList<>();
 
-        Map<String, Map<Integer,CwpResultInfo>> allMap = new HashMap<>();
+        Map<String, Map<Integer, CwpResultInfo>> allMap = new HashMap<>();
 
-        for (CwpResultInfo cwpResultInfo:cwpResultInfoList){
+        for (CwpResultInfo cwpResultInfo:cwpResultInfoListIn){
             String bayId = cwpResultInfo.getHATCHBWID();
             String craneId = cwpResultInfo.getCRANEID();
             String ldFlag = cwpResultInfo.getLDULD();       //装卸标志
             String moveType = cwpResultInfo.getMOVETYPE();  //作业工艺
 
-            String cKey = bayId + "." + craneId;     //倍位号.桥机号
+            String cKey = bayId + "." + craneId + "." + ldFlag;     //倍位号.桥机号
 
             //将数据按key为倍位号.桥机号，保存在Map里，其中value为以是开始时间为key的Map，目的是为了后面以时间顺序组成大作业块
             if(allMap.get(cKey)==null){
@@ -31,7 +31,7 @@ public class CwpResultInfoTransform {
         }
 
         //开始遍历倍位号.桥机号相同的Map
-        for(Map<Integer,CwpResultInfo> valueMap : allMap.values()){
+        for(Map<Integer, CwpResultInfo> valueMap : allMap.values()){
             List<Integer> timeList = new ArrayList(valueMap.keySet());
             Collections.sort(timeList);
 
@@ -98,14 +98,40 @@ public class CwpResultInfoTransform {
             List<Integer> timeList = new ArrayList(valueMap.keySet());
             Collections.sort(timeList);     //按时间进行排序
             int seq = 1;
+            CwpResultInfo lastBlock = null; //上一个大块对象
             for(Integer tKey : timeList) {  //由于按时间排序了，所以直接编序号
-                CwpResultInfo cwpResultInfo = valueMap.get(tKey);
-                cwpResultInfo.setMOVETYPE(null);
-                cwpResultInfo.setLDULD(null);
-                cwpResultInfo.setQDC(null);
-                cwpResultInfo.setREALWORKINGSTARTTIME(null);
-                cwpResultInfo.setCraneSeq(seq++);
-                resultInfoList.add(cwpResultInfo);
+                CwpResultInfo currentBlock = valueMap.get(tKey);    //当前大块对象
+
+                //添加桥机作业顺序
+                currentBlock.setCraneSeq(seq);
+                if (lastBlock == null){     //上一个大块对象为空
+                    try {      //将当前对象克隆给上一个大块对象
+                        lastBlock = (CwpResultInfo) currentBlock.clone();
+                        seq++;
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
+                } else {    //上一个时间片对象不为空
+                    //判断当前对象的开始时间是否与上一个对象的结束时间相同（由于cwp的输出有可能前者会小于后者），还有在同一个倍位上（桥机没有移动），则桥机顺序号是相同的
+                    if(currentBlock.getWORKINGSTARTTIME() - lastBlock.getWORKINGENDTIME() <= 1 && currentBlock.getHATCHBWID().equals(lastBlock.getHATCHBWID())){
+                        currentBlock.setCraneSeq(lastBlock.getCraneSeq());  //跟上一个大块的序号相同
+                    }
+                    else{      //不是连续时间片
+                        try {   //将当前对象克隆给上一个大块对象
+                            lastBlock = (CwpResultInfo) currentBlock.clone();
+                            seq++;
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                currentBlock.setMOVETYPE(null);
+                //添加作业绝对时间
+                int workTimeMinute = currentBlock.getWorkTimeMinute();
+                Date startTime = currentBlock.getCraneWorkStartTime();
+                Date endTime = new Date(startTime.getTime() + workTimeMinute*60*1000);
+                currentBlock.setWorkingEndTime(endTime);
+                resultInfoList.add(currentBlock);
             }
         }
 
@@ -132,11 +158,35 @@ public class CwpResultInfoTransform {
             List<Integer> timeList = new ArrayList(valueMap.keySet());
             Collections.sort(timeList);
             int seq = 1;
+            CwpResultInfo lastBlock = null; //上一个大块对象
             for(int i = 0; i < timeList.size(); i++) {
                 int tKey = timeList.get(i);
-                CwpResultInfo cwpResultInfo = valueMap.get(tKey);
-                cwpResultInfo.setHatchSeq(seq++);
-                resultInfoList.add(cwpResultInfo);
+                CwpResultInfo currentBlock = valueMap.get(tKey);    //当前大块对象
+
+                //添加舱作业顺序
+                currentBlock.setHatchSeq(seq);
+                if (lastBlock == null){     //上一个大块对象为空
+                    try {      //将当前对象克隆给上一个大块对象
+                        lastBlock = (CwpResultInfo) currentBlock.clone();
+                        seq++;
+                    } catch (CloneNotSupportedException e) {
+                        e.printStackTrace();
+                    }
+                } else {    //上一个时间片对象不为空
+                    //判断当前对象的开始时间是否与上一个对象的结束时间相同（由于cwp的输出有可能前者会小于后者），还有在同一个倍位上（即桥机没有移动），则桥机顺序号是相同的
+                    if(currentBlock.getWORKINGSTARTTIME() - lastBlock.getWORKINGENDTIME() <= 1 && currentBlock.getHATCHBWID().equals(lastBlock.getHATCHBWID())){
+                        currentBlock.setHatchSeq(lastBlock.getHatchSeq());  //跟上一个大块的序号相同
+                    }
+                    else{      //不是连续时间片
+                        try {   //将当前对象克隆给上一个大块对象
+                            lastBlock = (CwpResultInfo) currentBlock.clone();
+                            seq++;
+                        } catch (CloneNotSupportedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                resultInfoList.add(currentBlock);
             }
         }
 

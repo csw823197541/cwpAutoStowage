@@ -108,13 +108,22 @@ public class PreStowageDataFrame extends JFrame{
                                 int row =((JTable)e.getSource()).rowAtPoint(e.getPoint()); //获得行位置
                                 String clickedBayId = (String) tableModel.getValueAt(row,tableWQL.getColumnModel().getColumnIndex("倍号"));
 
+                                String hatchId = (String) tableModel.getValueAt(row,tableWQL.getColumnModel().getColumnIndex("舱号"));
                                 System.out.println("倍位号：" + clickedBayId);
                                 //筛选该贝位的数据
                                 List<PreStowageData> bayLoadStowageData = new ArrayList<PreStowageData>();
                                 List<PreStowageData> bayDschStowageData = new ArrayList<PreStowageData>();
+                                int bayInt = Integer.valueOf(clickedBayId);
+                                int bayInt02 = 0;
+                                if(bayInt % 4 == 1) {
+                                    bayInt02 = bayInt + 1;
+                                }
+                                if(bayInt % 4 == 3) {
+                                    bayInt02 = bayInt -1;
+                                }
                                 for(int i = 0;i<preStowageInfoList.size();i++){
                                     PreStowageData preStowageData = preStowageInfoList.get(i);
-                                    if(preStowageData.getVBYBAYID().equals(clickedBayId)){
+                                    if(bayInt == Integer.valueOf(preStowageData.getVBYBAYID()) || bayInt02 == Integer.valueOf(preStowageData.getVBYBAYID())){
                                         if(preStowageData.getLDULD().equals("L")){
                                             bayLoadStowageData.add(preStowageData);
                                         }

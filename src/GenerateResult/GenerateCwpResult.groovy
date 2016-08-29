@@ -18,6 +18,7 @@ import importDataInfo.VesselStructureInfo
 import importDataInfo.VoyageInfo
 import importDataInfo.WorkMoveInfo
 import importDataInfo.WorkingTimeRange
+import test.Test30
 import utils.FileUtil
 import viewFrame.VesselStructureFrame
 
@@ -48,10 +49,15 @@ class GenerateCwpResult {
         String craneJsonStr = CraneInfoProcess.getCraneInfoJsonStr(craneInfoList)
         String hatchJsonStr = HatchInfoProcess.getHatchInfoJsonStr(hatchInfoList)
         String moveJsonStr = WorkMoveInfoProcess.getWorkMoveInfoJsonStr(workMoveInfoList)
+
+        String str = Test30.fileResult;
+//        str = str.split("\\\\")[1] + "\\" +str.split("\\\\")[2];
+//        str = "C:\\Users\\csw\\Desktop\\30\\" + str;
+
         try{
-            FileUtil.writeToFile("toCwpData/hatch.txt", hatchJsonStr)
-            FileUtil.writeToFile("toCwpData/crane.txt", craneJsonStr)
-            FileUtil.writeToFile("toCwpData/moves.txt", moveJsonStr)
+            FileUtil.writeToFile(str + "/toCwpData/hatch.txt", hatchJsonStr)
+            FileUtil.writeToFile(str + "/toCwpData/crane.txt", craneJsonStr)
+            FileUtil.writeToFile(str + "/toCwpData/moves.txt", moveJsonStr)
         } catch (Exception e) {
             e.printStackTrace()
         }
@@ -62,7 +68,7 @@ class GenerateCwpResult {
             System.out.println("cwp算法返回的json字符串:" + cwpResultStr);
             if(cwpResultStr != null){
                 try{
-                    FileUtil.writeToFile("toCwpData/cwpResult.txt", cwpResultStr)
+                    FileUtil.writeToFile(str + "/toCwpData/cwpResult.txt", cwpResultStr)
                 }catch (Exception e) {
                     e.printStackTrace()
                 }

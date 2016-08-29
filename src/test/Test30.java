@@ -2,6 +2,7 @@ package test;
 
 import GenerateResult.GenerateCwpResult;
 import GenerateResult.GenerateGroupResult;
+import GenerateResult.GenerateMoveOrder;
 import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import importDataProcess.*;
@@ -19,69 +20,73 @@ import java.util.List;
  */
 public class Test30 {
 
+    public static String fileResult = "";
+
     public static void main(String[] args) {
 
-        String vo = FileUtil.readFileToString(new File("E:\\testdatas516\\15791（P）\\COS SPAI\\Json/SHBTOS.CWPJUnitvoy.txt")).toString();
-        String sh = FileUtil.readFileToString(new File("E:\\testdatas516\\15791（P）\\COS SPAI\\Json/SHBTOS.CWPJUnitvesselstructure.txt")).toString();
-//        String cr = FileUtil.readFileToString(new File("E:/NewTestData/SHBTOS.CWPJUnitqcInfo.json")).toString();
-        String cr = FileUtil.readFileToString(new File("NewTestData/crane1.txt")).toString();
-        String co = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitcontainers.json")).toString();
-        String ca = FileUtil.readFileToString(new File("NewTestData/SHBTOS.CWPJUnitarea.json")).toString();
+        String filePath = "5.25data\\15617（P）\\";
 
+        File file = new File(filePath);
+        File[] tempList = file.listFiles();
+        System.out.println("该目录下对象个数：" + tempList.length);
+        for (int i = 0; i < tempList.length; i++) {
+            if (tempList[i].isFile()) {
+                System.out.println("文件：" + tempList[i]);
+            }
+            if (tempList[i].isDirectory()) {
+                filePath = tempList[i] + "\\Json\\";
+                fileResult = tempList[i] + "";
+                System.out.println("文件夹：" + filePath);
+                String vo = FileUtil.readFileToString(new File(filePath + "SHBTOS.CWPJUnitvoy.txt")).toString();
+                String sh = FileUtil.readFileToString(new File(filePath + "SHBTOS.CWPJUnitvesselstructure.txt")).toString();
+                String cr = FileUtil.readFileToString(new File("5.25data/13445（P）/HAMBURG BRI/Json/crane1.txt")).toString();
+                String str = Test30.fileResult;
+                str = str.split("\\\\")[1] + "\\" +str.split("\\\\")[2];
+                str = "C:\\Users\\csw\\Desktop\\30\\" + str;
+                System.out.println(str);
 //        //航次
-        List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
-        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
-        voyageFrame.setVisible(true);
-        //船舶结构
-        List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
-        ImportData.vesselStructureInfoList = vesselStructureInfoList;
-        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
-        vesselStructureFrame.setVisible(true);
+                List<VoyageInfo> voyageInfoList = VoyageInfoProcess.getVoyageInfo(vo);
+//        VoyageFrame voyageFrame = new VoyageFrame(voyageInfoList);
+//        voyageFrame.setVisible(true);
 
+                //船舶结构
+                List<VesselStructureInfo> vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(sh);
+                ImportData.vesselStructureInfoList = vesselStructureInfoList;
+//        VesselStructureFrame vesselStructureFrame = new VesselStructureFrame(vesselStructureInfoList);
+//        vesselStructureFrame.setVisible(true);
 
 //        //桥机
-        List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
-        CraneFrame craneFrame = new CraneFrame(craneInfoList);
-        craneFrame.setVisible(true);
-//        //在场箱
-        List<ContainerInfo> containerInfoList = ContainerInfoProcess.getContainerInfo(co);
-//        ContainerFrame containerFrame = new ContainerFrame(containerInfoList);
-//        containerFrame.setVisible(true);
-//        //箱区
-        List<ContainerAreaInfo> containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(ca);
-//        ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame(containerAreaInfoList);
-//        containerAreaFrame.setVisible(true);
-//        //属性组
-        List<GroupInfo> groupInfoList = GenerateGroupResult.getGroupResult(containerInfoList);
-//        GroupFrame groupFrame = new GroupFrame(groupInfoList);
-//        groupFrame.setVisible(true);
-        //实配图
-        String pr = FileUtil.readFileToString(new File("E:\\testdatas516\\15791（P）\\COS SPAI\\Json/SHBTOS.CWPJUnitperstowage.txt")).toString();
-        List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
+                List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
+//        CraneFrame craneFrame = new CraneFrame(craneInfoList);
+//        craneFrame.setVisible(true);
+
+                //实配图
+                String pr = FileUtil.readFileToString(new File(filePath + "SHBTOS.CWPJUnitperstowage.txt")).toString();
+                List<PreStowageData> preStowageDataList = PreStowageDataProcess.getPreStowageInfo(pr);
 //        PreStowageDataFrame preStowageFrame1 = new PreStowageDataFrame(preStowageDataList);
 //        preStowageFrame1.setVisible(true);
+
         //测试根据实配图生成预配图
-        List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
-//        List<PreStowageData> resultList = new GenerateMoveOrder().generateMoveOrder(preStowageDataList);
-        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
-        preStowageFrame2.setVisible(true);
-        //测试两个绝对位置
+//      List<PreStowageData> resultList = GeneratePreStowageFromKnowStowage6.getPreStowageResult(preStowageDataList);
+        List<PreStowageData> resultList = GenerateMoveOrder.generateMoveOrder(preStowageDataList, vesselStructureInfoList);
+      PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList);
+      preStowageFrame2.setVisible(true);
+
+                //测试两个绝对位置
 //        GenerateCwpResult.getHatchPositionInfo(voyageInfoList, vesselStructureInfoList);
-        //测试生成属性组和moveCount
-//        List<PreStowageData> resultList2 = GenerateMoveCountAndGroupId.getMoveCountAndGroupId(resultList);
-//        PreStowageDataFrame preStowageFrame2 = new PreStowageDataFrame(resultList2);
-//        preStowageFrame2.setVisible(true);
-        //调用cwp算法得到结果
+
+                //调用cwp算法得到结果
         List<CwpResultInfo> cwpResultInfoList = GenerateCwpResult.getCwpResult(voyageInfoList, vesselStructureInfoList, craneInfoList, resultList);
-        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
+//      CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoList, craneInfoList, null);
+//      cwpResultFrame.setVisible(true);
+
+        //对cwp结果进行处理，将连续作业的cwp块放到一起，以及对作业于某个舱所有的桥机进行编顺序，和某桥机作业舱的顺序
+        List<CwpResultInfo> cwpResultInfoTransformList = CwpResultInfoTransform.getTransformResult(cwpResultInfoList);
+        CwpResultFrame cwpResultFrame = new CwpResultFrame(cwpResultInfoTransformList, craneInfoList, null);
         cwpResultFrame.setVisible(true);
-        //测试自动配载算法
-//        String cwpResultStr = FileUtil.readFileToString(new File("toCwpData/cwpResult.txt")).toString();
-//        List<CwpResultInfo> cwpResultInfoList1 = CwpResultInfoProcess.getCwpResultInfo(cwpResultStr);
-//        List<AutoStowResultInfo> autoStowInfoList = GenerateAutoStowResult.getAutoStowResult(groupInfoList, containerInfoList, containerAreaInfoList, resultList, cwpResultInfoList);
-//        List<MoveInfo> moveInfoList = GenerateMoveInfoResult.getMoveInfoResult(cwpResultInfoList,autoStowInfoList);
-//        MoveFrame moveFrame = new MoveFrame(moveInfoList);
-//        moveFrame.setVisible(true);
+            }
+        }
+
 
     }
 }

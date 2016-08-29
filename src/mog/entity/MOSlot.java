@@ -15,10 +15,12 @@ public class MOSlot {
     private MOSlotPosition moSlotPosition;
     private MOContainer moContainer;
     private Set<MOSlotPosition> moSlotPositionSet;
-    private int moveOrderSeq;
+    private int moveOrderSeq;   //作业序列
+    private String moveType;    //作业工艺
 
+    public MOSlot(){}
 
-    MOSlot(MOSlotPosition moSlotPosition){
+    public MOSlot(MOSlotPosition moSlotPosition) {
         this.moSlotPosition = moSlotPosition;
         moSlotPositionSet = new HashSet<>();
         moveOrderSeq = -1;
@@ -39,6 +41,7 @@ public class MOSlot {
     public void setMoSlotPositionSet(Set<MOSlotPosition> moSlotPositionSet) {
         this.moSlotPositionSet = moSlotPositionSet;
     }
+
     public MOSlotPosition getMoSlotPosition() {
         return moSlotPosition;
     }
@@ -49,5 +52,13 @@ public class MOSlot {
 
     public void setMoveOrderSeq(int moveOrderSeq) {
         this.moveOrderSeq = moveOrderSeq;
+    }
+
+    public String getMoveType() {
+        return moveType;
+    }
+
+    public void setMoveType(String moveType) {
+        this.moveType = moveType;
     }
 }

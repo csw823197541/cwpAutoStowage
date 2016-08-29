@@ -28,6 +28,15 @@ public class CwpResultInfo implements Cloneable{
 
     private Date workingStartTime;     //开始作业时间
     private Date workingEndTime;        //结束作业时间
+    private Date craneWorkStartTime;    //桥机开始作业时间，包括桥机移动到倍位上的时间
+
+    public Date getCraneWorkStartTime() {
+        return craneWorkStartTime;
+    }
+
+    public void setCraneWorkStartTime(Date craneWorkStartTime) {
+        this.craneWorkStartTime = craneWorkStartTime;
+    }
 
     public Date getWorkingStartTime() {
         return workingStartTime;
@@ -50,7 +59,7 @@ public class CwpResultInfo implements Cloneable{
             return null;
         }
         else{
-            return (WORKINGSTARTTIME-WORKINGENDTIME)/60;
+            return (WORKINGENDTIME-WORKINGSTARTTIME)/60;
         }
     }
 

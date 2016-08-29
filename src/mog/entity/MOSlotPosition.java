@@ -14,22 +14,23 @@ public class MOSlotPosition {
     private int rowInt;
     private int tierInt;
 
-    MOSlotPosition(int inBayInt,int inRowInt,int inTierInt){
+    public MOSlotPosition(int inBayInt, int inRowInt, int inTierInt) {
         this.bayInt = inBayInt;
         this.rowInt = inRowInt;
         this.tierInt = inTierInt;
     }
 
     //
-    MOSlotPosition(String inPosStrByDot) throws Exception{
+    public MOSlotPosition(String inPosStrByDot) throws Exception {
         String[] poss = inPosStrByDot.split("\\.");
         bayInt = Integer.parseInt(poss[0]);
         rowInt = Integer.parseInt(poss[1]);
         tierInt = Integer.parseInt(poss[2]);
 
     }
-    public String getPosStrByDot(){
-        return "" + bayInt + "."+ rowInt + "."+ tierInt;
+
+    public String getPosStrByDot() {
+        return "" + bayInt + "." + rowInt + "." + tierInt;
     }
 
     public int getBayInt() {
