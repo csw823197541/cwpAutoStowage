@@ -293,7 +293,7 @@ public class POChooser2 {
                             break W;
                         }
                     }
-                    if (count01 == 0 && count03 == 0) {
+                    if (count01 == 0 || count03 == 0) {
                         i = 0;
                     } else {
                         if (!isContinueSameTPTop(wt, moSlotBlock)) {
@@ -383,7 +383,7 @@ public class POChooser2 {
                             break W;
                         }
                     }
-                    if (count01 == 0 && count03 == 0) {
+                    if (count01 == 0 || count03 == 0) {
                         i = 0;
                     } else {
                         if (!isContinueSameTPBottom(wt, moSlotBlock)) {

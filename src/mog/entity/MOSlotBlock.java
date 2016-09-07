@@ -230,7 +230,7 @@ public class MOSlotBlock {
         int rowInt = moSlotPosition.getRowInt();
         int tierInt = moSlotPosition.getTierInt();
         //后面slot的
-        System.out.println(moSlotPosition.getBayInt() + "-" + moSlotPosition.getRowInt() + "-" + moSlotPosition.getTierInt());
+        //System.out.println(moSlotPosition.getBayInt() + "-" + moSlotPosition.getRowInt() + "-" + moSlotPosition.getTierInt());
         MOSlot moSlot;
         if (rowInt == rowSeqList.get(rowSeqList.size() - 1)) {
             moSlot = null;

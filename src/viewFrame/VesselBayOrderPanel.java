@@ -55,7 +55,7 @@ public class VesselBayOrderPanel extends JPanel {
                 vx = start_x - (rowInt / 2 + 1) * rect_length;
             }
             if (tierInt >= 50) {
-                vy = start_y_a - ((tierInt - 75) / 2) * rect_length;
+                vy = start_y_a - ((tierInt - 70) / 2) * rect_length;
             } else {
                 vy = start_y_b - (tierInt / 2 ) * rect_length;
             }
@@ -84,7 +84,7 @@ public class VesselBayOrderPanel extends JPanel {
                     x = start_x - (rowInt / 2 + 1) * rect_length;
                 }
                 if (tierInt >= 50) {
-                    y = start_y_a - ((tierInt - 75) / 2) * rect_length;
+                    y = start_y_a - ((tierInt - 70) / 2) * rect_length;
                 } else {
                     y = start_y_b - (tierInt / 2) * rect_length;
                 }

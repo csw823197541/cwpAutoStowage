@@ -24,7 +24,7 @@ public class Test30 {
 
     public static void main(String[] args) {
 
-        String filePath = "5.25data\\15617（P）\\";
+        String filePath = "5.25data\\15791（P）\\";
 
         File file = new File(filePath);
         File[] tempList = file.listFiles();

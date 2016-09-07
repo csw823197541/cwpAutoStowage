@@ -6,6 +6,7 @@ import GenerateResult.GeneratePreStowageFromKnowStowage6;
 import importDataInfo.*;
 import importDataProcess.*;
 import utils.FileUtil;
+import viewFrame.CraneFrame;
 import viewFrame.CwpResultFrame;
 import viewFrame.PreStowageDataFrame;
 import viewFrame.VesselStructureFrame;
@@ -22,7 +23,7 @@ public class Test30_1 {
 
     public static void main(String[] args) {
 
-        String filePath = "5.25data\\15617（P）\\GJER MSK/Json/";
+        String filePath = "5.25data\\15249（P）\\ALEX BRI/Json/";
 
         String vo = FileUtil.readFileToString(new File(filePath + "SHBTOS.CWPJUnitvoy.txt")).toString();
         String sh = FileUtil.readFileToString(new File(filePath + "SHBTOS.CWPJUnitvesselstructure.txt")).toString();
@@ -41,8 +42,8 @@ public class Test30_1 {
 
 //        //桥机
         List<CraneInfo> craneInfoList = CraneInfoProcess.getCraneInfo(cr);
-//        CraneFrame craneFrame = new CraneFrame(craneInfoList);
-//        craneFrame.setVisible(true);
+        CraneFrame craneFrame = new CraneFrame(craneInfoList);
+        craneFrame.setVisible(true);
 
         //实配图
         String pr = FileUtil.readFileToString(new File(filePath + "SHBTOS.CWPJUnitperstowage.txt")).toString();
